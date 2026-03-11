@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="飯店詳細資訊">
+    <title data-i18n="site_title">兆基屋管訂房系統</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-utilities.css">
+    <link rel="stylesheet" href="/css/security-patch.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">
+                    <img src="/images/logo.jpg" alt="Logo" class="navbar-logo">
+                    <span data-i18n="site_title">兆基屋管訂房系統</span>
+                </a>
+                <div class="d-flex align-center">
+                    <ul class="navbar-menu">
+                        <li><a href="/" data-i18n="nav_home">首頁</a></li>
+                        <li><a href="/admin.html" data-i18n="nav_admin">管理後台</a></li>
+                    </ul>
+                    <div class="lang-container lang-selector-nav">
+                        <span class="lang-selector-label">
+                            🌐 <span data-i18n="nav_lang" class="font-medium font-09">語言</span>
+                        </span>
+                        <select class="lang-select lang-selector-select">
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="en">English</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">韓國語</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="hotelDetails">
+        <div class="spinner spinner-m4"></div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 線上訂房系統. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/translations.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/hotel-details-core.js"></script>
+
+
+    <div id="galleryModal" class="gallery-overlay hidden">
+        <button id="closeGalleryBtn" class="gallery-close">&times;</button>
+
+        <div class="gallery-content">
+            <img id="galleryImage" src="" alt="Room Gallery" class="gallery-img">
+
+            <button id="prevImageBtn" class="gallery-nav-btn gallery-prev">❮</button>
+            <button id="nextImageBtn" class="gallery-nav-btn gallery-next">❯</button>
+        </div>
+
+        <div id="galleryCounter" class="gallery-counter"></div>
+    </div>
+</body>
+
+</html>

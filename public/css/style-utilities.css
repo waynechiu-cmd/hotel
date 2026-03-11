@@ -1,0 +1,196 @@
+/* Global Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-15 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.my-1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.m-2-0-1 {
+    margin: 2rem 0 1rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.gap-05 {
+    gap: 0.5rem;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.w-full {
+    width: 100% !important;
+}
+
+.h-full {
+    height: 100% !important;
+}
+
+.p-05 {
+    padding: 0.5rem;
+}
+
+.p-075 {
+    padding: 0.75rem;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.p-2 {
+    padding: 2rem;
+}
+
+.border-1 {
+    border: 1px solid var(--bg-secondary);
+}
+
+.radius-05 {
+    border-radius: 0.5rem;
+}
+
+.radius-sm {
+    border-radius: var(--radius-sm);
+}
+
+.bg-white {
+    background: white;
+}
+
+.bg-secondary {
+    background: var(--bg-secondary);
+}
+
+.sticky-top {
+    position: sticky;
+    top: 100px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.font-0875 {
+    font-size: 0.875rem;
+}
+
+.font-1125 {
+    font-size: 1.125rem;
+}
+
+.font-125 {
+    font-size: 1.25rem;
+}
+
+.font-15 {
+    font-size: 1.5rem;
+}
+
+.font-2 {
+    font-size: 2rem;
+}
+
+.font-4 {
+    font-size: 4rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.primary-color {
+    color: var(--primary-color);
+}
+
+/* Custom Component Styles to replace inline hacks */
+.lang-select-style {
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--bg-secondary);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+}
+
+.modal-legacy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.max-w-500-centered {
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+.input-full-style {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-family: inherit;
+}

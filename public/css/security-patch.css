@@ -1,0 +1,548 @@
+/* Security Patch: Utility classes to replace inline styles for CSP compliance */
+
+/* Alignment & Spacing */
+.text-center {
+    text-align: center !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-05 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-1 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-15 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 2rem !important;
+}
+
+.mt-1 {
+    margin-top: 1rem !important;
+}
+
+.mt-2 {
+    margin-top: 2rem !important;
+}
+
+.mt-auto {
+    margin-top: auto !important;
+}
+
+.ml-1 {
+    margin-left: 1rem !important;
+}
+
+.ml-15 {
+    margin-left: 1.5rem !important;
+}
+
+.mr-1 {
+    margin-right: 1rem !important;
+}
+
+.p-05 {
+    padding: 0.5rem !important;
+}
+
+.p-075 {
+    padding: 0.75rem !important;
+}
+
+.p-1 {
+    padding: 1rem !important;
+}
+
+.p-2 {
+    padding: 2rem !important;
+}
+
+/* Colors */
+.text-gray-400 {
+    color: #9ca3af !important;
+}
+
+.text-gray-500 {
+    color: #6b7280 !important;
+}
+
+.text-gray-700 {
+    color: #374151 !important;
+}
+
+.text-gray-900 {
+    color: #111827 !important;
+}
+
+.text-red-500 {
+    color: #ef4444 !important;
+}
+
+.text-green-700 {
+    color: #15803d !important;
+}
+
+.text-amber-600 {
+    color: #d97706 !important;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.bg-green-50 {
+    background-color: #f0fdf4 !important;
+}
+
+.bg-indigo-50 {
+    background-color: #f5f3ff !important;
+}
+
+.bg-secondary {
+    background-color: var(--bg-secondary) !important;
+}
+
+.border-green-200 {
+    border-color: #bbf7d0 !important;
+}
+
+.border-t-gray {
+    border-top: 1px solid #374151 !important;
+}
+
+/* Sizing */
+.w-full {
+    width: 100% !important;
+}
+
+.w-40px {
+    width: 40px !important;
+}
+
+.h-24px {
+    height: 24px !important;
+}
+
+.h-60px {
+    height: 60px !important;
+}
+
+.h-80px {
+    height: 80px !important;
+}
+
+.h-300px {
+    height: 300px !important;
+}
+
+.max-w-400 {
+    max-width: 400px !important;
+}
+
+.max-w-500 {
+    max-width: 500px !important;
+}
+
+.max-h-90vh {
+    max-height: 90vh !important;
+}
+
+.max-h-250 {
+    max-height: 250px !important;
+}
+
+.max-h-300 {
+    max-height: 300px !important;
+}
+
+/* Layout & Typography */
+.flex {
+    display: flex !important;
+}
+
+.inline-flex {
+    display: inline-flex !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.justify-end {
+    justify-content: flex-end !important;
+}
+
+.items-center {
+    align-items: center !important;
+}
+
+.items-start {
+    align-items: start !important;
+}
+
+.vertical-mid {
+    vertical-align: middle !important;
+}
+
+.whitespace-pre-wrap {
+    white-space: pre-wrap !important;
+}
+
+.no-underline {
+    text-decoration: none !important;
+}
+
+.block {
+    display: block !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.overflow-y-auto {
+    overflow-y: auto !important;
+}
+
+.overflow-x-auto {
+    overflow-x: auto !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.font-mono {
+    font-family: monospace !important;
+}
+
+.font-0875 {
+    font-size: 0.875rem !important;
+}
+
+.font-09 {
+    font-size: 0.9rem !important;
+}
+
+.font-11px {
+    font-size: 11px !important;
+}
+
+.font-12px {
+    font-size: 12px !important;
+}
+
+.radius-05 {
+    border-radius: 0.5rem !important;
+}
+
+.radius-4px {
+    border-radius: 4px !important;
+}
+
+.radius-md {
+    border-radius: var(--radius-md) !important;
+}
+
+/* Specific Helpers */
+.hero-min-300 {
+    min-height: 300px !important;
+}
+
+.spinner-m4 {
+    margin: 4rem auto !important;
+}
+
+.lang-selector-nav {
+    margin-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-secondary);
+    transition: var(--transition-base);
+}
+
+.lang-selector-label {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-secondary);
+    cursor: default;
+    white-space: nowrap;
+}
+
+.lang-selector-select {
+    padding: 0.25rem;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Gallery Overlay */
+.gallery-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.gallery-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 80vh;
+}
+
+.gallery-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+.gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.gallery-prev {
+    left: -50px;
+}
+
+.gallery-next {
+    right: -50px;
+}
+
+.gallery-counter {
+    color: white;
+    margin-top: 1rem;
+    font-size: 1.125rem;
+}
+
+.audit-details-box {
+    font-size: 11px;
+    color: #6b7280;
+    max-width: 300px;
+    white-space: pre-wrap;
+}
+
+.wo-photo-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+}
+
+.wo-photo-view {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.btn-success-green {
+    background-color: #10B981 !important;
+    color: white !important;
+}
+
+.btn-small {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+}
+
+.btn-mini {
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+}
+
+.lang-container-nav {
+    margin-left: 1rem;
+}
+
+.input-full-padding {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-family: inherit;
+}
+/* Booking Summary */
+.summary-img { width: 100%; border-radius: 0.5rem; margin-bottom: 1rem; }
+.room-title-lg { margin-bottom: 1rem; font-size: 1.5rem; }
+.summary-grid { 
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; 
+    margin-bottom: 1.5rem; font-size: 0.95rem; 
+    background: var(--bg-secondary); padding: 1rem; border-radius: 0.5rem; 
+}
+.summary-item-label { color: var(--text-secondary); }
+.summary-item-value { color: var(--text-primary); font-weight: 600; }
+.border-t-secondary { border-top: 1px solid var(--bg-secondary); padding-top: 1rem; margin-bottom: 1rem; }
+.flex-between { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+.bg-red-error { background: #fee2e2 !important; }
+.text-red-error { color: #991b1b !important; }
+.bg-primary-fallback { background: var(--primary-color) !important; }
+
+/* Hotel Details Hero & Info */
+.hotel-hero-container { position: relative; height: 500px; overflow: hidden; }
+.hotel-hero-img { width: 100%; height: 100%; object-fit: cover; }
+.hotel-hero-overlay { 
+    position: absolute; bottom: 0; left: 0; right: 0; 
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); 
+    padding: 3rem 0; 
+}
+.hotel-hero-title { color: white; font-size: 3rem; margin-bottom: 0.5rem; }
+.hotel-hero-subtitle { color: white; font-size: 1.25rem; }
+.hotel-rating-container { margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.hotel-rating-stars { font-size: 1.5rem; color: #fbbf24; }
+.hotel-rating-value { color: white; font-size: 1.25rem; font-weight: 600; }
+.hotel-star-text { color: white; margin-left: 1rem; }
+.hotel-desc-lg { font-size: 1.125rem; line-height: 1.8; }
+.contact-info-mt1 { margin-top: 1rem; }
+.mb-3 { margin-bottom: 3rem !important; }
+.amenities-mt1 { margin-top: 1rem; }
+.btn-open-gallery-style { 
+    position: absolute; bottom: 10px; right: 10px; 
+    background: rgba(0,0,0,0.7); color: white; border: none; 
+    padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; 
+    font-size: 0.875rem; 
+}
+.cursor-pointer { cursor: pointer !important; }
+
+/* Permission Checkbox Labels */
+.permission-label { color: #374151; font-size: 0.875rem; font-weight: normal; }
+
+/* Booking Page Specific */
+.availability-message { padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+.submit-btn-lg { width: 100%; padding: 1rem; font-size: 1.125rem; }
+.booking-ref-text { font-size: 0.875rem; margin-bottom: 0.5rem; }
+.confirmation-text { color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+/* Additional utility classes for CSP compliance */
+.w-full-percent { width: 100%; }
+.h-full-percent { height: 100%; }
+.obj-cover { object-fit: cover; }
+.overflow-hidden-body { overflow: hidden; }
+.overflow-auto-body { overflow: auto; }
+.grid-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
+.aspect-1 { aspect-ratio: 1; }
+.pos-relative { position: relative; }
+.pos-absolute { position: absolute; }
+.top-4px { top: 4px; }
+.right-4px { right: 4px; }
+.w-24px { width: 24px; }
+.h-24px { height: 24px; }
+.border-radius-50 { border-radius: 50%; }
+.bg-red-delete { background: rgba(239, 68, 68, 0.9); }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.font-13px { font-size: 13px; }
+.font-075rem { font-size: 0.75rem; }
+.font-0875rem { font-size: 0.875rem; }
+.font-4rem { font-size: 4rem; }
+.font-weight-600 { font-weight: 600; }
+.font-weight-700 { font-weight: 700; }
+.text-align-right { text-align: right; }
+.padding-4rem-2rem { padding: 4rem 2rem; }
+.padding-2rem { padding: 2rem; }
+.margin-bottom-1rem { margin-bottom: 1rem; }
+.color-gray-400 { color: #9ca3af; }
+.color-gray-600 { color: #6B7280; }
+.color-gray-700 { color: #374151; }
+.color-green { color: #10B981; }
+.color-red { color: red; }
+.border-gray-200 { border: 1px solid #e5e7eb; }
+.bg-none { background: none; }
+.border-none { border: none; }
+.cursor-pointer { cursor: pointer; }
+.color-red-500 { color: #ef4444; }
+.display-none { display: none; }
+.display-block { display: block; }
+.display-flex { display: flex; }
+.bg-error { background: #fee2e2; }
+.text-error { color: #991b1b; }
+.status-badge { padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; }
+.status-in-progress { background: #dbeafe; color: #1e40af; }
+.status-pending { background: #f3f4f6; color: #4b5563; }
+
+/* Progress bars with CSS custom properties */
+.progress-bar { transition: width 0.3s ease; }
+.progress-bar[data-width] { width: var(--bar-width, 0%); }
+
+/* Gallery and modal specific */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
+.gallery-item { position: relative; aspect-ratio: 1; border-radius: 0.5rem; overflow: hidden; border: 1px solid #e5e7eb; }
+.gallery-img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-delete-btn { position: absolute; top: 4px; right: 4px; background: rgba(239, 68, 68, 0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+/* Staff tasks empty state */
+.empty-state { text-align: center; padding: 4rem 2rem; }
+.empty-state-icon { font-size: 4rem; margin-bottom: 1rem; }
+.empty-state-title { color: #374151; font-weight: 700; }
+.empty-state-text { color: #6B7280; }
+
+/* Inventory alerts */
+.inventory-alert-item { background: #FEF2F2; border-left: 4px solid #EF4444; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 0.25rem; }
+.inventory-alert-name { font-weight: 600; font-size: 0.875rem; }
+.inventory-alert-code { font-size: 0.75rem; color: #6B7280; }
+.inventory-alert-qty { text-align: right; }
+.inventory-alert-qty-value { font-weight: 700; }
+
+/* Instance table */
+.instance-table { font-size: 13px; }
+.instance-delete-btn { color: #ef4444; border: none; background: none; cursor: pointer; }
+
+/* Status badges with dynamic colors */
+.status-badge-dynamic { padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; }
+.ticket-number { font-size: 0.75rem; color: #9CA3AF; }

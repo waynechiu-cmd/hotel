@@ -1,0 +1,168 @@
+:root {
+    --primary: #4F46E5;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --bg: #F3F4F6;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1F2937;
+}
+
+.container {
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.task-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--primary);
+}
+
+.task-card.priority-critical {
+    border-left-color: var(--danger);
+}
+
+.task-card.status-closed {
+    border-left-color: var(--success);
+    opacity: 0.7;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-cleaning {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+.badge-repair {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.375rem;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn-success {
+    background: var(--success);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Utility to replace inline styles */
+.text-center {
+    text-align: center;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-05 {
+    margin-bottom: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.w-full {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.p-075 {
+    padding: 0.75rem;
+}
+
+.border-1 {
+    border: 1px solid #d1d5db;
+}
+
+.radius-0375 {
+    border-radius: 0.375rem;
+}
+
+.color-gray {
+    color: #6B7280;
+}
+
+.bg-none {
+    background: none;
+}
+
+.border-none {
+    border: none;
+}
+
+.block {
+    display: block;
+}

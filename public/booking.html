@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="完成您的訂房">
+    <title data-i18n="site_title">兆基屋管訂房系統</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-utilities.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">
+                    <img src="/images/logo.jpg" alt="Logo" class="navbar-logo">
+                    <span data-i18n="site_title">兆基屋管訂房系統</span>
+                </a>
+                <div class="d-flex align-center">
+                    <ul class="navbar-menu">
+                        <li><a href="/" data-i18n="nav_home">首頁</a></li>
+                        <li><a href="/admin.html" data-i18n="nav_admin">管理後台</a></li>
+                    </ul>
+                    <div class="lang-container lang-container-nav">
+                        <select class="lang-select" class="lang-select-style">
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="en">English</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">韓國語</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Booking Section -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center mb-3" data-i18n="booking_title">完成您的預訂</h1>
+
+            <div class="booking-grid">
+                <!-- Booking Form -->
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="mb-15" data-i18n="booking_info_title">訂房資訊</h2>
+
+                        <form id="bookingForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="checkIn" data-i18n="check_in">入住日期 *</label>
+                                    <input type="date" id="checkIn" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkOut" data-i18n="check_out">退房日期 *</label>
+                                    <input type="date" id="checkOut" required>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="roomInstance" data-i18n="room_number">選擇房號 (Room Number) *</label>
+                                    <select id="roomInstance" required disabled>
+                                        <option value="" data-i18n="select_date_first">請先選擇日期...</option>
+                                    </select>
+                                    <input type="hidden" id="numRooms" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numGuests" data-i18n="guests">房客人數 *</label>
+                                    <select id="numGuests" required>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h3 class="m-2-0-1" data-i18n="contact_info">聯絡資訊</h3>
+
+                            <div class="form-group mb-15">
+                                <label for="guestName" data-i18n="contact_name">姓名 *</label>
+                                <input type="text" id="guestName" placeholder="請輸入您的姓名"
+                                    data-i18n-placeholder="enter_name" required>
+                            </div>
+
+                            <div class="form-group mb-15">
+                                <label for="guestEmail" data-i18n="contact_email">電子郵件 *</label>
+                                <input type="email" id="guestEmail" placeholder="example@email.com" required>
+                            </div>
+
+                            <div class="form-group mb-15">
+                                <label for="guestPhone" data-i18n="contact_phone">電話 (Telephone) *</label>
+                                <input type="tel" id="guestPhone" placeholder="02-12345678" required>
+                            </div>
+
+                            <div class="form-group mb-15">
+                                <label for="guestMobile" data-i18n="contact_mobile">手機 (Mobile) *</label>
+                                <input type="tel" id="guestMobile" placeholder="0912345678" required pattern="09\d{8}"
+                                    title="請輸入有效的手機號碼 (09開頭，共10碼)">
+                            </div>
+
+                            <div class="form-group mb-15">
+                                <label for="specialRequests" data-i18n="special_requests">特殊需求（選填）</label>
+                                <textarea id="specialRequests" rows="4" data-i18n-placeholder="special_req_placeholder"
+                                    placeholder="例如：需要嬰兒床、無障礙房間等" class="input-full-padding"></textarea>
+                            </div>
+
+                            <div id="availabilityMessage" class="hidden availability-message"></div>
+
+                            <button type="submit" class="btn btn-primary submit-btn-lg" id="submitBtn"
+                                data-i18n="confirm_booking">
+                                確認預訂
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="sticky-top">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="mb-15" data-i18n="booking_summary">訂單摘要</h3>
+
+                            <div id="bookingSummary">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden" class="modal-legacy">
+        <div class="card" class="max-w-500-centered">
+            <div class="card-content" class="text-center">
+                <div class="font-4 mb-1 text-center">✅</div>
+                <h2 class="mb-1" data-i18n="booking_success_title">預訂申請已送出！</h2>
+                <p class="mb-1" data-i18n="booking_success_msg">您的訂房請求已收到，請等待管理員確認。</p>
+                <div id="bookingReferenceDisplay" class="bg-secondary p-1 radius-05 mb-15">
+                    <p class="booking-ref-text" data-i18n="booking_reference">訂單編號</p>
+                    <p id="bookingReference" class="font-15 font-bold primary-color">
+                    </p>
+                </div>
+                <p class="confirmation-text" data-i18n="confirmation_sent">
+                    確認信已發送至您的電子郵件</p>
+                <button class="btn btn-primary" id="backToHomeBtn" data-i18n="back_to_home">返回首頁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 <span data-i18n="site_title">飯店預訂系統</span>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/translations.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/booking-core.js"></script>
+</body>
+
+</html>

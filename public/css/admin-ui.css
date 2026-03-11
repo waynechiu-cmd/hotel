@@ -1,0 +1,290 @@
+/* CSS for Admin UI - Expanded for CSP Compliance */
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --secondary-color: #6b7280;
+    --bg-gray: #f3f4f6;
+    --sidebar-width: 260px;
+    --sidebar-bg: #1f2937;
+    --input-border: #d1d5db;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+}
+
+#adminBody {
+    display: flex !important;
+    flex-direction: row !important;
+    min-height: 100vh !important;
+    background: #f3f4f6 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    color: #1f2937 !important;
+}
+
+#adminBody .sidebar {
+    width: var(--sidebar-width) !important;
+    background: var(--sidebar-bg) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    z-index: 1100 !important;
+    transition: transform 0.3s ease;
+}
+
+#adminBody .main-content {
+    flex: 1 !important;
+    margin-left: var(--sidebar-width) !important;
+    padding: 2rem !important;
+    width: calc(100% - var(--sidebar-width)) !important;
+    min-width: 0 !important;
+}
+
+/* Tab Logic */
+#adminBody .tab-content {
+    display: none !important;
+}
+
+#adminBody .tab-content.active {
+    display: block !important;
+}
+
+/* Modals & Overlays */
+.modal-overlay,
+.sidebar-overlay,
+#loginOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1200;
+    align-items: center;
+    justify-content: center;
+}
+
+#loginOverlay {
+    display: flex;
+    /* Default show, JS will hide if logged in */
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Utility Classes for CSP */
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex !important;
+}
+
+.block {
+    display: block !important;
+}
+
+.grid {
+    display: grid !important;
+}
+
+.relative {
+    position: relative !important;
+}
+
+.fixed {
+    position: fixed !important;
+}
+
+.w-full {
+    width: 100% !important;
+}
+
+.h-full {
+    height: 100% !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-4 {
+    gap: 1rem !important;
+}
+
+.items-center {
+    align-items: center !important;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.flex-end {
+    justify-content: flex-end !important;
+}
+
+.mb-4 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem !important;
+}
+
+.p-4 {
+    padding: 1rem !important;
+}
+
+.rounded {
+    border-radius: 0.5rem !important;
+}
+
+.text-sm {
+    font-size: 14px !important;
+}
+
+.text-xs {
+    font-size: 12px !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.text-gray {
+    color: #6b7280 !important;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-outline {
+    background: transparent;
+    border-color: var(--input-border);
+    color: #374151;
+}
+
+.btn-outline:hover {
+    background: #f9fafb;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    background: white;
+    color: #1a202c;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Badges */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-confirmed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background: #f9fafb;
+    padding: 1rem;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 1rem;
+    border-top: 1px solid #f3f4f6;
+    font-size: 14px;
+}

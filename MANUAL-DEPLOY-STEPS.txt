@@ -1,0 +1,277 @@
+# 手動部署步驟指南
+
+由於 SSH 金鑰認證問題，自動部署無法執行。請按照以下步驟手動部署：
+
+## 方法 1：使用打包檔案（推薦）
+
+### 步驟 1：準備部署包
+已為您建立部署包：`hotel-booking-deploy.tar.gz`
+
+### 步驟 2：上傳到伺服器
+使用您偏好的方式上傳檔案到伺服器：
+
+**選項 A - 使用 SCP（如果有密碼）：**
+```bash
+scp hotel-booking-deploy.tar.gz root@104.199.235.223:/root/
+```
+
+**選項 B - 使用 SFTP 客戶端：**
+- 使用 FileZilla、WinSCP 等工具
+- 連接到 104.199.235.223
+- 上傳 `hotel-booking-deploy.tar.gz` 到 `/root/`
+
+**選項 C - 使用網頁上傳：**
+如果伺服器有網頁管理面板（如 cPanel），使用檔案管理器上傳
+
+### 步驟 3：連接到伺服器
+```bash
+ssh root@104.199.235.223
+# 輸入密碼
+```
+
+### 步驟 4：解壓縮並設定
+```bash
+# 建立目錄
+mkdir -p /var/www/hotel-booking
+cd /var/www/hotel-booking
+
+# 解壓縮
+tar -xzf /root/hotel-booking-deploy.tar.gz
+
+# 安裝依賴
+npm install --production
+
+# 初始化資料庫
+mysql -h 35.201.240.143 -u hotel -p'.F$~Jio$m$4D]MSA' hotel < schema.sql
+
+# 啟動應用
+pm2 start server.js --name hotel-booking
+pm2 save
+```
+
+---
+
+## 方法 2：使用伺服器設定腳本
+
+### 步驟 1：連接到伺服器
+```bash
+ssh root@104.199.235.223
+```
+
+### 步驟 2：下載並執行設定腳本
+在伺服器上執行：
+```bash
+# 建立設定腳本
+cat > /root/server-setup.sh << 'SCRIPT_END'
+[複製 server-setup.sh 的內容到這裡]
+SCRIPT_END
+
+# 執行腳本
+chmod +x /root/server-setup.sh
+/root/server-setup.sh
+```
+
+### 步驟 3：手動建立應用程式檔案
+由於檔案較多，建議使用方法 1 的打包上傳方式。
+
+---
+
+## 方法 3：逐步手動建立（適合學習）
+
+### 1. 連接伺服器
+```bash
+ssh root@104.199.235.223
+```
+
+### 2. 安裝 Node.js
+```bash
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+apt-get install -y nodejs
+node --version  # 確認安裝成功
+```
+
+### 3. 建立專案目錄
+```bash
+mkdir -p /var/www/hotel-booking
+cd /var/www/hotel-booking
+```
+
+### 4. 建立 package.json
+```bash
+cat > package.json << 'EOF'
+{
+  "name": "hotel-booking-platform",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "body-parser": "^1.20.2"
+  }
+}
+EOF
+```
+
+### 5. 安裝依賴
+```bash
+npm install --production
+```
+
+### 6. 建立環境配置
+```bash
+cat > .env << 'EOF'
+DB_HOST=35.201.240.143
+DB_USER=hotel
+DB_PASSWORD=.F$~Jio$m$4D]MSA
+DB_NAME=hotel
+DB_PORT=3306
+PORT=3000
+NODE_ENV=production
+EOF
+```
+
+### 7. 建立目錄結構
+```bash
+mkdir -p config routes public/css public/js
+```
+
+### 8. 建立所有應用程式檔案
+您需要建立以下檔案（內容請參考本地專案）：
+- `server.js`
+- `config/database.js`
+- `routes/hotels.js`
+- `routes/rooms.js`
+- `routes/bookings.js`
+- `schema.sql`
+- `public/index.html`
+- `public/hotels.html`
+- `public/hotel-details.html`
+- `public/booking.html`
+- `public/admin.html`
+- `public/css/style.css`
+- `public/js/app.js`
+
+**建議**：使用方法 1 的打包上傳方式更快速！
+
+### 9. 初始化資料庫
+```bash
+mysql -h 35.201.240.143 -u hotel -p'.F$~Jio$m$4D]MSA' hotel < schema.sql
+```
+
+### 10. 安裝 PM2
+```bash
+npm install -g pm2
+```
+
+### 11. 啟動應用
+```bash
+pm2 start server.js --name hotel-booking
+pm2 save
+pm2 startup  # 設定開機自動啟動
+```
+
+### 12. 安裝 Nginx
+```bash
+apt-get update
+apt-get install -y nginx
+```
+
+### 13. 配置 Nginx
+```bash
+cat > /etc/nginx/sites-available/hotel-booking << 'EOF'
+server {
+    listen 80;
+    server_name _;
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+EOF
+
+ln -sf /etc/nginx/sites-available/hotel-booking /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default
+nginx -t && systemctl reload nginx
+```
+
+---
+
+## 驗證部署
+
+### 1. 檢查應用狀態
+```bash
+pm2 status
+```
+應該看到 `hotel-booking` 狀態為 `online`
+
+### 2. 檢查日誌
+```bash
+pm2 logs hotel-booking --lines 20
+```
+
+### 3. 測試本地連接
+```bash
+curl http://localhost:3000
+```
+應該返回 HTML 內容
+
+### 4. 測試外部訪問
+在瀏覽器訪問：
+- http://104.199.235.223
+
+---
+
+## 常見問題
+
+### Q: 如何取得 hotel-booking-deploy.tar.gz？
+A: 檔案位於：`/home/wayne.chiu/.gemini/antigravity/scratch/hotel-booking-platform/hotel-booking-deploy.tar.gz`
+
+### Q: SSH 連接需要密碼怎麼辦？
+A: 使用 `-o PreferredAuthentications=password` 選項：
+```bash
+ssh -o PreferredAuthentications=password root@104.199.235.223
+```
+
+### Q: 應用啟動失敗怎麼辦？
+A: 查看日誌：
+```bash
+pm2 logs hotel-booking
+```
+常見原因：
+- 資料庫連接失敗（檢查 .env 設定）
+- 端口被佔用（更改 PORT）
+- 模組未安裝（執行 npm install）
+
+### Q: 網頁顯示 502 錯誤？
+A: Node.js 應用未運行，重啟：
+```bash
+pm2 restart hotel-booking
+```
+
+---
+
+## 需要協助？
+
+如果遇到問題，請提供：
+1. 錯誤訊息
+2. PM2 日誌：`pm2 logs hotel-booking --lines 50`
+3. Nginx 日誌：`tail -f /var/log/nginx/error.log`
+
+---
+
+## 部署完成後
+
+訪問您的網站：
+- **HTTP**: http://104.199.235.223
+- **域名**: http://hotel.cc-house.cc（需先設定 DNS）
+
+設定 SSL（可選）：
+```bash
+./setup-ssl.sh
+```

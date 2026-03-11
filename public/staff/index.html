@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>房務管理系統</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/staff.css">
+    <link rel="stylesheet" href="/css/security-patch.css">
+</head>
+
+<body>
+
+
+    <div id="loginView" class="container">
+        <div class="login-box">
+            <h2 class="text-center">員工登入</h2>
+            <div class="mb-1">
+                <label class="block mb-05">帳號 (Email)</label>
+                <input type="text" id="username" placeholder="example@cc-house.cc"
+                    class="w-full p-075 border-1 radius-0375">
+            </div>
+            <div class="mb-1">
+                <label class="block mb-05">密碼</label>
+                <input type="password" id="password" placeholder="••••••••" class="w-full p-075 border-1 radius-0375">
+            </div>
+            <p id="loginError" class="hidden text-center mb-1 text-red-500 font-0875">
+            </p>
+            <button id="loginBtn" class="btn">登入</button>
+        </div>
+    </div>
+
+
+    <div id="taskListView" class="hidden">
+        <div class="header">
+            <div class="d-flex justify-between align-center">
+                <h1>📋 我的工單</h1>
+                <button id="logoutBtn" class="bg-none border-none color-gray">登出</button>
+            </div>
+        </div>
+        <div class="container" id="tasksContainer">
+
+            <div class="text-center color-gray mt-2">載入中...</div>
+        </div>
+    </div>
+
+    <script src="/js/staff-core.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="瀏覽所有可用飯店">
+    <title data-i18n="site_title">兆基屋管訂房系統</title>
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-utilities.css">
+    <link rel="stylesheet" href="/css/security-patch.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">
+                    <img src="/images/logo.jpg" alt="Logo" class="navbar-logo">
+                    <span data-i18n="site_title">兆基屋管訂房系統</span>
+                </a>
+                <div class="d-flex align-center">
+                    <ul class="navbar-menu">
+                        <li><a href="/" data-i18n="nav_home">首頁</a></li>
+                        <li><a href="/admin.html" data-i18n="nav_admin">管理後台</a></li>
+                    </ul>
+                    <div class="lang-container lang-selector-nav">
+                        <span class="lang-selector-label">
+                            🌐 <span data-i18n="nav_lang" class="font-medium font-09">語言</span>
+                        </span>
+                        <select class="lang-select lang-selector-select">
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="en">English</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="hero hero-min-300">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="explore_hotels">探索所有飯店</h1>
+                <p data-i18n="find_accommodation">找到最適合您的住宿選擇</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container-wide">
+            <div class="hotels-layout">
+
+                <div class="card" class="sticky-top">
+                    <div class="card-content">
+                        <h3 class="mb-15" data-i18n="filter_title">篩選條件</h3>
+
+                        <div class="form-group" class="mb-15">
+                            <label for="searchQuery" data-i18n="search_label">搜尋</label>
+                            <input type="text" id="searchQuery" data-i18n="search_placeholder" placeholder="飯店名稱或城市">
+                        </div>
+
+                        <div class="form-group" class="mb-15">
+                            <label for="cityFilter" data-i18n="city_label">城市</label>
+                            <select id="cityFilter">
+                                <option value="" data-i18n="all_cities">所有城市</option>
+                                <option value="Hualien" data-i18n="city_hualien">花蓮</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" class="mb-15">
+                            <label for="minRating" data-i18n="min_rating_label">最低評分</label>
+                            <select id="minRating">
+                                <option value="" data-i18n="no_limit">不限</option>
+                                <option value="3">3.0+</option>
+                                <option value="4">4.0+</option>
+                                <option value="4.5">4.5+</option>
+                            </select>
+                        </div>
+
+
+
+                        <button class="btn btn-primary" id="applyFiltersBtn" class="w-full" data-i18n="apply_filters">
+                            套用篩選
+                        </button>
+                        <button class="btn btn-outline mt-05 w-full" id="clearFiltersBtn" data-i18n="clear_filters">
+                            清除篩選
+                        </button>
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="mb-15">
+                        <h2 id="resultsCount" data-i18n="loading">載入中...</h2>
+                    </div>
+
+                    <div id="hotelsList" class="grid grid-2">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 線上訂房系統. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/translations.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/hotels-core.js"></script>
+</body>
+
+</html>
