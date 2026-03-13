@@ -45,7 +45,7 @@ app.use(helmet({
             connectSrc: ["'self'", "http://104.199.235.223", "http://localhost:3000", "https://hotel.cc-house.cc", "https://cdn.jsdelivr.net"],
             frameSrc: ["'self'"],
             objectSrc: ["'none'"],
-            scriptSrcAttr: ["'none'"], // Strict
+            scriptSrcAttr: [(req, res) => `'nonce-${res.locals.nonce}'`], // Allow nonce for inline handlers
             upgradeInsecureRequests: null
         }
     },

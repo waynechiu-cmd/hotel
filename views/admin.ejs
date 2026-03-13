@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/style-utilities.css">
     <link rel="stylesheet" href="/css/security-patch.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 </head>
 
 <body id="adminBody" class="admin-page">
@@ -361,7 +361,7 @@
                     <p>核心指標監控與趨勢告警系統</p>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <button class="btn btn-outline btn-sm" onclick="loadBIDashboard()"><i class="fas fa-sync-alt"></i>
+                    <button class="btn btn-outline btn-sm" id="btnRefreshBIDashboard"><i class="fas fa-sync-alt"></i>
                         刷新數據</button>
                     <select class="form-input btn-sm" style="width: auto; height: 38px;">
                         <option>最近 7 天</option>
@@ -446,7 +446,7 @@
                     <h1>房務執行中心</h1>
                     <p>查看並執行指派給您的清潔與維修任務</p>
                 </div>
-                <button class="btn btn-outline btn-sm" onclick="loadStaffTasks()"><i class="fas fa-sync-alt"></i>
+                <button class="btn btn-outline btn-sm" id="btnRefreshStaffTasks"><i class="fas fa-sync-alt"></i>
                     刷新任務</button>
             </div>
 
@@ -474,11 +474,7 @@
                             <i class="fas fa-box"></i> 品名 <span style="color: var(--accent-red);">*</span>
                         </label>
                         <input type="text" id="invName" required placeholder="例如: 牙刷組、枕套、毛巾..."
-                            style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-family: inherit;"
-                            onmouseover="this.style.borderColor='#d1d5db'"
-                            onmouseout="this.style.borderColor='#e5e7eb'"
-                            onfocus="this.style.borderColor='var(--primary-color)'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                            style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-family: inherit;">
                     </div>
 
                     <!-- 代號欄位 -->
@@ -487,11 +483,7 @@
                             <i class="fas fa-barcode"></i> 代號 (SKU) <span style="color: var(--accent-red);">*</span>
                         </label>
                         <input type="text" id="invCode" required placeholder="例如: TB-001 或 TOWEL-BED"
-                            style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; font-family: 'Courier New', monospace; transition: all 0.3s; box-sizing: border-box;"
-                            onmouseover="this.style.borderColor='#d1d5db'"
-                            onmouseout="this.style.borderColor='#e5e7eb'"
-                            onfocus="this.style.borderColor='var(--primary-color)'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                            style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; font-family: 'Courier New', monospace; transition: all 0.3s; box-sizing: border-box;">
                     </div>
 
                     <!-- 數量與閾值 -->
@@ -503,11 +495,7 @@
                             </label>
                             <div style="position: relative;">
                                 <input type="number" id="invQuantity" value="0" min="0" step="1"
-                                    style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-weight: 600;"
-                                    onmouseover="this.style.borderColor='#d1d5db'"
-                                    onmouseout="this.style.borderColor='#e5e7eb'"
-                                    onfocus="this.style.borderColor='var(--primary-color)'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
-                                    onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                    style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-weight: 600;">
                                 <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-weight: 600;">件</span>
                             </div>
                         </div>
@@ -519,11 +507,7 @@
                             </label>
                             <div style="position: relative;">
                                 <input type="number" id="invThreshold" value="5" min="1" step="1"
-                                    style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-weight: 600;"
-                                    onmouseover="this.style.borderColor='#d1d5db'"
-                                    onmouseout="this.style.borderColor='#e5e7eb'"
-                                    onfocus="this.style.borderColor='var(--accent-yellow)'; this.style.boxShadow='0 0 0 3px rgba(245, 158, 11, 0.1)'"
-                                    onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                    style="width: 100%; padding: 0.875rem 1rem 0.875rem 2.5rem; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; font-weight: 600;">
                                 <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-weight: 600;">件</span>
                             </div>
                             <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.5rem 0 0; margin-left: 0.5rem;">
@@ -2413,11 +2397,11 @@
             if (task.status === 'pending') {
                 statusLabel = '待處理';
                 statusColor = '#D1D5DB';
-                actionBtn = `<button class="btn btn-primary w-full" style="margin-top: 1.5rem; justify-content: center;" onclick="startStaffTask(${task.id})"><i class="fas fa-play" style="margin-right: 8px;"></i> 開始任務</button>`;
+                actionBtn = `<button class="btn btn-primary w-full btnStartStaffTask" data-task-id="${task.id}" style="margin-top: 1.5rem; justify-content: center;"><i class="fas fa-play" style="margin-right: 8px;"></i> 開始任務</button>`;
             } else if (task.status === 'in_progress') {
                 statusLabel = '執行中';
                 statusColor = 'var(--accent-blue)';
-                actionBtn = `<button class="btn btn-sm w-full" style="margin-top: 1.5rem; justify-content: center; background: var(--grad-green); color: white; border: none;" onclick="openCompletionModal(${task.id})"><i class="fas fa-check-double" style="margin-right: 8px;"></i> 完成任務</button>`;
+                actionBtn = `<button class="btn btn-sm w-full btnOpenCompletionModal" data-task-id="${task.id}" style="margin-top: 1.5rem; justify-content: center; background: var(--grad-green); color: white; border: none;"><i class="fas fa-check-double" style="margin-right: 8px;"></i> 完成任務</button>`;
             }
 
             return `
@@ -2578,5 +2562,83 @@
     if (document.getElementById("btnTriggerGalleryUpload")) {
         document.getElementById("btnTriggerGalleryUpload").addEventListener("click", () => { document.getElementById("galleryImageInput").click(); });
     }
+
+    // Inventory Form Input Handlers
+    function setupInventoryFormListeners() {
+        const formInputs = ['invName', 'invCode', 'invQuantity', 'invThreshold'];
+        
+        formInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                // 標準邊框顏色
+                const normalColor = '#e5e7eb';
+                const hoverColor = '#d1d5db';
+                const focusColor = input.id === 'invThreshold' ? 'var(--accent-yellow)' : 'var(--primary-color)';
+                const focusShadow = input.id === 'invThreshold' 
+                    ? '0 0 0 3px rgba(245, 158, 11, 0.1)' 
+                    : '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                
+                input.addEventListener('mouseover', function() {
+                    this.style.borderColor = hoverColor;
+                });
+                
+                input.addEventListener('mouseout', function() {
+                    this.style.borderColor = normalColor;
+                });
+                
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = focusColor;
+                    this.style.boxShadow = focusShadow;
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = normalColor;
+                    this.style.boxShadow = 'none';
+                });
+            }
+        });
+    }
+
+    // Dashboard Button Listeners
+    const btnRefreshBIDashboard = document.getElementById('btnRefreshBIDashboard');
+    if (btnRefreshBIDashboard) {
+        btnRefreshBIDashboard.addEventListener('click', loadBIDashboard);
+    }
+
+    const btnRefreshStaffTasks = document.getElementById('btnRefreshStaffTasks');
+    if (btnRefreshStaffTasks) {
+        btnRefreshStaffTasks.addEventListener('click', loadStaffTasks);
+    }
+
+    // Staff Tasks Dynamic Button Listeners
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.btnStartStaffTask')) {
+            const taskId = e.target.closest('.btnStartStaffTask').dataset.taskId;
+            startStaffTask(taskId);
+        }
+        if (e.target.closest('.btnOpenCompletionModal')) {
+            const taskId = e.target.closest('.btnOpenCompletionModal').dataset.taskId;
+            openCompletionModal(taskId);
+        }
+    });
+
+    // Initialize inventory form listeners when modal opens
+    const inventoryModal = document.getElementById('inventoryModal');
+    if (inventoryModal) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'style') {
+                    const isVisible = inventoryModal.style.display === 'flex' || inventoryModal.style.display === 'block';
+                    if (isVisible) {
+                        setupInventoryFormListeners();
+                    }
+                }
+            });
+        });
+        observer.observe(inventoryModal, { attributes: true });
+    }
+
+    // Initial setup
+    setupInventoryFormListeners();
 
 </script>
