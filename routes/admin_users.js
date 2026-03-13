@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { pool } = require('../config/database');
 const AuditService = require('../services/auditService');
-const { verifyToken, checkRole, checkPermission } = require('../middleware/authMiddleware_v2');
+const { verifyToken, checkRole, checkPermission } = require('../middleware/authMiddleware');
 
 // Protect all admin routes
 router.use(verifyToken, checkPermission('admin_users'));

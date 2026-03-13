@@ -31,14 +31,17 @@ const verifyToken = (req, res, next) => {
     const token = authHeader.split(' ')[1];
 
     try {
-        console.log(`[AuthDebug-V2] Verifying token: ${token.substring(0, 15)}... using secret: ${secret.substring(0, 3)}...`);
+        console.log(`[Auth] 驗證token: ${token.substring(0, 15)}... (密鑰: ${secret.substring(0, 3)}...)`);
         const decoded = jwt.verify(token, secret);
         req.user = decoded;
-        console.log(`[AuthDebug-V2] Success for: ${decoded.email}`);
+        console.log(`[Auth] ✓ token驗證成功: ${decoded.email}`);
         next();
     } catch (err) {
-        console.error(`[AuthDebug-V2] Token verification failed: ${err.message} for token: ${token.substring(0, 15)}...`);
-        return res.status(403).json({ error: '無效或過期的憑證' })
+        let errorMsg = err.message;
+        if (err.name === 'TokenExpiredError') errorMsg = 'Token已過期';
+        if (err.name === 'JsonWebTokenError') errorMsg = '無效的簽名/Token';
+        console.error(`[Auth] ✗ token驗證失敗: ${errorMsg} (token: ${token.substring(0, 15)}...)`);
+        return res.status(403).json({ error: '無效或過期的憑證', details: errorMsg })
     }
 };
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AuditService = require('../services/auditService');
-const { verifyToken, checkPermission } = require('../middleware/authMiddleware_v2');
+const { verifyToken, checkPermission } = require('../middleware/authMiddleware');
 
 // Protect audit logs (Only Admin or users with explicit permission)
 router.use(verifyToken, (req, res, next) => {

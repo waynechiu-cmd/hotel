@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/database');
 const AuditService = require('../services/auditService');
-const { verifyToken, checkPermission } = require('../middleware/authMiddleware_v2');
+const { verifyToken, checkPermission } = require('../middleware/authMiddleware');
 const NotificationService = require('../services/notificationService');
 
 // GET /api/inventory - List all items

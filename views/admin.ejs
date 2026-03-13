@@ -1387,20 +1387,29 @@
             const items = await res.json();
             allInventoryItems = items;
 
-            // Update Summary Stats
-            const total = items.length;
-            const low = items.filter(i => i.quantity > 0 && i.quantity <= i.alert_threshold).length;
-            const outOfStock = items.filter(i => i.quantity <= 0).length;
-
-            document.getElementById('invTotalCount').innerText = total;
-            document.getElementById('invLowCount').innerText = low;
-            document.getElementById('invOutCount').innerText = outOfStock;
-            document.getElementById('invLastUpdate').innerText = new Date().toLocaleTimeString('zh-TW', { hour12: false });
-
+            updateSummaryStats();
             renderInventory(items);
         } catch (err) {
             console.error('Failed to load inventory', err);
         }
+    }
+
+    function updateSummaryStats() {
+        if (!Array.isArray(allInventoryItems)) return;
+        
+        const total = allInventoryItems.length;
+        const low = allInventoryItems.filter(i => i.quantity > 0 && i.quantity <= i.alert_threshold).length;
+        const outOfStock = allInventoryItems.filter(i => i.quantity <= 0).length;
+
+        const totalEl = document.getElementById('invTotalCount');
+        const lowEl = document.getElementById('invLowCount');
+        const outEl = document.getElementById('invOutCount');
+        const updateEl = document.getElementById('invLastUpdate');
+
+        if (totalEl) totalEl.innerText = total;
+        if (lowEl) lowEl.innerText = low;
+        if (outEl) outEl.innerText = outOfStock;
+        if (updateEl) updateEl.innerText = new Date().toLocaleTimeString('zh-TW', { hour12: false });
     }
 
     function filterInventory(query) {
@@ -1429,7 +1438,7 @@
         items.forEach(item => {
             const isOut = item.quantity <= 0;
             const isLow = !isOut && item.quantity <= item.alert_threshold;
-            const progressPercent = Math.min(100, Math.round((item.quantity / (item.alert_threshold * 2 || 1)) * 100));
+            const progressPercent = Math.min(100, Math.round((item.quantity / (item.alert_threshold || 1)) * 100));
 
             html += `
             <div class="inventory-card ${isLow || isOut ? 'low-stock' : ''}" style="border-top: 4px solid ${isOut ? 'var(--accent-red)' : isLow ? '#F59E0B' : 'var(--accent-green)'}">
@@ -1520,6 +1529,16 @@
         const qtyInput = document.getElementById(`inv-qty-${id}`);
         if (!qtyInput) return;
 
+        // Check if token exists
+        if (!token) {
+            alert('請先登入系統');
+            logout();
+            return;
+        }
+
+        console.log('[Inventory Debug] Starting update for item', id, 'to quantity', newQty);
+        console.log('[Inventory Debug] Current token:', token ? token.substring(0, 20) + '...' : 'NO TOKEN');
+
         try {
             qtyInput.classList.add('opacity-50');
 
@@ -1529,32 +1548,41 @@
                 body: JSON.stringify({ quantity: newQty })
             });
 
+            console.log('[Inventory Debug] API response status:', res.status);
+            console.log('[Inventory Debug] API response ok:', res.ok);
+
             qtyInput.classList.remove('opacity-50');
 
             if (res.ok) {
-                qtyInput.setAttribute('data-last-saved', newQty);
-                // Reload summary stats without full re-render for smooth experience
-                const item = allInventoryItems.find(i => i.id == id);
-                if (item) item.quantity = newQty;
-                updateSummaryStats();
+                try {
+                    qtyInput.setAttribute('data-last-saved', newQty);
+                    // Reload summary stats without full re-render for smooth experience
+                    const item = allInventoryItems.find(i => i.id == id);
+                    if (item) item.quantity = newQty;
+                    updateSummaryStats();
 
-                // Update the card's visual state (badges, progress bar)
-                const card = qtyInput.closest('.inventory-card');
-                if (card) {
-                    const isOut = newQty <= 0;
-                    const isLow = !isOut && newQty <= item.alert_threshold;
+                    // Update the card's visual state (badges, progress bar)
+                    const card = qtyInput.closest('.inventory-card');
+                    if (card && item) {  // 確保 item 存在
+                        const isOut = newQty <= 0;
+                        const isLow = !isOut && newQty <= item.alert_threshold;
 
-                    card.className = `inventory-card ${isLow || isOut ? 'low-stock' : ''}`;
-                    const badge = card.querySelector('.status-badge');
-                    if (badge) {
-                        badge.className = `status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}`;
-                        badge.innerHTML = isOut ? '<i class="fas fa-ban"></i> 缺貨' : isLow ? '<i class="fas fa-triangle-exclamation"></i> 低水位' : '<i class="fas fa-check-circle"></i> 充足';
+                        card.className = `inventory-card ${isLow || isOut ? 'low-stock' : ''}`;
+                        const badge = card.querySelector('.status-badge');
+                        if (badge) {
+                            badge.className = `status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}`;
+                            badge.innerHTML = isOut ? '<i class="fas fa-ban"></i> 缺貨' : isLow ? '<i class="fas fa-triangle-exclamation"></i> 低水位' : '<i class="fas fa-check-circle"></i> 充足';
+                        }
+                        const progress = card.querySelector('div[style*="transition: width"]');
+                        if (progress) {
+                            progress.style.width = `${Math.min(100, (newQty / (item.alert_threshold || 1)) * 100)}%`;
+                            progress.style.background = isOut ? '#ef4444' : isLow ? '#f59e0b' : '#10b981';
+                        }
                     }
-                    const progress = card.querySelector('div[style*="transition: width"]');
-                    if (progress && item) {
-                        progress.style.width = `${Math.min(100, (newQty / (item.alert_threshold * 2)) * 100)}%`;
-                        progress.style.background = isOut ? '#ef4444' : isLow ? '#f59e0b' : '#10b981';
-                    }
+                    console.log('[Inventory Debug] UI update successful');
+                } catch (uiErr) {
+                    console.error('[Inventory Debug] UI update error:', uiErr.message);
+                    console.error('[Inventory Debug] Stack:', uiErr.stack);
                 }
             } else {
                 const err = await res.json().catch(() => ({}));

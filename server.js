@@ -42,7 +42,7 @@ app.use(helmet({
             scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.nonce}'`, "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
             imgSrc: ["'self'", "data:", "https:", "http:", "blob:"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com", "data:"],
-            connectSrc: ["'self'", "http://104.199.235.223", "http://localhost:3000", "https://hotel.cc-house.cc"],
+            connectSrc: ["'self'", "http://104.199.235.223", "http://localhost:3000", "https://hotel.cc-house.cc", "https://cdn.jsdelivr.net"],
             frameSrc: ["'self'"],
             objectSrc: ["'none'"],
             scriptSrcAttr: ["'none'"], // Strict
