@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="庫存管理系統">
+    <title>庫存管理 - 兆基訂房系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            --bg: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-secondary);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .inventory-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-medium);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inventory-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .inventory-card.low-stock {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-confirmed {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-cancelled {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .inventory-qty-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .inventory-qty-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .inventory-qty-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .inventory-qty-input {
+            width: 60px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .progress-container {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .spinner {
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">🏨 兆基訂房系統</a>
+                <ul class="navbar-menu">
+                    <li><a href="/">首頁</a></li>
+                    <li><a href="/hotels.html">飯店列表</a></li>
+                    <li><a href="/admin.html">管理後台</a></li>
+                    <li><a href="/admin/inventory.html" class="active">庫存管理</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Inventory Management -->
+    <section class="section">
+        <div class="container">
+            <div class="header">
+                <div>
+                    <h1 style="margin: 0 0 0.5rem 0;">庫存管理</h1>
+                    <p style="color: var(--text-secondary); margin: 0;">管理飯店用品庫存，即時監控庫存水位</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i> 新增品項
+                </button>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <input type="text" class="search-input" id="searchInput" placeholder="搜尋品項名稱或代碼...">
+                <select class="filter-select" id="statusFilter">
+                    <option value="all">所有狀態</option>
+                    <option value="instock">庫存充足</option>
+                    <option value="low">庫存不足</option>
+                    <option value="out">缺貨</option>
+                </select>
+                <select class="filter-select" id="sortBy">
+                    <option value="name">按名稱排序</option>
+                    <option value="quantity">按數量排序</option>
+                    <option value="status">按狀態排序</option>
+                </select>
+            </div>
+
+            <!-- Inventory Grid -->
+            <div class="inventory-grid" id="inventoryList">
+                <div class="spinner" style="grid-column: 1/-1; margin: 2rem auto;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add/Edit Modal -->
+    <div id="inventoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">新增庫存品項</h2>
+            <form id="inventoryForm">
+                <input type="hidden" id="itemId">
+                <div class="form-group">
+                    <label for="itemName">品項名稱</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemCode">品項代碼</label>
+                    <input type="text" id="itemCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemQuantity">目前數量</label>
+                    <input type="number" id="itemQuantity" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="alertThreshold">警告庫存</label>
+                    <input type="number" id="alertThreshold" min="0" required>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        let inventoryItems = [];
+        let filteredItems = [];
+
+        // Mock data for demonstration
+        const mockInventory = [
+            { id: 1, name: "毛巾", code: "TOWEL001", quantity: 150, alert_threshold: 50 },
+            { id: 2, name: "床單", code: "SHEET001", quantity: 80, alert_threshold: 30 },
+            { id: 3, name: "枕頭", code: "PILLOW001", quantity: 15, alert_threshold: 20 },
+            { id: 4, name: "洗髮精", code: "SHAMPOO001", quantity: 200, alert_threshold: 100 },
+            { id: 5, name: "香皂", code: "SOAP001", quantity: 5, alert_threshold: 25 },
+            { id: 6, name: "拖鞋", code: "SLIPPER001", quantity: 120, alert_threshold: 40 }
+        ];
+
+        async function loadInventory() {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 500));
+            inventoryItems = mockInventory;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const sortBy = document.getElementById('sortBy').value;
+
+            filteredItems = inventoryItems.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
+                                     item.code.toLowerCase().includes(searchTerm);
+                
+                let matchesStatus = true;
+                if (statusFilter === 'instock') {
+                    matchesStatus = item.quantity > item.alert_threshold;
+                } else if (statusFilter === 'low') {
+                    matchesStatus = item.quantity > 0 && item.quantity <= item.alert_threshold;
+                } else if (statusFilter === 'out') {
+                    matchesStatus = item.quantity <= 0;
+                }
+
+                return matchesSearch && matchesStatus;
+            });
+
+            // Sort
+            filteredItems.sort((a, b) => {
+                if (sortBy === 'name') return a.name.localeCompare(b.name);
+                if (sortBy === 'quantity') return b.quantity - a.quantity;
+                if (sortBy === 'status') return a.quantity - b.quantity;
+                return 0;
+            });
+
+            renderInventory(filteredItems);
+        }
+
+        function renderInventory(items) {
+            if (!Array.isArray(items)) return;
+            const container = document.getElementById('inventoryList');
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 6rem; background: white; border-radius: 24px; border: 1px dashed #E2E8F0;">
+                    <div style="font-size: 5rem; margin-bottom: 2rem; opacity: 0.3;">📦</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 800; color: #1E293B;">找不到符合條件的品項</h3>
+                </div>`;
+                return;
+            }
+
+            let html = '';
+            items.forEach(item => {
+                const isOut = item.quantity <= 0;
+                const isLow = !isOut && item.quantity <= item.alert_threshold;
+                const progressPercent = Math.min(100, Math.round((item.quantity / (item.alert_threshold * 2 || 1)) * 100));
+                
+                // 根據狀態定義顏色
+                const statusColor = isOut ? '#EF4444' : (isLow ? '#F59E0B' : '#10B981');
+                const cardBg = isOut ? '#FFF5F5' : (isLow ? '#FFFBEB' : '#FFFFFF');
+
+                html += `
+                <div class="inventory-card ${isLow || isOut ? 'low-stock' : ''}" 
+                     style="background: ${cardBg}; border-top: 5px solid ${statusColor}; transition: transform 0.3s ease;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div style="background: #334155; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 8px;">
+                                <i class="fas fa-barcode"></i> ${item.code || '無代號'}
+                            </div>
+                            <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: #1E293B;">${item.name}</h3>
+                        </div>
+                        <span class="status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}" 
+                              style="box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            ${isOut ? '缺貨' : isLow ? '補貨警告' : '庫存充足'}
+                        </span>
+                    </div>
+
+                    <div style="margin-top: auto;">
+                        <div class="flex justify-between items-center mb-5">
+                            <div class="inventory-qty-control" style="background: #F1F5F9; padding: 6px; border-radius: 14px;">
+                                <button class="inventory-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="-1" style="background: white;"><i class="fas fa-minus"></i></button>
+                                <input type="text" id="inv-qty-${item.id}" class="inventory-qty-input" value="${item.quantity}" readonly 
+                                       style="width: 50px; font-size: 1.2rem; font-weight: 800; color: #1E293B;">
+                                <button class="inventory-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="1" style="background: white;"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div class="flex gap-2">
+                                 <button class="btn btn-outline btn-sm btn-edit-inv" data-id="${item.id}" 
+                                         style="width: 42px; height: 42px; border-radius: 12px; background: white;"><i class="fas fa-pen"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mb-2" style="font-size: 0.8rem; font-weight: 700; color: #64748B;">
+                            <span>庫存水位 (低標: ${item.alert_threshold})</span>
+                            <span style="color: ${statusColor}">${progressPercent}%</span>
+                        </div>
+                        <div class="progress-container" style="height: 10px; border-radius: 10px; background: #E2E8F0; margin: 0; overflow: hidden;">
+                            <div style="width: ${progressPercent}%; height: 100%; border-radius: 10px; background: ${statusColor}; transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+
+            // Add event listeners
+            document.querySelectorAll('.btn-adjust-inv').forEach(btn => {
+                btn.addEventListener('click', adjustQuantity);
+            });
+            document.querySelectorAll('.btn-edit-inv').forEach(btn => {
+                btn.addEventListener('click', editItem);
+            });
+        }
+
+        function adjustQuantity(e) {
+            const btn = e.currentTarget;
+            const id = parseInt(btn.dataset.id);
+            const delta = parseInt(btn.dataset.delta);
+            const item = inventoryItems.find(i => i.id === id);
+            
+            if (item) {
+                item.quantity = Math.max(0, item.quantity + delta);
+                document.getElementById(`inv-qty-${id}`).value = item.quantity;
+                applyFilters();
+            }
+        }
+
+        function editItem(e) {
+            const id = parseInt(e.currentTarget.dataset.id);
+            const item = inventoryItems.find(i => i.id === id);
+            
+            if (item) {
+                document.getElementById('modalTitle').textContent = '編輯庫存品項';
+                document.getElementById('itemId').value = item.id;
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('itemCode').value = item.code;
+                document.getElementById('itemQuantity').value = item.quantity;
+                document.getElementById('alertThreshold').value = item.alert_threshold;
+                document.getElementById('inventoryModal').style.display = 'block';
+            }
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = '新增庫存品項';
+            document.getElementById('inventoryForm').reset();
+            document.getElementById('itemId').value = '';
+            document.getElementById('inventoryModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('inventoryModal').style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        document.getElementById('sortBy').addEventListener('change', applyFilters);
+
+        document.getElementById('inventoryForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('itemId').value;
+            const itemData = {
+                name: document.getElementById('itemName').value,
+                code: document.getElementById('itemCode').value,
+                quantity: parseInt(document.getElementById('itemQuantity').value),
+                alert_threshold: parseInt(document.getElementById('alertThreshold').value)
+            };
+
+            if (id) {
+                // Edit existing item
+                const item = inventoryItems.find(i => i.id === parseInt(id));
+                Object.assign(item, itemData);
+            } else {
+                // Add new item
+                itemData.id = Math.max(...inventoryItems.map(i => i.id)) + 1;
+                inventoryItems.push(itemData);
+            }
+
+            closeModal();
+            applyFilters();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('inventoryModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Load inventory on page load
+        window.addEventListener('DOMContentLoaded', loadInventory);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="完成您的訂房">
+    <title>預訂房間 - 兆基訂房系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">🏨 兆基訂房系統</a>
+                <ul class="navbar-menu">
+                    <li><a href="/">首頁</a></li>
+                    <li><a href="/hotels.html">飯店列表</a></li>
+                    <li><a href="/admin.html">管理後台</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Booking Section -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center mb-3">完成您的預訂</h1>
+
+            <div style="display: grid; grid-template-columns: 1fr 400px; gap: 2rem; align-items: start;">
+                <!-- Booking Form -->
+                <div class="card">
+                    <div class="card-content">
+                        <h2 style="margin-bottom: 2rem;">訂房資訊</h2>
+
+                        <form id="bookingForm">
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div class="form-group">
+                                    <label for="checkIn">入住日期 *</label>
+                                    <input type="date" id="checkIn" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkOut">退房日期 *</label>
+                                    <input type="date" id="checkOut" required>
+                                </div>
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div class="form-group">
+                                    <label for="numRooms">房間數量 *</label>
+                                    <select id="numRooms" required>
+                                        <option value="1">1 間房</option>
+                                        <option value="2">2 間房</option>
+                                        <option value="3">3 間房</option>
+                                        <option value="4">4 間房</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numGuests">房客人數 *</label>
+                                    <select id="numGuests" required>
+                                        <option value="1">1 位</option>
+                                        <option value="2">2 位</option>
+                                        <option value="3">3 位</option>
+                                        <option value="4">4 位</option>
+                                        <option value="5">5 位</option>
+                                        <option value="6">6 位</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h3 style="margin: 2rem 0 1rem;">聯絡資訊</h3>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label for="guestName">姓名 *</label>
+                                <input type="text" id="guestName" placeholder="請輸入您的姓名" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label for="guestEmail">電子郵件 *</label>
+                                <input type="email" id="guestEmail" placeholder="example@email.com" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label for="guestPhone">電話 *</label>
+                                <input type="tel" id="guestPhone" placeholder="+886-912-345-678" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label for="specialRequests">特殊需求（選填）</label>
+                                <textarea id="specialRequests" rows="4" placeholder="例如：需要嬰兒床、無障礙房間等"
+                                    style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-family: inherit;"></textarea>
+                            </div>
+
+                            <div id="availabilityMessage" class="hidden"
+                                style="padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+
+                            <button type="submit" class="btn btn-primary"
+                                style="width: 100%; padding: 1rem; font-size: 1.125rem;" id="submitBtn">
+                                確認預訂
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div style="position: sticky; top: 100px;">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="margin-bottom: 1.5rem;">訂單摘要</h3>
+
+                            <div id="bookingSummary">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden"
+        style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+        <div class="card" style="max-width: 500px; margin: 1rem;">
+            <div class="card-content" style="text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                <h2 style="margin-bottom: 1rem;">預訂成功！</h2>
+                <p style="margin-bottom: 1rem;">您的訂房已確認</p>
+                <div id="bookingReferenceDisplay"
+                    style="background: var(--bg-secondary); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.875rem; margin-bottom: 0.5rem;">訂單編號</p>
+                    <p id="bookingReference" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
+                    </p>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">確認信已發送至您的電子郵件</p>
+                <button class="btn btn-primary" onclick="window.location.href='/'">返回首頁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 兆基訂房系統. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+        let roomData = null;
+        let hotelData = null;
+        let roomId = null;
+        let hotelId = null;
+
+        async function loadBookingPage() {
+            roomId = sessionStorage.getItem('selectedRoom');
+            hotelId = sessionStorage.getItem('selectedHotel');
+
+            if (!roomId || !hotelId) {
+                window.location.href = '/hotels.html';
+                return;
+            }
+
+            // Fetch hotel and room data
+            hotelData = await fetchHotelById(hotelId);
+            if (hotelData && hotelData.rooms) {
+                roomData = hotelData.rooms.find(r => r.id == roomId);
+            }
+
+            if (!roomData) {
+                window.location.href = '/hotels.html';
+                return;
+            }
+
+            updateSummary();
+
+            // Set minimum dates
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkIn').setAttribute('min', today);
+            document.getElementById('checkOut').setAttribute('min', today);
+
+            // Add event listeners
+            document.getElementById('checkIn').addEventListener('change', updateSummary);
+            document.getElementById('checkOut').addEventListener('change', updateSummary);
+            document.getElementById('numRooms').addEventListener('change', updateSummary);
+        }
+
+        function updateSummary() {
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const numRooms = parseInt(document.getElementById('numRooms').value);
+
+            let nights = 0;
+            let totalPrice = 0;
+
+            if (checkIn && checkOut) {
+                nights = calculateNights(checkIn, checkOut);
+                totalPrice = roomData.price_per_night * nights * numRooms;
+
+                // Update check-out minimum
+                const checkInDate = new Date(checkIn);
+                checkInDate.setDate(checkInDate.getDate() + 1);
+                document.getElementById('checkOut').setAttribute('min', checkInDate.toISOString().split('T')[0]);
+            }
+
+            const summaryHtml = `
+                <div style="margin-bottom: 1rem;">
+                    <img src="${roomData.main_image || 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400'}" 
+                         alt="${roomData.room_type}"
+                         style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem;">
+                </div>
+                
+                <h4 style="margin-bottom: 0.5rem;">${hotelData.name}</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">📍 ${hotelData.city}</p>
+                
+                <h4 style="margin-bottom: 0.5rem;">${roomData.room_type}</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">🛏️ ${roomData.bed_type}</p>
+                
+                <div style="border-top: 1px solid var(--bg-secondary); padding-top: 1rem; margin-bottom: 1rem;">
+                    ${checkIn && checkOut ? `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>入住日期</span>
+                            <span style="font-weight: 600;">${formatDate(checkIn)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>退房日期</span>
+                            <span style="font-weight: 600;">${formatDate(checkOut)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>住宿天數</span>
+                            <span style="font-weight: 600;">${nights} 晚</span>
+                        </div>
+                    ` : '<p style="color: var(--text-secondary);">請選擇日期</p>'}
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>房間數量</span>
+                        <span style="font-weight: 600;">${numRooms} 間</span>
+                    </div>
+                </div>
+                
+                <div style="border-top: 2px solid var(--bg-secondary); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>${formatCurrency(roomData.price_per_night)} × ${nights} 晚 × ${numRooms} 間</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <span style="font-size: 1.125rem; font-weight: 600;">總計</span>
+                        <span style="font-size: 1.5rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            ${formatCurrency(totalPrice)}
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('bookingSummary').innerHTML = summaryHtml;
+        }
+
+        document.getElementById('bookingForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const numRooms = parseInt(document.getElementById('numRooms').value);
+            const numGuests = parseInt(document.getElementById('numGuests').value);
+            const guestName = document.getElementById('guestName').value;
+            const guestEmail = document.getElementById('guestEmail').value;
+            const guestPhone = document.getElementById('guestPhone').value;
+            const specialRequests = document.getElementById('specialRequests').value;
+
+            // Check availability first
+            const availability = await checkRoomAvailability(roomId, checkIn, checkOut, numRooms);
+
+            const messageDiv = document.getElementById('availabilityMessage');
+
+            if (!availability.available) {
+                messageDiv.className = '';
+                messageDiv.style.background = '#fee2e2';
+                messageDiv.style.color = '#991b1b';
+                messageDiv.textContent = `抱歉，所選日期僅剩 ${availability.availableRooms} 間房，無法滿足您的需求。`;
+                return;
+            }
+
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '處理中...';
+
+            try {
+                const nights = calculateNights(checkIn, checkOut);
+                const totalPrice = roomData.price_per_night * nights * numRooms;
+
+                const bookingData = {
+                    roomId: parseInt(roomId),
+                    hotelId: parseInt(hotelId),
+                    guestName,
+                    guestEmail,
+                    guestPhone,
+                    checkInDate: checkIn,
+                    checkOutDate: checkOut,
+                    numGuests,
+                    numRooms,
+                    specialRequests: specialRequests || null
+                };
+
+                const result = await createBooking(bookingData);
+
+                // Show success modal
+                document.getElementById('bookingReference').textContent = result.bookingReference;
+                document.getElementById('successModal').classList.remove('hidden');
+
+            } catch (error) {
+                messageDiv.className = '';
+                messageDiv.style.background = '#fee2e2';
+                messageDiv.style.color = '#991b1b';
+                messageDiv.textContent = '預訂失敗，請稍後再試。';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '確認預訂';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', loadBookingPage);
+    </script>
+</body>
+
+</html>

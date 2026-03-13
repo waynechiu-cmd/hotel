@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>營運數據儀表板 - 兆基訂房系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --bg: #F9FAFB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #111827;
+            color: white;
+            height: 100vh;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #374151;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: #6B7280;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>CC House BI</h2>
+        <nav>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 1rem;"><a href="/admin.html" style="color: #9CA3AF; text-decoration: none;">🏠
+                        返回管理首頁</a></li>
+                <li style="margin-bottom: 1rem; color: white; font-weight: 600;">📊 數據儀表板</li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header style="margin-bottom: 2rem;">
+            <h1>營運數據分析 (Business Intelligence)</h1>
+            <p style="color: #6B7280;">即時追蹤您的飯店營運績效</p>
+        </header>
+
+        <div class="grid">
+            <!-- Revenue Chart -->
+            <div class="card">
+                <h3>營收趨勢 (Revenue Trends)</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <!-- Occupancy Chart -->
+            <div class="card">
+                <h3>房型佔有率 (Occupancy by Room Type)</h3>
+                <canvas id="occupancyChart"></canvas>
+            </div>
+
+            <!-- Staff Performance -->
+            <div class="card">
+                <h3>房務效率 (Staff Performance - Avg Resolution)</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="card stat-card">
+                <div class="stat-value" id="totalBookings">--</div>
+                <div class="stat-label">本月總訂單量</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadDashboard() {
+            const token = localStorage.getItem('authToken') || 'dev-admin-token';
+
+            try {
+                // 1. Fetch Revenue
+                const revRes = await fetch('/api/analytics/revenue', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const revenueData = await revRes.json();
+                renderRevenueChart(revenueData);
+
+                // 2. Fetch Occupancy
+                const occRes = await fetch('/api/analytics/occupancy', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const occupancyData = await occRes.json();
+                renderOccupancyChart(occupancyData);
+
+                // 3. Fetch Performance
+                const perfRes = await fetch('/api/analytics/performance', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const performanceData = await perfRes.json();
+                renderPerformanceChart(performanceData);
+
+                // Set quick stats
+                document.getElementById('totalBookings').innerText = revenueData.reduce((acc, curr) => acc + curr.total_bookings, 0);
+
+            } catch (err) {
+                console.error('Failed to load dashboard:', err);
+            }
+        }
+
+        function renderRevenueChart(data) {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.month).reverse(),
+                    datasets: [{
+                        label: '月營收 (NT$)',
+                        data: data.map(d => d.total_revenue).reverse(),
+                        borderColor: '#4F46E5',
+                        tension: 0.1,
+                        fill: true,
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)'
+                    }]
+                }
+            });
+        }
+
+        function renderOccupancyChart(data) {
+            const ctx = document.getElementById('occupancyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(d => d.room_type),
+                    datasets: [{
+                        data: data.map(d => d.bookings_count),
+                        backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#EF4444']
+                    }]
+                }
+            });
+        }
+
+        function renderPerformanceChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.staff_name),
+                    datasets: [{
+                        label: '平均處理時數 (小時)',
+                        data: data.map(d => d.avg_resolution_hours),
+                        backgroundColor: '#10B981'
+                    }]
+                }
+            });
+        }
+
+        loadDashboard();
+    </script>
+</body>
+
+</html>

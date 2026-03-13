@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="尋找並預訂您理想的飯店 - 最佳價格保證">
+    <title>飯店訂房平台 - 找到您的完美住宿</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">🏨 兆基訂房系統</a>
+                <ul class="navbar-menu">
+                    <li><a href="/">首頁</a></li>
+                    <li><a href="/hotels.html">飯店列表</a></li>
+                    <li><a href="/admin.html">管理後台</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>探索世界，從這裡開始</h1>
+                <p>尋找完美的住宿體驗，享受難忘的旅程</p>
+
+                <!-- Search Box -->
+                <div class="search-box">
+                    <form class="search-form" id="searchForm">
+                        <div class="form-group">
+                            <label for="destination">專案查詢</label>
+                            <select id="destination">
+                                <option value="光寶科宿舍專案">光寶科宿舍專案</option>
+                                <option value="台北">台北</option>
+                                <option value="台中">台中</option>
+                                <option value="高雄">高雄</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkIn">入住日期</label>
+                            <input type="date" id="checkIn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkOut">退房日期</label>
+                            <input type="date" id="checkOut" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">房客人數</label>
+                            <select id="guests">
+                                <option value="1">1 位房客</option>
+                                <option value="2" selected>2 位房客</option>
+                                <option value="3">3 位房客</option>
+                                <option value="4">4 位房客</option>
+                                <option value="5">5 位房客</option>
+                                <option value="6">6 位房客</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary">🔍 搜尋</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color: white;">為什麼選擇我們？</h2>
+                <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">提供最優質的訂房體驗</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card" style="text-align: center;">
+                    <div class="card-content">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                        <h3>最佳價格保證</h3>
+                        <p>我們保證提供市場上最優惠的價格，讓您的旅行更超值</p>
+                    </div>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div class="card-content">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                        <h3>即時確認</h3>
+                        <p>立即確認您的訂房，無需等待，讓旅行計劃更輕鬆</p>
+                    </div>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div class="card-content">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                        <h3>安全可靠</h3>
+                        <p>採用業界領先的安全技術，保護您的個人資訊和交易安全</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>關於我們</h4>
+                    <ul>
+                        <li><a href="#">公司簡介</a></li>
+                        <li><a href="#">聯絡我們</a></li>
+                        <li><a href="#">職涯機會</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>服務項目</h4>
+                    <ul>
+                        <li><a href="#">飯店預訂</a></li>
+                        <li><a href="#">企業方案</a></li>
+                        <li><a href="#">合作夥伴</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>客戶服務</h4>
+                    <ul>
+                        <li><a href="#">常見問題</a></li>
+                        <li><a href="#">訂房政策</a></li>
+                        <li><a href="#">退款政策</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>聯絡資訊</h4>
+                    <ul>
+                        <li>📧 info@cc-house.cc</li>
+                        <li>📞 +886-2-1234-5678</li>
+                        <li>📍 台北市信義區</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 兆基訂房系統. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // Set minimum dates for check-in and check-out
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkIn').setAttribute('min', today);
+        document.getElementById('checkOut').setAttribute('min', today);
+
+        // Update check-out minimum when check-in changes
+        document.getElementById('checkIn').addEventListener('change', function () {
+            const checkInDate = new Date(this.value);
+            checkInDate.setDate(checkInDate.getDate() + 1);
+            document.getElementById('checkOut').setAttribute('min', checkInDate.toISOString().split('T')[0]);
+        });
+
+
+        // Handle search form submission
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const destination = document.getElementById('destination').value;
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const guests = document.getElementById('guests').value;
+
+            // Store search params in sessionStorage
+            sessionStorage.setItem('searchParams', JSON.stringify({
+                destination, checkIn, checkOut, guests
+            }));
+
+            // Redirect to hotels page
+            window.location.href = '/hotels.html';
+        });
+    </script>
+</body>
+
+</html>

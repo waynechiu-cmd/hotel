@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="管理後台">
+    <title>管理後台 - 兆基訂房系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-completed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">🏨 兆基訂房系統</a>
+                <ul class="navbar-menu">
+                    <li><a href="/">首頁</a></li>
+                    <li><a href="/hotels.html">飯店列表</a></li>
+                    <li><a href="/admin.html">管理後台</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <section class="section">
+        <div class="container-wide">
+            <h1 style="margin-bottom: 2rem;">管理後台</h1>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-4" style="margin-bottom: 3rem;">
+                <div class="card">
+                    <div class="card-content" style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📊</div>
+                        <h3 id="totalBookings">0</h3>
+                        <p style="color: var(--text-secondary);">總訂單數</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content" style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✅</div>
+                        <h3 id="confirmedBookings">0</h3>
+                        <p style="color: var(--text-secondary);">已確認訂單</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content" style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⏳</div>
+                        <h3 id="pendingBookings">0</h3>
+                        <p style="color: var(--text-secondary);">待處理訂單</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content" style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰</div>
+                        <h3 id="totalRevenue">NT$ 0</h3>
+                        <p style="color: var(--text-secondary);">總營收</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('all')">所有訂單</button>
+                <button class="tab-btn" onclick="switchTab('pending')">待處理</button>
+                <button class="tab-btn" onclick="switchTab('confirmed')">已確認</button>
+                <button class="tab-btn" onclick="switchTab('cancelled')">已取消</button>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="card">
+                <div class="card-content" style="padding: 0;">
+                    <div id="bookingsTable">
+                        <div class="spinner" style="margin: 2rem auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 兆基訂房系統. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+        let allBookings = [];
+        let currentFilter = 'all';
+
+        async function loadDashboard() {
+            allBookings = await fetchAllBookings();
+            updateStats();
+            renderBookingsTable();
+        }
+
+        function updateStats() {
+            const total = allBookings.length;
+            const confirmed = allBookings.filter(b => b.status === 'confirmed').length;
+            const pending = allBookings.filter(b => b.status === 'pending').length;
+            const revenue = allBookings
+                .filter(b => b.status === 'confirmed' || b.status === 'completed')
+                .reduce((sum, b) => sum + parseFloat(b.total_price), 0);
+
+            document.getElementById('totalBookings').textContent = total;
+            document.getElementById('confirmedBookings').textContent = confirmed;
+            document.getElementById('pendingBookings').textContent = pending;
+            document.getElementById('totalRevenue').textContent = formatCurrency(revenue);
+        }
+
+        function switchTab(filter) {
+            currentFilter = filter;
+
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderBookingsTable();
+        }
+
+        function renderBookingsTable() {
+            const filteredBookings = currentFilter === 'all'
+                ? allBookings
+                : allBookings.filter(b => b.status === currentFilter);
+
+            if (filteredBookings.length === 0) {
+                document.getElementById('bookingsTable').innerHTML = `
+                    <p style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        沒有${currentFilter === 'all' ? '' : getStatusText(currentFilter)}訂單
+                    </p>
+                `;
+                return;
+            }
+
+            const tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>訂單編號</th>
+                            <th>飯店</th>
+                            <th>房型</th>
+                            <th>客人</th>
+                            <th>入住日期</th>
+                            <th>退房日期</th>
+                            <th>金額</th>
+                            <th>狀態</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filteredBookings.map(booking => `
+                            <tr>
+                                <td><strong>${booking.booking_reference}</strong></td>
+                                <td>${booking.hotel_name}</td>
+                                <td>${booking.room_type}</td>
+                                <td>
+                                    ${booking.guest_name}<br>
+                                    <small style="color: var(--text-secondary);">${booking.guest_email}</small>
+                                </td>
+                                <td>${formatDate(booking.check_in_date)}</td>
+                                <td>${formatDate(booking.check_out_date)}</td>
+                                <td><strong>${formatCurrency(booking.total_price)}</strong></td>
+                                <td>
+                                    <span class="status-badge status-${booking.status}">
+                                        ${getStatusText(booking.status)}
+                                    </span>
+                                </td>
+                                <td>
+                                    ${booking.status === 'pending' ? `
+                                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;" onclick="updateStatus(${booking.id}, 'confirmed')">
+                                            確認
+                                        </button>
+                                    ` : ''}
+                                    ${booking.status === 'confirmed' ? `
+                                        <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;" onclick="updateStatus(${booking.id}, 'cancelled')">
+                                            取消
+                                        </button>
+                                    ` : ''}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('bookingsTable').innerHTML = tableHtml;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '待處理',
+                'confirmed': '已確認',
+                'cancelled': '已取消',
+                'completed': '已完成'
+            };
+            return statusMap[status] || status;
+        }
+
+        async function updateStatus(bookingId, newStatus) {
+            try {
+                await updateBookingStatus(bookingId, newStatus);
+                await loadDashboard();
+                alert('訂單狀態已更新');
+            } catch (error) {
+                alert('更新失敗，請稍後再試');
+            }
+        }
+
+        window.switchTab = switchTab;
+        window.updateStatus = updateStatus;
+        window.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+
+</html>
