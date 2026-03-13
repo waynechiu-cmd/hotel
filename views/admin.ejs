@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
     <title>管理員後台 - 兆基屋管訂房系統</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/style-utilities.css">
     <link rel="stylesheet" href="/css/security-patch.css">
@@ -27,19 +30,25 @@
     <!-- Login Overlay -->
     <div id="loginOverlay">
         <div class="login-card">
-            <div style="text-align: center; margin-bottom: 1.5rem;"><img src="/images/logo.jpg" alt="Logo" style="height: 60px; width: auto; border-radius: 5px;"></div>
-            <h2 class="text-center mb-4">管理員登入</h2>
+            <div style="margin-bottom: 2.5rem;">
+                <img src="/images/logo.jpg" alt="Logo"
+                    style="height: 64px; width: auto; border-radius: 12px; margin-bottom: 1rem;">
+                <h2 style="margin: 0; font-family: 'Outfit', sans-serif;">管理員系統</h2>
+                <p style="color: #64748b; margin-top: 0.5rem;">請輸入您的管理帳號密碼</p>
+            </div>
             <form id="loginForm">
-                <div class="form-group mb-4">
-                    <label>帳號</label>
-                    <input type="text" id="username" placeholder="請輸入帳號" required>
+                <div class="form-group">
+                    <label for="username">電子郵件 / 帳號</label>
+                    <input type="text" id="username" class="form-input" placeholder="example@cc-house.cc" required>
                 </div>
-                <div class="form-group mb-4">
-                    <label>密碼</label>
-                    <input type="password" id="password" placeholder="請輸入密碼" required>
+                <div class="form-group">
+                    <label for="password">密碼</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-full mb-2">登入系統</button>
-                <button id="btnLoginCancel" type="button" class="btn btn-outline w-full">取消</button>
+                <button type="submit" class="btn btn-primary w-full" style="margin-top: 1rem;">
+                    <span>登入系統</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
                 <p id="loginError" class="text-danger text-center mt-4 hidden"></p>
             </form>
         </div>
@@ -105,38 +114,95 @@
     </div>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-        <a href="/" class="sidebar-brand" style="display: flex; align-items: center; gap: 0.75rem;"><img src="/images/logo.jpg" alt="Logo" style="height: 32px; width: auto; border-radius: 4px;"><span>兆基屋管管理系統</span></a>
+    <nav class="sidebar" id="sidebar">
+        <a href="/" class="sidebar-brand">
+            <img src="/images/logo.jpg" alt="Logo" style="height: 36px; width: auto; border-radius: 8px;">
+            <span style="font-family: 'Outfit', sans-serif;">兆基屋管</span>
+        </a>
+
         <ul class="nav-links">
-            <li><a href="#" id="linkBookings" class="active">📑 訂單管理</a></li>
-            <li><a href="#" id="linkBI" style="display: none;">📊 營運數據儀表板</a></li>
-            <li><a href="#" id="linkStaff" style="display: none;">📋 房務工單系統</a></li>
-            <li><a href="#" id="linkRooms" style="display: none;">🏨 房型與房間管理</a></li>
-            <li><a href="#" id="linkWorkOrders" style="display: none;">📋 派工管理</a></li>
-            <li><a href="#" id="linkInventory" style="display: none;">📦 庫存管理</a></li>
-            <li><a href="#" id="linkUsers" style="display: none;">👥 帳號權限管理</a></li>
+            <li><a href="#" id="linkBookings" class="active"><i class="fas fa-calendar-check"></i> <span>訂單管理</span></a>
+            </li>
+            <li><a href="#" id="linkBI" style="display: none;"><i class="fas fa-chart-pie"></i> <span>營運報表</span></a>
+            </li>
+            <li><a href="#" id="linkStaff" style="display: none;"><i class="fas fa-clipboard-check"></i>
+                    <span>房務工單</span></a></li>
+            <li><a href="#" id="linkRooms" style="display: none;"><i class="fas fa-hotel"></i> <span>房型管理</span></a>
+            </li>
+            <li><a href="#" id="linkWorkOrders" style="display: none;"><i class="fas fa-tools"></i>
+                    <span>派工系統</span></a></li>
+            <li><a href="#" id="linkInventory" style="display: none;"><i class="fas fa-boxes-stacked"></i>
+                    <span>庫存資產</span></a></li>
+            <li><a href="#" id="linkUsers" style="display: none;"><i class="fas fa-user-shield"></i>
+                    <span>權限設定</span></a></li>
         </ul>
-        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #374151;">
-            <p id="userInfo" style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 0.5rem;"></p>
-            <a href="#" id="btnLogout" style="color: #ef4444; text-decoration: none; font-size: 0.875rem;">登出</a>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="userInitial">A</div>
+                <div style="flex: 1; min-width: 0;">
+                    <div id="footerUserLabel"
+                        style="font-weight: 700; font-size: 0.9375rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
+                        Administrator</div>
+                    <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">系統管理員</div>
+                </div>
+            </div>
+            <a href="#" id="btnLogout"
+                style="color: #fca5a5; text-decoration: none; font-size: 0.875rem; display: flex; align-items: center; gap: 0.625rem; padding: 0.5rem; transition: color 0.2s;">
+                <i class="fas fa-sign-out-alt"></i> 登出帳號
+            </a>
         </div>
-    </aside>
+    </nav>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <div class="main-content" id="mainContent">
         <!-- Bookings Tab -->
         <div id="tabBookings" class="tab-content active">
-            <header
-                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <h1>訂單管理</h1>
-                    <p style="color: #6b7280;">查看並管理所有預訂資訊</p>
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>訂單管理總覽</h1>
+                    <p>查看並管理所有住客與房間預訂資訊</p>
                 </div>
-                <!-- Search/Filter could go here if needed -->
-            </header>
+                <div class="flex items-center space-x-2">
+                    <button class="btn btn-outline btn-sm"><i class="fas fa-file-export"></i> 匯出報表</button>
+                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> 新增預訂</button>
+                </div>
+            </div>
 
-            <div id="bookingsList" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                <div class="spinner"></div>
+            <div class="stat-grid" id="bookingSummaryStats">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--primary-soft); color: var(--primary-color);"><i
+                                class="fas fa-calendar-alt"></i></div>
+                        <span class="status-badge" style="background: #F1F5F9; color: #475569;">TOTAL</span>
+                    </div>
+                    <span class="stat-label">本月總訂單</span>
+                    <span class="stat-value" id="countTotalBookings">--</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: #FFFBEB; color: #F59E0B;"><i class="fas fa-clock"></i>
+                        </div>
+                        <span class="status-badge status-pending">PENDING</span>
+                    </div>
+                    <span class="stat-label">待確認訂單</span>
+                    <span class="stat-value" id="countPendingBookings">--</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: #ECFDF5; color: #10B981;"><i
+                                class="fas fa-check-circle"></i></div>
+                        <span class="status-badge status-confirmed">CONFIRMED</span>
+                    </div>
+                    <span class="stat-label">已確認訂單</span>
+                    <span class="stat-value" id="countConfirmedBookings">--</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div id="bookingsList">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </div>
 
@@ -172,60 +238,113 @@
         </div>
 
         <!-- Work Orders Tab -->
-        <div id="tabWorkOrders" class="tab-content">
-            <header
-                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <h1>派工管理</h1>
-                    <p style="color: #6b7280;">管理並追蹤房務派工、設施維修工單</p>
+        <div id="tabWorkOrders" class="tab-content" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>派工任務系統</h1>
+                    <p>飯店清潔、維護與臨時需求的調度中心</p>
                 </div>
-                <button id="btnAddNewWorkOrder" class="btn btn-primary">+ 新增工單</button>
-            </header>
+                <button id="btnAddNewWorkOrder" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>
+                    建立新派工</button>
+            </div>
 
-            <div id="workOrdersList" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                <div class="spinner"></div>
+            <div class="stat-grid mb-8">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-dark); color: white;"><i
+                                class="fas fa-ticket-alt"></i></div>
+                        <span class="status-badge" style="background: #F1F5F9; color: #475569;">TOTAL</span>
+                    </div>
+                    <span class="stat-label">累積工單數</span>
+                    <span class="stat-value" id="countTotalWO">--</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-red); color: white;"><i
+                                class="fas fa-hourglass-start"></i></div>
+                        <span class="status-badge status-pending">PENDING</span>
+                    </div>
+                    <span class="stat-label">待處理任務</span>
+                    <span class="stat-value" id="countPendingWO" style="color: var(--accent-red);">--</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-blue); color: white;"><i
+                                class="fas fa-spinner"></i></div>
+                        <span class="status-badge" style="background: #E0E7FF; color: #1E40AF;">ACTIVE</span>
+                    </div>
+                    <span class="stat-label">正在執行中</span>
+                    <span class="stat-value" id="countProgressWO" style="color: var(--accent-blue);">--</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div id="workOrdersList">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </div>
 
         <!-- Inventory Tab -->
         <div id="tabInventory" class="tab-content">
-            <header
-                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <h1 style="font-size: 1.875rem; font-weight: 800; color: #111827; margin: 0;">庫存管理中心</h1>
-                    <p style="color: #6b7280; margin-top: 0.25rem;">即時監控備品數量與低水位預警系統</p>
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>庫存管理中心</h1>
+                    <p>即時監控備品數量與低水位預警系統</p>
                 </div>
-                <button id="btnAddNewInventory" class="btn btn-primary"
-                    style="padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span>+ 新增庫存品項</span>
+                <button id="btnAddNewInventory" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    <span>新增庫存品項</span>
                 </button>
-            </header>
+            </div>
 
             <!-- Summary Stats -->
-            <div class="inv-summary-grid" id="invSummaryStats">
-                <div class="inv-stat-card">
-                    <span class="inv-stat-label">總品項數量</span>
-                    <span class="inv-stat-value" id="invTotalCount">--</span>
+            <div class="stat-grid" id="invSummaryStats">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-dark); color: white;"><i
+                                class="fas fa-cubes"></i></div>
+                        <span class="status-badge" style="background: #F1F5F9; color: #475569;">CATALOG</span>
+                    </div>
+                    <span class="stat-label">品項總數</span>
+                    <span class="stat-value" id="invTotalCount">--</span>
                 </div>
-                <div class="inv-stat-card" style="border-left: 4px solid #ef4444;">
-                    <span class="inv-stat-label">低水位告警</span>
-                    <span class="inv-stat-value" id="invLowCount" style="color: #ef4444;">--</span>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-red); color: white;"><i
+                                class="fas fa-arrow-down-short-wide"></i></div>
+                        <span class="status-badge" style="background: #FEF2F2; color: #EF4444;">LOW STOCK</span>
+                    </div>
+                    <span class="stat-label">水位過低</span>
+                    <span class="stat-value" id="invLowCount" style="color: var(--accent-red);">--</span>
                 </div>
-                <div class="inv-stat-card" style="border-left: 4px solid #111827;">
-                    <span class="inv-stat-label">缺貨品項</span>
-                    <span class="inv-stat-value" id="invOutCount" style="color: #111827;">--</span>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: #1E293B; color: white;"><i
+                                class="fas fa-circle-exclamation"></i></div>
+                        <span class="status-badge" style="background: #E2E8F0; color: #1E293B;">OUT</span>
+                    </div>
+                    <span class="stat-label">完全缺貨</span>
+                    <span class="stat-value" id="invOutCount" style="color: #1E293B;">--</span>
                 </div>
             </div>
 
             <!-- Controls Row -->
             <div
-                style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                <div class="inv-search-container">
-                    <span class="inv-search-icon">🔍</span>
-                    <input type="text" id="invSearchInput" class="inv-search-input" placeholder="搜尋品項名稱或 SKU...">
+                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+                <div
+                    style="flex: 1; min-width: 320px; position: relative; box-shadow: var(--shadow-sm); border-radius: 16px;">
+                    <i class="fas fa-search"
+                        style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem;"></i>
+                    <input type="text" id="invSearchInput" class="form-input" placeholder="鍵入品項名稱或 SKU 快速檢索..."
+                        style="padding-left: 3rem; height: 52px; border-radius: 16px; border: 1px solid var(--border-color); font-size: 0.9375rem; background: white;">
                 </div>
-                <div style="font-size: 0.875rem; color: #6b7280;">
-                    最後更新: <span id="invLastUpdate">剛剛</span>
+                <div class="card"
+                    style="padding: 0.75rem 1.5rem; border-radius: 14px; display: flex; align-items: center; gap: 8px; font-size: 0.875rem; color: #64748b; font-weight: 600; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); background: white;">
+                    <div
+                        style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: pulse 2s infinite;">
+                    </div>
+                    即時對帳中: <span id="invLastUpdate" style="color: var(--text-main); font-weight: 700;">剛剛</span>
                 </div>
             </div>
 
@@ -235,70 +354,107 @@
         </div>
 
         <!-- BI Dashboard Tab -->
-        <div id="tabBIDashboard" class="tab-content">
-            <header style="margin-bottom: 2rem;">
-                <h1>營運數據儀表板</h1>
-                <p style="color: #6b7280;">核心指標監控與庫存告警系統</p>
-            </header>
-
-            <div class="summary-grid">
-                <div class="stat-card">
-                    <span class="stat-label">當前入住率 (Occupancy)</span>
-                    <div class="stat-value" id="occRateText">--%</div>
-                    <div style="font-size: 0.75rem; color: #9CA3AF;" id="occCountText">0/0 房間</div>
-                    <div class="progress-container">
-                        <div id="occRateBar" class="progress-bar" style="width: 0%; background: #4F46E5;"></div>
-                    </div>
+        <div id="tabBIDashboard" class="tab-content" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>營運數據分析</h1>
+                    <p>核心指標監控與趨勢告警系統</p>
                 </div>
-
-                <div class="stat-card">
-                    <span class="stat-label">工單完成率 (Resolution Rate)</span>
-                    <div class="stat-value" id="woRateText">--%</div>
-                    <div style="font-size: 0.75rem; color: #9CA3AF;" id="woCountText">0/0 任務</div>
-                    <div class="progress-container">
-                        <div id="woRateBar" class="progress-bar" style="width: 0%; background: #10B981;"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <span class="stat-label">低庫存項目數</span>
-                    <div class="stat-value" id="invAlertCount" style="color: #F59E0B;">--</div>
-                    <div style="font-size: 0.75rem; color: #9CA3AF;">需補貨或即將用罄</div>
+                <div class="flex items-center space-x-2">
+                    <button class="btn btn-outline btn-sm" onclick="loadBIDashboard()"><i class="fas fa-sync-alt"></i>
+                        刷新數據</button>
+                    <select class="form-input btn-sm" style="width: auto; height: 38px;">
+                        <option>最近 7 天</option>
+                        <option>最近 30 天</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="bi-grid">
-                <!-- Inventory Alerts -->
-                <div class="chart-card">
-                    <h3>📦 庫存告警明細</h3>
-                    <div id="inventoryAlertList" class="inventory-list">
-                        <div style="text-align: center; padding: 2rem; color: #9CA3AF;">載入中...</div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-blue); color: white;"><i
+                                class="fas fa-door-open"></i></div>
+                        <span id="occCountText" style="font-size: 11px; font-weight: 700; color: #4F46E5;">0/0
+                            ROOMS</span>
+                    </div>
+                    <span class="stat-label">當前入住率</span>
+                    <div class="stat-value" id="occRateText">--%</div>
+                    <div class="progress-container" style="margin-top: 1rem;">
+                        <div id="occRateBar" class="progress-bar" style="width: 0%; background: var(--grad-blue);">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Occupancy Chart -->
-                <div class="chart-card">
-                    <h3>房型入住分布 (Distribution)</h3>
-                    <canvas id="occupancyChart" style="max-height: 250px;"></canvas>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-green); color: white;"><i
+                                class="fas fa-list-check"></i></div>
+                        <span id="woCountText" style="font-size: 11px; font-weight: 700; color: #10B981;">0/0
+                            TASKS</span>
+                    </div>
+                    <span class="stat-label">工單結案率</span>
+                    <div class="stat-value" id="woRateText">--%</div>
+                    <div class="progress-container" style="margin-top: 1rem;">
+                        <div id="woRateBar" class="progress-bar" style="width: 0%; background: var(--grad-green);">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Staff Performance -->
-                <div class="chart-card" style="grid-column: span 2;">
-                    <h3>房務效率 (平均處理時數)</h3>
-                    <canvas id="performanceChart" style="max-height: 300px;"></canvas>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--grad-red); color: white;"><i
+                                class="fas fa-triangle-exclamation"></i></div>
+                        <span class="status-badge" style="background: #FEF2F2; color: #EF4444;">ALERT</span>
+                    </div>
+                    <span class="stat-label">待處理告警項目</span>
+                    <div class="stat-value" id="invAlertCount" style="color: var(--accent-red);">--</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem;">需補貨品項數量</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie" style="color: var(--accent-blue);"></i> 房型入住分布</h3>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="occupancyChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-bar" style="color: var(--primary-color);"></i> 房務效率 (平均處理時數)</h3>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card mt-6">
+                <h3><i class="fas fa-boxes" style="color: var(--accent-red);"></i> 庫存告警明細</h3>
+                <div id="inventoryAlertList" class="inventory-list">
+                    <div style="text-align: center; padding: 3rem; color: #9CA3AF;">
+                        <div class="spinner"></div>
+                        <p class="mt-4">正在分析庫存水位...</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Staff Work Orders Tab -->
-        <div id="tabStaff" class="tab-content">
-            <header style="margin-bottom: 2rem;">
-                <h1>房務工單系統</h1>
-                <p style="color: #6b7280;">處理指派給您的工作任務</p>
-            </header>
+        <div id="tabStaff" class="tab-content" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>房務執行中心</h1>
+                    <p>查看並執行指派給您的清潔與維修任務</p>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="loadStaffTasks()"><i class="fas fa-sync-alt"></i>
+                    刷新任務</button>
+            </div>
 
-            <div id="staffTasksContainer">
-                <div style="text-align: center; color: #6B7280; margin-top: 2rem;">載入中...</div>
+            <div id="staffTasksContainer" class="room-type-grid">
+                <div style="grid-column: 1/-1; text-align: center; padding: 5rem; color: #9CA3AF;">
+                    <div class="spinner"></div>
+                    <p class="mt-4">正在取得派工單...</p>
+                </div>
             </div>
         </div>
 
@@ -590,1143 +746,1310 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
+</html>
 <script nonce="<%= nonce %>">
-console.log('Admin Core Loaded');
-let currentUser = null;
-let token = sessionStorage.getItem('adminToken');
+    console.log('Admin Core Loaded V2');
+    let currentUser = null;
+    let token = sessionStorage.getItem('adminToken');
 
-// Initial Auth Check
-if (token) {
-    checkAuth();
-}
-
-async function checkAuth() {
-    try {
-        console.log('[Auth-Debug] Starting checkAuth...');
-        const overlay = document.getElementById('loginOverlay');
-        const storedUser = sessionStorage.getItem('adminUser');
-        console.log('[Auth-Debug] storedUser type:', typeof storedUser, 'length:', storedUser ? storedUser.length : 0);
-        currentUser = JSON.parse(storedUser);
-        if (!currentUser) throw new Error('No user data');
-
-        console.log('[Auth-Debug] currentUser:', currentUser.email);
-        overlay.classList.add('hidden');
-        updateUIByPermissions();
-        console.log('[Auth-Debug] Loading bookings...');
-        await loadBookings();
-    } catch (err) {
-        console.error('[Auth-Debug] Auth check/init failed:', err);
-        const overlay = document.getElementById('loginOverlay');
-        if (overlay) overlay.classList.remove('hidden');
-        sessionStorage.removeItem('adminToken');
+    // Initial Auth Check
+    if (token) {
+        checkAuth();
     }
-}
 
-function updateUIByPermissions() {
-    if (!currentUser) return;
-    document.getElementById('userInfo').innerText = `登入者: ${currentUser.fullName}`;
+    async function checkAuth() {
+        try {
+            console.log('[Auth-Debug] Starting checkAuth...');
+            const overlay = document.getElementById('loginOverlay');
+            const storedUser = sessionStorage.getItem('adminUser');
+            console.log('[Auth-Debug] storedUser type:', typeof storedUser, 'length:', storedUser ? storedUser.length : 0);
+            currentUser = JSON.parse(storedUser);
+            if (!currentUser) throw new Error('No user data');
 
-    const perms = currentUser.permissions || [];
-    const role = currentUser.role;
-
-    // Default hidden
-    const links = ['linkBI', 'linkStaff', 'linkUsers', 'linkRooms', 'linkWorkOrders', 'linkInventory', 'linkBookings'];
-    links.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.classList.add('hidden');
-            el.classList.remove('flex');
+            console.log('[Auth-Debug] currentUser:', currentUser.email);
+            overlay.classList.add('hidden');
+            updateUIByPermissions();
+            console.log('[Auth-Debug] Loading bookings...');
+            await loadBookings();
+        } catch (err) {
+            console.error('[Auth-Debug] Auth check/init failed:', err);
+            const overlay = document.getElementById('loginOverlay');
+            if (overlay) overlay.classList.remove('hidden');
+            sessionStorage.removeItem('adminToken');
         }
-    });
+    }
 
-    // Admin always sees everything
-    if (role === 'admin' || currentUser.email === 'cch' || currentUser.email === 'cch@cc-house.cc') {
+    function updateUIByPermissions() {
+        if (!currentUser) return;
+        document.getElementById('footerUserLabel').innerText = currentUser.fullName;
+        if (document.getElementById('userInitial')) {
+            document.getElementById('userInitial').innerText = currentUser.fullName[0].toUpperCase();
+        }
+
+        const perms = currentUser.permissions || [];
+        const role = currentUser.role;
+
+        // Default hidden
+        const links = ['linkBI', 'linkStaff', 'linkUsers', 'linkRooms', 'linkWorkOrders', 'linkInventory', 'linkBookings'];
         links.forEach(id => {
             const el = document.getElementById(id);
             if (el) {
-                el.classList.remove('hidden');
-                el.classList.add('flex');
+                el.classList.add('hidden');
+                el.classList.remove('flex'); // Ensure flex is removed if it was added
             }
         });
-        return;
-    }
 
-    // Show base on strict perms check
-    if (perms.includes('bi_dashboard')) {
-        const el = document.getElementById('linkBI');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('staff_pwa')) {
-        const el = document.getElementById('linkStaff');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('admin_bookings')) {
-        const el = document.getElementById('linkBookings');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('admin_rooms')) {
-        const el = document.getElementById('linkRooms');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('admin_work_orders')) {
-        const el = document.getElementById('linkWorkOrders');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('admin_inventory')) {
-        const el = document.getElementById('linkInventory');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-    if (perms.includes('admin_users')) {
-        const el = document.getElementById('linkUsers');
-        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-    }
-
-    // Managers as a fallback for missing perms (optional, but per user request "沒權限的使用者左側選單會完全看不到" we should be strict)
-    // If the user wants strict filtering, we don't grant anything else by role alone.
-}
-
-// Login Handler
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.disabled = true;
-    btn.innerText = '驗證中...';
-
-    try {
-        const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value
-            })
-        });
-
-        console.log('[Login-Debug] res.status:', res.status);
-        const data = await res.json();
-        console.log('[Login-Debug] data received:', data);
-        if (res.ok) {
-            console.log('[Login-Debug] Success, storing tokens...');
-            sessionStorage.setItem('adminToken', data.token);
-            sessionStorage.setItem('adminUser', JSON.stringify(data.user));
-            token = data.token;
-            console.log('[Login-Debug] Calling checkAuth...');
-            await checkAuth();
-        } else {
-            console.log('[Login-Debug] Login failed:', data.error);
-            const errorEl = document.getElementById('loginError');
-            errorEl.innerText = data.error || '登入失敗';
-            errorEl.classList.remove('hidden');
-            errorEl.style.display = 'block'; // Fallback
+        // Admin always sees everything
+        if (role === 'admin' || currentUser.email === 'cch' || currentUser.email === 'cch@cc-house.cc') {
+            links.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                }
+            });
+            return;
         }
-    } catch (err) {
-        alert('登入失敗，伺服器連線問題');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = '登入系統';
+
+        // Show base on strict perms check
+        if (perms.includes('bi_dashboard')) {
+            const el = document.getElementById('linkBI');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('staff_pwa')) {
+            const el = document.getElementById('linkStaff');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('admin_bookings')) {
+            const el = document.getElementById('linkBookings');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('admin_rooms')) {
+            const el = document.getElementById('linkRooms');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('admin_work_orders')) {
+            const el = document.getElementById('linkWorkOrders');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('admin_inventory')) {
+            const el = document.getElementById('linkInventory');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+        if (perms.includes('admin_users')) {
+            const el = document.getElementById('linkUsers');
+            if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+        }
+
+        // Managers as a fallback for missing perms (optional, but per user request "沒權限的使用者左側選單會完全看不到" we should be strict)
+        // If the user wants strict filtering, we don't grant anything else by role alone.
     }
 
-function logout() {
-    sessionStorage.removeItem('adminToken');
-    sessionStorage.removeItem('adminUser');
-    location.reload();
-}
+    // Login Handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>驗證中...</span>';
 
-function showTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                })
+            });
 
-    // Map tab names to IDs correctly
-    let targetTabId = 'tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
+            console.log('[Login-Debug] res.status:', res.status);
+            const data = await res.json();
+            console.log('[Login-Debug] data received:', data);
+            if (res.ok) {
+                console.log('[Login-Debug] Success, storing tokens...');
+                sessionStorage.setItem('adminToken', data.token);
+                sessionStorage.setItem('adminUser', JSON.stringify(data.user));
+                token = data.token;
+                console.log('[Login-Debug] Calling checkAuth...');
+                await checkAuth();
+            } else {
+                console.log('[Login-Debug] Login failed:', data.error);
+                const errorEl = document.getElementById('loginError');
+                errorEl.innerText = data.error || '登入失敗';
+                errorEl.classList.remove('hidden');
+                errorEl.style.display = 'block'; // Fallback
+            }
+        } catch (err) {
+            alert('登入失敗，伺服器連線問題');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span>登入系統</span><i class="fas fa-arrow-right"></i>';
+        }
+    });
 
-    // Special cases for tab IDs if they don't match the pattern exactly
-    if (tabName === 'biDashboard') targetTabId = 'tabBIDashboard';
-
-    const targetTab = document.getElementById(targetTabId);
-    if (targetTab) {
-        targetTab.classList.add('active');
+    function logout() {
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('adminUser');
+        location.reload();
     }
 
-    const linkId = 'link' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
-    if (document.getElementById(linkId)) {
-        document.getElementById(linkId).classList.add('active');
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+
+        // Map tab names to IDs correctly
+        let targetTabId = 'tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
+
+        // Special cases for tab IDs if they don't match the pattern exactly
+        if (tabName === 'biDashboard') targetTabId = 'tabBIDashboard';
+
+        const targetTab = document.getElementById(targetTabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+
+        const linkId = 'link' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
+        if (document.getElementById(linkId)) {
+            document.getElementById(linkId).classList.add('active');
+        }
+
+        // Load data based on tab
+        if (tabName === 'bookings') loadBookings();
+        if (tabName === 'users') loadUsers();
+        if (tabName === 'rooms') loadRoomTypes();
+        if (tabName === 'workOrders') loadWorkOrders();
+        if (tabName === 'inventory') loadInventory();
+        if (tabName === 'biDashboard') loadBIDashboard();
+        if (tabName === 'staff') loadStaffTasks();
+
+        // Close sidebar on mobile after clicking a link
+        if (window.innerWidth <= 768) {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+        }
     }
 
-    // Load data based on tab
-    if (tabName === 'bookings') loadBookings();
-    if (tabName === 'users') loadUsers();
-    if (tabName === 'rooms') loadRoomTypes();
-    if (tabName === 'workOrders') loadWorkOrders();
-    if (tabName === 'inventory') loadInventory();
-    if (tabName === 'biDashboard') loadBIDashboard();
-    if (tabName === 'staff') loadStaffTasks();
-
-    // Close sidebar on mobile after clicking a link
-    if (window.innerWidth <= 768) {
+    function toggleSidebar() {
         const sidebar = document.querySelector('.sidebar');
         const overlay = document.getElementById('sidebarOverlay');
-        if (sidebar) sidebar.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
+        if (sidebar) sidebar.classList.toggle('active');
+        if (overlay) overlay.classList.toggle('active');
     }
-}
 
-function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    if (sidebar) sidebar.classList.toggle('active');
-    if (overlay) overlay.classList.toggle('active');
-}
-
-async function loadBookings() {
-    try {
-        const res = await fetch('/api/bookings', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) {
-            if (res.status === 403 || res.status === 401) logout();
-            throw new Error('Failed to load bookings');
+    async function loadBookings() {
+        try {
+            const res = await fetch('/api/bookings', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!res.ok) {
+                if (res.status === 403 || res.status === 401) logout();
+                throw new Error('Failed to load bookings');
+            }
+            const bookings = await res.json();
+            renderBookings(bookings);
+        } catch (err) {
+            console.error('loadBookings error:', err);
         }
-        const bookings = await res.json();
-        renderBookings(bookings);
-    } catch (err) {
-        console.error('loadBookings error:', err);
     }
-}
 
-function renderBookings(bookings) {
-    if (!Array.isArray(bookings)) return;
-    let html = `<table><thead><tr><th>編號</th><th>房型 / 房號</th><th>客人</th><th>特殊需求</th><th>日期</th><th>狀態</th><th>操作</th></tr></thead><tbody>`;
-    bookings.forEach(b => {
-        html += `<tr>
-                    <td>${b.booking_reference}</td>
+    function renderBookings(bookings) {
+        if (!Array.isArray(bookings)) return;
+
+        // Update stats
+        document.getElementById('countTotalBookings').innerText = bookings.length;
+        document.getElementById('countPendingBookings').innerText = bookings.filter(b => b.status === 'pending').length;
+        document.getElementById('countConfirmedBookings').innerText = bookings.filter(b => b.status === 'confirmed').length;
+
+        const statusMap = {
+            pending: { text: '待確認', class: 'status-pending', icon: 'fa-hourglass-half' },
+            confirmed: { text: '已確認', class: 'status-confirmed', icon: 'fa-check-circle' },
+            completed: { text: '已完成', class: 'status-completed', icon: 'fa-calendar-check' },
+            cancelled: { text: '已取消', class: 'status-cancelled', icon: 'fa-times-circle' },
+        };
+
+        let html = `
+        <div class="table-responsive">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>編號</th>
+                        <th>房型 / 房號</th>
+                        <th>客人</th>
+                        <th>入住 / 退房</th>
+                        <th>狀態</th>
+                        <th style="text-align: right;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        bookings.forEach(b => {
+            const statusInfo = statusMap[b.status] || { text: b.status, class: 'status-default', icon: 'fa-question-circle' };
+            const checkIn = b.check_in_date.split('T')[0];
+            const checkOut = b.check_out_date.split('T')[0];
+
+            html += `
+                <tr style="transition: all 0.2s;">
+                    <td style="font-weight: 700; color: var(--primary-color);">${b.booking_reference}</td>
                     <td>
                         <div style="font-weight: 600;">${b.room_type}</div>
-                        <div style="font-size: 11px; color: #6b7280;">${b.room_number || '未分配'}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);"><i class="fas fa-hashtag"></i> ${b.room_number || '未分配'}</div>
                     </td>
-                    <td>${b.guest_name}</td>
-                    <td><div style="font-size: 12px; color: #d97706; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${b.special_requests || ''}">${b.special_requests || '-'}</div></td>
-                    <td>${b.check_in_date.split('T')[0]}</td>
-
-                    <td><span class="status-badge status-${b.status}">${b.status}</span></td>
                     <td>
-                        ${b.status === 'pending' ? `<button class="btn btn-primary btn-confirm-booking" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;" data-id="${b.id}">確認</button>` : ''}
-                        <button class="btn btn-outline btn-edit-booking" style="padding: 4px 8px; font-size: 12px;" data-id="${b.id}">編輯</button>
+                        <div style="font-weight: 600;">${b.guest_name}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);"><i class="fas fa-envelope"></i> ${b.guest_email}</div>
                     </td>
-                </tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById('bookingsList').innerHTML = html;
-}
-
-async function loadUsers() {
-    const res = await fetch('/api/admin/users', {
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-    const users = await res.json();
-    renderUsers(users);
-}
-
-function renderUsers(users) {
-    if (!Array.isArray(users)) return;
-    let html = `<table><thead><tr><th>姓名</th><th>Email</th><th>角色</th><th>權限</th><th>操作</th></tr></thead><tbody>`;
-    users.forEach(u => {
-        const perms = u.permissions || [];
-        const userJson = JSON.stringify(u).replace(/"/g, '&quot;');
-        html += `<tr>
-                    <td>${u.full_name}</td>
-                    <td>${u.email}</td>
-                    <td><span class="status-badge" style="background:#f3f4f6; color:#374151;">${u.role}</span></td>
-                    <td>${perms.map(p => `<span class="permission-tag">${p}</span>`).join('')}</td>
                     <td>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-outline btn-edit-user" style="padding: 2px 8px; font-size: 12px;" data-user='${userJson}'>編輯</button>
-                            <button class="btn btn-outline btn-delete-user" style="padding: 2px 8px; font-size: 12px; color: #ef4444; border-color: #fecaca;" data-id="${u.id}">刪除</button>
+                        <div style="font-size: 0.875rem;"><span style="color: var(--accent-blue);">IN</span> ${checkIn}</div>
+                        <div style="font-size: 0.875rem;"><span style="color: var(--accent-red);">OUT</span> ${checkOut}</div>
+                    </td>
+                    <td>
+                        <span class="status-badge ${statusInfo.class}">
+                            <i class="fas ${statusInfo.icon}"></i> ${statusInfo.text}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="flex items-center justify-end space-x-2">
+                            ${b.status === 'pending' ? `<button class="btn btn-sm btn-primary btn-confirm-booking" data-id="${b.id}" title="確認訂單"><i class="fas fa-check"></i></button>` : ''}
+                            <button class="btn btn-sm btn-outline btn-edit-booking" data-id="${b.id}" title="編輯"><i class="fas fa-edit"></i></button>
                         </div>
                     </td>
                 </tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById('usersList').innerHTML = html;
-}
-
-async function editUser(user) {
-    // Note: If user is passed as string, parse it if needed. 
-    // In delegation, we'll parse it before calling this.
-    document.getElementById('editUserId').value = user.id;
-    document.getElementById('newFullName').value = user.full_name;
-    document.getElementById('newEmail').value = user.email;
-    document.getElementById('newRole').value = user.role;
-    document.getElementById('newPassword').required = false;
-    document.getElementById('pwdLabel').innerText = '變更密碼 (不選則不修改)';
-    document.getElementById('userModalTitle').innerText = '編輯帳號資料';
-
-    // Reset and Set checkboxes
-    const perms = user.permissions || [];
-    document.querySelectorAll('input[name="permission"]').forEach(cb => {
-        cb.checked = perms.includes(cb.value);
-    });
-
-    openUserModal();
-}
-
-async function deleteUser(id) {
-    if (!confirm('確定要永久刪除此帳號嗎？')) return;
-    try {
-        const res = await fetch(`/api/admin/users/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (res.ok) {
-            alert('已刪除');
-            loadUsers();
-        } else {
-            const err = await res.json();
-            alert('失敗: ' + err.error);
-        }
-    } catch (e) { alert('系統錯誤'); }
-}
-
-let workOrdersData = [];
-
-async function loadWorkOrders() {
-    try {
-        const res = await fetch('/api/work-orders', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const orders = await res.json();
-        workOrdersData = orders;
-        renderWorkOrders(orders);
-    } catch (error) {
-        console.error('Failed to load work orders:', error);
-    }
-}
-
-function renderWorkOrders(orders) {
-    if (!Array.isArray(orders)) return;
-    const statusNames = { pending: '未執行', in_progress: '處理中', completed: '已完成' };
-    const statusColors = { pending: 'status-pending', in_progress: 'status-confirmed', completed: 'status-completed' };
-
-    let html = `<table><thead><tr><th>派工單號</th><th>地點</th><th>負責人</th><th>狀態</th><th>建立時間</th><th>操作</th></tr></thead><tbody>`;
-    orders.forEach(o => {
-        html += `<tr>
-                    <td>${o.ticket_number}</td>
-                    <td>
-                        <div style="font-weight: 600;">Room ${o.room_number || '公共區域'}</div>
-                        <div style="font-size: 11px; color: #6b7280;">${o.category}</div>
-                    </td>
-                    <td>${o.assigned_to_name || '未分配'}</td>
-                    <td><span class="status-badge" style="background: ${o.status === 'completed' ? '#d1fae5' : o.status === 'in_progress' ? '#dbeafe' : '#fef3c7'}; color: ${o.status === 'completed' ? '#065f46' : o.status === 'in_progress' ? '#1e40af' : '#92400e'}">${statusNames[o.status] || o.status}</span></td>
-                    <td>${new Date(o.created_at).toLocaleString('zh-TW', { hour12: false })}</td>
-                    <td>
-                        <button class="btn btn-outline btn-view-wo" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;" data-id="${o.id}">查看</button>
-                        <button class="btn btn-outline btn-edit-wo" style="padding: 4px 8px; font-size: 12px;" data-id="${o.id}">編輯</button>
-                    </td>
-                </tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById('workOrdersList').innerHTML = html;
-}
-
-async function updateWorkOrderStatus(id, status) {
-    try {
-        const res = await fetch(`/api/work-orders/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ status })
-        });
-        if (res.ok) {
-            loadWorkOrders();
-        } else {
-            alert('更新失敗：狀態值無效');
-        }
-    } catch (e) { alert('更新失敗'); }
-}
-
-// Work Order Modal Handlers
-async function openWorkOrderModal() {
-    // Load Rooms
-    const roomRes = await fetch('/api/admin/room-instances', { headers: { 'Authorization': `Bearer ${token}` } });
-    const rooms = await roomRes.json();
-    const roomSelect = document.getElementById('woRoomId');
-    roomSelect.innerHTML = '<option value="">-- 非特定房間 --</option>';
-    rooms.forEach(r => {
-        roomSelect.innerHTML += `<option value="${r.id}">${r.room_number} (${r.room_type})</option>`;
-    });
-
-    // Load Staff
-    const userRes = await fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } });
-    const users = await userRes.json();
-    const staffSelect = document.getElementById('woAssignedTo');
-    staffSelect.innerHTML = '<option value="">-- 請選擇員工 --</option>';
-    users.forEach(u => {
-        staffSelect.innerHTML += `<option value="${u.id}">${u.full_name} (${u.role})</option>`;
-    });
-
-    const el = document.getElementById('workOrderModal');
-    if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-}
-
-function closeWorkOrderModal() {
-    const el = document.getElementById('workOrderModal');
-    if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-    document.getElementById('workOrderForm').reset();
-    document.getElementById('woModalTitle').innerText = '新增派工單';
-    document.getElementById('woId').value = '';
-}
-
-async function editWorkOrder(id) {
-    // Find order from global data or fetch if needed
-    let order = workOrdersData.find(o => o.id == id);
-
-    if (!order) {
-        // Fallback fetch if not found in global (rare)
-        const res = await fetch('/api/work-orders', { headers: { 'Authorization': `Bearer ${token}` } });
-        const orders = await res.json();
-        order = orders.find(o => o.id == id);
-    }
-
-    if (!order) {
-        alert('找不到該工單');
-        return;
-    }
-
-    // Load rooms and staff FIRST
-    await openWorkOrderModal();
-
-    // THEN Set modal title and Store order ID 
-    // This ensures no modal opening logic overwrites this
-    document.getElementById('woModalTitle').innerText = '編輯派工單';
-    document.getElementById('woId').value = id.toString(); // Force string
-
-    // Fill in the form
-    document.getElementById('woRoomId').value = order.room_id || '';
-    document.getElementById('woAssignedTo').value = order.assigned_to || '';
-    document.getElementById('woDescription').value = order.description;
-    document.getElementById('woCategory').value = order.category || 'cleaning';
-    document.getElementById('woPriority').value = order.priority || 'medium';
-}
-
-document.getElementById('workOrderForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.innerText = '處理中...';
-
-    const woId = document.getElementById('woId').value;
-    const isEdit = !!woId;
-
-    const data = {
-        roomId: document.getElementById('woRoomId').value,
-        category: document.getElementById('woCategory').value,
-        priority: document.getElementById('woPriority').value,
-        assignedTo: document.getElementById('woAssignedTo').value,
-        description: document.getElementById('woDescription').value
-    };
-
-    try {
-        const url = isEdit ? `/api/work-orders/${woId}` : '/api/work-orders';
-        const method = isEdit ? 'PATCH' : 'POST';
-
-        const res = await fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(data)
-        });
-
-        if (res.ok) {
-            alert(isEdit ? '工單更新成功' : '工單已建立並指派');
-            closeWorkOrderModal();
-            loadWorkOrders();
-            if (!isEdit) e.target.reset();
-        } else {
-            const err = await res.json();
-            alert((isEdit ? '更新失敗: ' : '建立失敗: ') + (err.error || '未知錯誤'));
-        }
-    } catch (err) {
-        alert('系統錯誤');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = isEdit ? '儲存變更' : '建立工單';
-    }
-
-// View Modal Logic
-// View Modal Logic
-function viewWorkOrder(id) {
-    console.log('Viewing work order:', id);
-    const o = workOrdersData.find(x => x.id == id);
-    if (!o) {
-        console.error('Work order not found in global data', id, workOrdersData);
-        return;
-    }
-
-    document.getElementById('viewTicketNumber').innerText = o.ticket_number;
-    document.getElementById('viewCreatedAt').innerText = new Date(o.created_at).toLocaleString('zh-TW', { hour12: false });
-    document.getElementById('viewLocation').innerText = o.room_number ? `Room ${o.room_number}` : '公共區域';
-    document.getElementById('viewAssignedTo').innerText = o.assigned_to_name || '未分配';
-    document.getElementById('viewCategory').innerText = o.category;
-
-    const statusNames = { pending: '未執行', in_progress: '處理中', completed: '已完成' };
-    document.getElementById('viewStatus').innerText = statusNames[o.status] || o.status;
-
-    document.getElementById('viewDescription').innerText = o.description || '無描述';
-    document.getElementById('viewStaffRemarks').innerText = o.staff_remarks || '無備註';
-
-    const photoArea = document.getElementById('viewPhotoArea');
-    if (o.photo_url) {
-        photoArea.innerHTML = `<a href="${o.photo_url}" target="_blank"><img src="${o.photo_url}" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #e5e7eb;"></a>`;
-    } else {
-        photoArea.innerHTML = '<span style="color: #9ca3af;">無照片</span>';
-    }
-
-    const el = document.getElementById('woViewModal');
-    if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-}
-
-function closeWoViewModal() {
-    const el = document.getElementById('woViewModal');
-    if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-}
-
-// Inventory Handlers
-let allInventoryItems = [];
-
-async function loadInventory() {
-    try {
-        const res = await fetch('/api/inventory', { headers: { 'Authorization': `Bearer ${token}` } });
-        const items = await res.json();
-        allInventoryItems = items;
-
-        // Update Summary Stats
-        const total = items.length;
-        const low = items.filter(i => i.quantity > 0 && i.quantity <= i.alert_threshold).length;
-        const outOfStock = items.filter(i => i.quantity <= 0).length;
-
-        document.getElementById('invTotalCount').innerText = total;
-        document.getElementById('invLowCount').innerText = low;
-        document.getElementById('invOutCount').innerText = outOfStock;
-        document.getElementById('invLastUpdate').innerText = new Date().toLocaleTimeString('zh-TW', { hour12: false });
-
-        renderInventory(items);
-    } catch (err) {
-        console.error('Failed to load inventory', err);
-    }
-}
-
-function filterInventory(query) {
-    const filtered = allInventoryItems.filter(item =>
-        item.name.toLowerCase().includes(query.toLowerCase()) ||
-        item.code.toLowerCase().includes(query.toLowerCase())
-    );
-    renderInventory(filtered);
-}
-
-function renderInventory(items) {
-    if (!Array.isArray(items)) return;
-    const container = document.getElementById('inventoryList');
-
-    if (items.length === 0) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: #9ca3af; background: white; border-radius: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
-                    <p>找不到符合條件的品項</p>
-                </div>`;
-        return;
-    }
-
-    let html = '';
-    items.forEach(item => {
-        const isOut = item.quantity <= 0;
-        const isLow = !isOut && item.quantity <= item.alert_threshold;
-
         html += `
-                <div class="inventory-card ${isLow || isOut ? 'low-stock' : ''}">
-                    <div class="inv-card-header">
-                        <div class="inv-title-area">
-                            <span class="inv-sku">${item.code}</span>
-                            <h3 style="margin-top: 0.5rem;">${item.name}</h3>
+                </tbody>
+            </table>
+        </div>`;
+        document.getElementById('bookingsList').innerHTML = html;
+    }
+
+    async function loadUsers() {
+        const res = await fetch('/api/admin/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const users = await res.json();
+        renderUsers(users);
+    }
+
+    function renderUsers(users) {
+        if (!Array.isArray(users)) return;
+        let html = `
+        <div class="table-responsive">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>使用者資料</th>
+                        <th>主角色</th>
+                        <th>系統權限</th>
+                        <th style="text-align: right;">管理</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        users.forEach(u => {
+            const perms = u.permissions || [];
+            const userJson = JSON.stringify(u).replace(/"/g, '&quot;');
+            html += `
+                <tr class="hover-row">
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--grad-dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800;">${u.full_name.charAt(0)}</div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 1rem;">${u.full_name}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">${u.email}</div>
+                            </div>
                         </div>
-                        <span class="status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}">
-                            ${isOut ? '🚫 缺貨' : isLow ? '⚠️ 低水位' : '✅ 充足'}
+                    </td>
+                    <td>
+                        <span class="status-badge" style="background: #F1F5F9; color: #1E293B; font-weight: 700;">
+                            <i class="fas fa-user-shield" style="margin-right: 4px;"></i> ${u.role}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex flex-wrap gap-1">
+                            ${perms.map(p => `<span class="permission-tag" style="background: var(--primary-soft); color: var(--primary-color); border: none; font-weight: 700; font-size: 0.7rem;">${p}</span>`).join('')}
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="flex items-center justify-end space-x-2">
+                            <button class="btn btn-sm btn-outline btn-edit-user" data-user='${userJson}' title="編輯資料"><i class="fas fa-user-edit"></i></button>
+                            <button class="btn btn-sm btn-outline btn-delete-user" data-id="${u.id}" style="color: var(--accent-red); border-color: #FEE2E2;" title="刪除帳號"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+        html += `
+                </tbody>
+            </table>
+        </div>`;
+        document.getElementById('usersList').innerHTML = html;
+    }
+
+    async function editUser(user) {
+        // Note: If user is passed as string, parse it if needed. 
+        // In delegation, we'll parse it before calling this.
+        document.getElementById('editUserId').value = user.id;
+        document.getElementById('newFullName').value = user.full_name;
+        document.getElementById('newEmail').value = user.email;
+        document.getElementById('newRole').value = user.role;
+        document.getElementById('newPassword').required = false;
+        document.getElementById('pwdLabel').innerText = '變更密碼 (不選則不修改)';
+        document.getElementById('userModalTitle').innerText = '編輯帳號資料';
+
+        // Reset and Set checkboxes
+        const perms = user.permissions || [];
+        document.querySelectorAll('input[name="permission"]').forEach(cb => {
+            cb.checked = perms.includes(cb.value);
+        });
+
+        openUserModal();
+    }
+
+    async function deleteUser(id) {
+        if (!confirm('確定要永久刪除此帳號嗎？')) return;
+        try {
+            const res = await fetch(`/api/admin/users/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                alert('已刪除');
+                loadUsers();
+            } else {
+                const err = await res.json();
+                alert('失敗: ' + err.error);
+            }
+        } catch (e) { alert('系統錯誤'); }
+    }
+
+    let workOrdersData = [];
+
+    async function loadWorkOrders() {
+        try {
+            const res = await fetch('/api/work-orders', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const orders = await res.json();
+            workOrdersData = orders;
+
+            // Update Work Order Stats
+            if (Array.isArray(orders)) {
+                document.getElementById('countTotalWO').innerText = orders.length;
+                document.getElementById('countPendingWO').innerText = orders.filter(o => o.status === 'pending').length;
+                document.getElementById('countProgressWO').innerText = orders.filter(o => o.status === 'in_progress').length;
+            }
+
+            renderWorkOrders(orders);
+        } catch (error) {
+            console.error('Failed to load work orders:', error);
+        }
+    }
+
+    function renderWorkOrders(orders) {
+        if (!Array.isArray(orders)) return;
+        const statusMap = {
+            pending: { text: '未執行', class: 'status-pending', icon: 'fa-hourglass-start' },
+            in_progress: { text: '處理中', class: 'status-confirmed', icon: 'fa-spinner fa-spin' },
+            completed: { text: '已完成', class: 'status-completed', icon: 'fa-check-circle' },
+        };
+        const categoryMap = {
+            cleaning: '房間清潔',
+            repair: '設施維修',
+            maintenance: '定期保養',
+            other: '其他項目'
+        };
+
+        let html = `
+        <div class="table-responsive">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>工單單號</th>
+                        <th>執行地點 / 類別</th>
+                        <th>指派人員</th>
+                        <th>當前狀態</th>
+                        <th>建立時間</th>
+                        <th style="text-align: right;">管理</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        orders.forEach(o => {
+            const statusInfo = statusMap[o.status] || { text: o.status, class: 'status-default', icon: 'fa-question-circle' };
+            html += `
+                <tr class="hover-row">
+                    <td style="font-weight: 700;">#${o.id}</td>
+                    <td>
+                        <div style="font-weight: 600;"><i class="fas fa-map-marker-alt" style="color: var(--accent-red); margin-right: 4px;"></i> ${o.room_number ? 'Room ' + o.room_number : '公共區域'}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);"><i class="fas fa-tag"></i> ${categoryMap[o.category] || o.category}</div>
+                    </td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 24px; height: 24px; border-radius: 50%; background: #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #64748B;">${(o.assigned_to_name || '?').charAt(0)}</div>
+                            <span style="font-weight: 500;">${o.assigned_to_name || '未指派'}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge ${statusInfo.class}">
+                            <i class="fas ${statusInfo.icon}"></i> ${statusInfo.text}
+                        </span>
+                    </td>
+                    <td style="font-size: 0.8rem; color: var(--text-muted);">${new Date(o.created_at).toLocaleString('zh-TW', { hour12: false })}</td>
+                    <td style="text-align: right;">
+                        <div class="flex items-center justify-end space-x-2">
+                            <button class="btn btn-sm btn-outline btn-view-wo" data-id="${o.id}" title="查看細項"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-outline btn-edit-wo" data-id="${o.id}" title="編輯"><i class="fas fa-edit"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+        html += `
+                </tbody>
+            </table>
+        </div>`;
+        document.getElementById('workOrdersList').innerHTML = html;
+    }
+
+    async function updateWorkOrderStatus(id, status) {
+        try {
+            const res = await fetch(`/api/work-orders/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ status })
+            });
+            if (res.ok) {
+                loadWorkOrders();
+            } else {
+                alert('更新失敗：狀態值無效');
+            }
+        } catch (e) { alert('更新失敗'); }
+    }
+
+    // Work Order Modal Handlers
+    async function openWorkOrderModal() {
+        // Load Rooms
+        const roomRes = await fetch('/api/admin/room-instances', { headers: { 'Authorization': `Bearer ${token}` } });
+        const rooms = await roomRes.json();
+        const roomSelect = document.getElementById('woRoomId');
+        roomSelect.innerHTML = '<option value="">-- 非特定房間 --</option>';
+        rooms.forEach(r => {
+            roomSelect.innerHTML += `<option value="${r.id}">${r.room_number} (${r.room_type})</option>`;
+        });
+
+        // Load Staff
+        const userRes = await fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } });
+        const users = await userRes.json();
+        const staffSelect = document.getElementById('woAssignedTo');
+        staffSelect.innerHTML = '<option value="">-- 請選擇員工 --</option>';
+        users.forEach(u => {
+            staffSelect.innerHTML += `<option value="${u.id}">${u.full_name} (${u.role})</option>`;
+        });
+
+        const el = document.getElementById('workOrderModal');
+        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+    }
+
+    function closeWorkOrderModal() {
+        const el = document.getElementById('workOrderModal');
+        if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+        document.getElementById('workOrderForm').reset();
+        document.getElementById('woModalTitle').innerText = '新增派工單';
+        document.getElementById('woId').value = '';
+    }
+
+    async function editWorkOrder(id) {
+        // Find order from global data or fetch if needed
+        let order = workOrdersData.find(o => o.id == id);
+
+        if (!order) {
+            // Fallback fetch if not found in global (rare)
+            const res = await fetch('/api/work-orders', { headers: { 'Authorization': `Bearer ${token}` } });
+            const orders = await res.json();
+            order = orders.find(o => o.id == id);
+        }
+
+        if (!order) {
+            alert('找不到該工單');
+            return;
+        }
+
+        // Load rooms and staff FIRST
+        await openWorkOrderModal();
+
+        // THEN Set modal title and Store order ID 
+        // This ensures no modal opening logic overwrites this
+        document.getElementById('woModalTitle').innerText = '編輯派工單';
+        document.getElementById('woId').value = id.toString(); // Force string
+
+        // Fill in the form
+        document.getElementById('woRoomId').value = order.room_id || '';
+        document.getElementById('woAssignedTo').value = order.assigned_to || '';
+        document.getElementById('woDescription').value = order.description;
+        document.getElementById('woCategory').value = order.category || 'cleaning';
+        document.getElementById('woPriority').value = order.priority || 'medium';
+    }
+
+    document.getElementById('workOrderForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const woId = document.getElementById('woId').value;
+        const isEdit = !!woId;
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 處理中...';
+
+        const data = {
+            roomId: document.getElementById('woRoomId').value,
+            category: document.getElementById('woCategory').value,
+            priority: document.getElementById('woPriority').value,
+            assignedTo: document.getElementById('woAssignedTo').value,
+            description: document.getElementById('woDescription').value
+        };
+
+        try {
+            const url = isEdit ? `/api/work-orders/${woId}` : '/api/work-orders';
+            const method = isEdit ? 'PATCH' : 'POST';
+
+            const res = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                alert(isEdit ? '工單更新成功' : '工單已建立並指派');
+                closeWorkOrderModal();
+                loadWorkOrders();
+                if (!isEdit) e.target.reset();
+            } else {
+                const err = await res.json();
+                alert((isEdit ? '更新失敗: ' : '建立失敗: ') + (err.error || '未知錯誤'));
+            }
+        } catch (err) {
+            alert('系統錯誤');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = isEdit ? '儲存變更' : '建立工單';
+        }
+    });
+
+    // View Modal Logic
+    function viewWorkOrder(id) {
+        console.log('Viewing work order:', id);
+        const o = workOrdersData.find(x => x.id == id);
+        if (!o) {
+            console.error('Work order not found in global data', id, workOrdersData);
+            return;
+        }
+
+        document.getElementById('viewTicketNumber').innerText = o.ticket_number;
+        document.getElementById('viewCreatedAt').innerText = new Date(o.created_at).toLocaleString('zh-TW', { hour12: false });
+        document.getElementById('viewLocation').innerText = o.room_number ? `Room ${o.room_number}` : '公共區域';
+        document.getElementById('viewAssignedTo').innerText = o.assigned_to_name || '未分配';
+        document.getElementById('viewCategory').innerText = o.category;
+
+        const statusMap = {
+            pending: { text: '未執行', class: 'status-pending', icon: 'fa-hourglass-start' },
+            in_progress: { text: '處理中', class: 'status-confirmed', icon: 'fa-spinner fa-spin' },
+            completed: { text: '已完成', class: 'status-completed', icon: 'fa-check-circle' },
+        };
+        const statusInfo = statusMap[o.status] || { text: o.status, class: 'status-default', icon: 'fa-question-circle' };
+        const viewStatusEl = document.getElementById('viewStatus');
+        viewStatusEl.className = `status-badge ${statusInfo.class}`;
+        viewStatusEl.innerHTML = `<i class="fas ${statusInfo.icon}"></i> ${statusInfo.text}`;
+
+        document.getElementById('viewDescription').innerText = o.description || '無描述';
+        document.getElementById('viewStaffRemarks').innerText = o.staff_remarks || '無備註';
+
+        const photoArea = document.getElementById('viewPhotoArea');
+        if (o.photo_url) {
+            photoArea.innerHTML = `<a href="${o.photo_url}" target="_blank"><img src="${o.photo_url}" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #e5e7eb;"></a>`;
+        } else {
+            photoArea.innerHTML = '<span style="color: #9ca3af;">無照片</span>';
+        }
+
+        const el = document.getElementById('woViewModal');
+        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+    }
+
+    function closeWoViewModal() {
+        const el = document.getElementById('woViewModal');
+        if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+    }
+
+    // Inventory Handlers
+    let allInventoryItems = [];
+
+    async function loadInventory() {
+        try {
+            const res = await fetch('/api/inventory', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!res.ok) {
+                if (res.status === 403 || res.status === 401) logout();
+                throw new Error('Failed to load inventory');
+            }
+            const items = await res.json();
+            allInventoryItems = items;
+
+            // Update Summary Stats
+            const total = items.length;
+            const low = items.filter(i => i.quantity > 0 && i.quantity <= i.alert_threshold).length;
+            const outOfStock = items.filter(i => i.quantity <= 0).length;
+
+            document.getElementById('invTotalCount').innerText = total;
+            document.getElementById('invLowCount').innerText = low;
+            document.getElementById('invOutCount').innerText = outOfStock;
+            document.getElementById('invLastUpdate').innerText = new Date().toLocaleTimeString('zh-TW', { hour12: false });
+
+            renderInventory(items);
+        } catch (err) {
+            console.error('Failed to load inventory', err);
+        }
+    }
+
+    function filterInventory(query) {
+        const filtered = allInventoryItems.filter(item =>
+            item.name.toLowerCase().includes(query.toLowerCase()) ||
+            item.code.toLowerCase().includes(query.toLowerCase())
+        );
+        renderInventory(filtered);
+    }
+
+    function renderInventory(items) {
+        if (!Array.isArray(items)) return;
+        const container = document.getElementById('inventoryList');
+
+        if (items.length === 0) {
+            container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 6rem; color: var(--text-muted); background: white; border-radius: 24px; border: 1px dashed var(--border-color);">
+                <div style="font-size: 5rem; margin-bottom: 2rem; opacity: 0.3;">📦</div>
+                <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main);">找不到符合條件的品項</h3>
+                <p>請嘗試更換關鍵字或新增新品項</p>
+            </div>`;
+            return;
+        }
+
+        let html = '';
+        items.forEach(item => {
+            const isOut = item.quantity <= 0;
+            const isLow = !isOut && item.quantity <= item.alert_threshold;
+            const progressPercent = Math.min(100, Math.round((item.quantity / (item.alert_threshold * 2 || 1)) * 100));
+
+            html += `
+            <div class="inventory-card ${isLow || isOut ? 'low-stock' : ''}" style="border-top: 4px solid ${isOut ? 'var(--accent-red)' : isLow ? '#F59E0B' : 'var(--accent-green)'}">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="text-overline" style="margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+                            <i class="fas fa-barcode"></i> ${item.code || 'NO SKU'}
+                        </div>
+                        <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main); line-height: 1.2;">${item.name}</h3>
+                    </div>
+                    <span class="status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}">
+                        <i class="fas ${isOut ? 'fa-ban' : isLow ? 'fa-triangle-exclamation' : 'fa-check-circle'}"></i> 
+                        ${isOut ? '缺貨' : isLow ? '低水位' : '充足'}
+                    </span>
+                </div>
+
+                <div style="background: rgba(248, 250, 252, 0.8); padding: 0.625rem 0.875rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.8rem; font-weight: 600; color: #64748B; display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-tag"></i> ${item.category || '備品 / 耗材'}
+                </div>
+
+                <div style="margin-top: auto;">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="inventory-qty-control">
+                            <button class="inventory-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="-1" title="減少數量"><i class="fas fa-minus"></i></button>
+                            <input type="text" id="inv-qty-${item.id}" class="inventory-qty-input" value="${item.quantity}" readonly data-last-saved="${item.quantity}">
+                            <button class="inventory-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="1" title="增加數量"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="flex gap-2">
+                             <button class="btn btn-outline btn-sm btn-edit-inv" data-id="${item.id}" style="width: 38px; height: 38px; border-radius: 10px; padding: 0; justify-content: center;" title="編輯品項"><i class="fas fa-pen-to-square"></i></button>
+                             <button class="btn btn-outline btn-sm btn-delete-inv" data-id="${item.id}" style="width: 38px; height: 38px; border-radius: 10px; padding: 0; justify-content: center; color: var(--accent-red); border-color: #FEE2E2;" title="刪除品項"><i class="fas fa-trash-can"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-2" style="font-size: 0.75rem; font-weight: 700;">
+                        <span style="color: var(--text-muted);">庫存水位 <span style="font-weight: 400;">(閾值: ${item.alert_threshold})</span></span>
+                        <span style="color: ${isOut ? 'var(--accent-red)' : isLow ? '#D97706' : 'var(--accent-green)'};">${progressPercent}%</span>
+                    </div>
+                    <div class="progress-container" style="height: 8px; border-radius: 10px; background: #F1F5F9; margin: 0;">
+                        <div style="width: ${progressPercent}%; height: 100%; border-radius: 10px; background: ${isOut ? 'var(--grad-red)' : isLow ? 'var(--grad-primary)' : 'var(--grad-green)'}; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
+                    </div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    async function loadInventoryItemForEdit(id) {
+        const item = allInventoryItems.find(i => i.id == id); // Fixed lookup bug
+        if (!item) return;
+        // Re-use current modal but populate it
+        document.getElementById('invName').value = item.name;
+        document.getElementById('invCode').value = item.code;
+        document.getElementById('invQuantity').value = item.quantity;
+        document.getElementById('invThreshold').value = item.alert_threshold;
+
+        // Note: need to handle "Edit" vs "Create" in the modal submission
+        // For now just show how it would populate. 
+        // I'll update the inventory form handler to support updates.
+        openInventoryModal();
+        // Change title/button text
+        document.querySelector('#inventoryModal h2').innerText = '編輯品項';
+        document.querySelector('#inventoryModal button[type="submit"]').innerText = '儲存變更';
+        // Store ID on the form
+        document.getElementById('inventoryForm').setAttribute('data-edit-id', id);
+    }
+
+    let inventoryDebounceTimers = {};
+
+    function adjustInventory(id, delta) {
+        const input = document.getElementById(`inv-qty-${id}`);
+        if (!input) return;
+
+        const currentVal = parseInt(input.value) || 0;
+        const newVal = Math.max(0, currentVal + delta);
+        input.value = newVal;
+
+        // Debounce the update to prevent race conditions
+        if (inventoryDebounceTimers[id]) clearTimeout(inventoryDebounceTimers[id]);
+        inventoryDebounceTimers[id] = setTimeout(() => {
+            updateInventory(id, newVal);
+        }, 500);
+    }
+
+    async function updateInventory(id, newQty) {
+        newQty = parseInt(newQty);
+        if (isNaN(newQty) || newQty < 0) return;
+
+        const qtyInput = document.getElementById(`inv-qty-${id}`);
+        if (!qtyInput) return;
+
+        try {
+            qtyInput.classList.add('opacity-50');
+
+            const res = await fetch(`/api/inventory/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ quantity: newQty })
+            });
+
+            qtyInput.classList.remove('opacity-50');
+
+            if (res.ok) {
+                qtyInput.setAttribute('data-last-saved', newQty);
+                // Reload summary stats without full re-render for smooth experience
+                const item = allInventoryItems.find(i => i.id == id);
+                if (item) item.quantity = newQty;
+                updateSummaryStats();
+
+                // Update the card's visual state (badges, progress bar)
+                const card = qtyInput.closest('.inventory-card');
+                if (card) {
+                    const isOut = newQty <= 0;
+                    const isLow = !isOut && newQty <= item.alert_threshold;
+
+                    card.className = `inventory-card ${isLow || isOut ? 'low-stock' : ''}`;
+                    const badge = card.querySelector('.status-badge');
+                    if (badge) {
+                        badge.className = `status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}`;
+                        badge.innerHTML = isOut ? '<i class="fas fa-ban"></i> 缺貨' : isLow ? '<i class="fas fa-triangle-exclamation"></i> 低水位' : '<i class="fas fa-check-circle"></i> 充足';
+                    }
+                    const progress = card.querySelector('div[style*="transition: width"]');
+                    if (progress && item) {
+                        progress.style.width = `${Math.min(100, (newQty / (item.alert_threshold * 2)) * 100)}%`;
+                        progress.style.background = isOut ? '#ef4444' : isLow ? '#f59e0b' : '#10b981';
+                    }
+                }
+            } else {
+                const err = await res.json().catch(() => ({}));
+                alert('更新失敗: ' + (err.error || '伺服器錯誤'));
+                qtyInput.value = qtyInput.getAttribute('data-last-saved');
+            }
+        } catch (err) {
+            alert('更新失敗: 網路連線問題');
+            qtyInput.value = qtyInput.getAttribute('data-last-saved');
+            qtyInput.classList.remove('opacity-50');
+        }
+    }
+
+
+    async function deleteInventoryItem(id) {
+        if (!confirm('確定要刪除此品項嗎？')) return;
+        try {
+            const res = await fetch(`/api/inventory/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) loadInventory();
+        } catch (e) { alert('刪除失敗'); }
+    }
+
+    function openInventoryModal() {
+        const el = document.getElementById('inventoryModal');
+        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+    }
+
+    function closeInventoryModal() {
+        const el = document.getElementById('inventoryModal');
+        if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+        document.getElementById('inventoryForm').reset();
+        document.getElementById('inventoryForm').removeAttribute('data-edit-id');
+        document.querySelector('#inventoryModal h2').innerText = '新增品項';
+        document.querySelector('#inventoryModal button[type="submit"]').innerText = '確認建立';
+    }
+
+    document.getElementById('inventoryForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = e.target.getAttribute('data-edit-id');
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerText = '處理中...';
+
+        const data = {
+            name: document.getElementById('invName').value,
+            code: document.getElementById('invCode').value,
+            quantity: parseInt(document.getElementById('invQuantity').value),
+            alertThreshold: parseInt(document.getElementById('invThreshold').value)
+        };
+
+        try {
+            const url = editId ? `/api/inventory/${editId}` : '/api/inventory';
+            const method = editId ? 'PATCH' : 'POST';
+
+            const res = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                alert(editId ? '品項已更新' : '品項已新增');
+                closeInventoryModal();
+                loadInventory();
+            } else {
+                const err = await res.json();
+                alert('失敗: ' + (err.error || '未知錯誤'));
+            }
+        } catch (err) {
+            alert('系統錯誤');
+        } finally {
+            btn.disabled = false;
+            btn.innerText = editId ? '儲存變更' : '確認建立';
+        }
+    });
+
+    // Modal Handlers
+    function openUserModal() {
+        const el = document.getElementById('userModal');
+        if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+    }
+
+    function closeUserModal() {
+        const el = document.getElementById('userModal');
+        if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+        document.getElementById('userForm').reset();
+        document.getElementById('editUserId').value = '';
+        document.getElementById('userModalTitle').innerText = '新增管理帳號';
+        document.getElementById('pwdLabel').innerText = '初始密碼';
+        document.getElementById('newPassword').required = true;
+    }
+
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('editUserId').value;
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerText = '處理中...';
+
+        const permissions = Array.from(document.querySelectorAll('input[name="permission"]:checked')).map(cb => cb.value);
+
+        const userData = {
+            fullName: document.getElementById('newFullName').value,
+            email: document.getElementById('newEmail').value,
+            role: document.getElementById('newRole').value,
+            permissions: permissions
+        };
+
+        const password = document.getElementById('newPassword').value;
+        if (password) userData.password = password;
+
+        try {
+            const url = editId ? `/api/admin/users/${editId}` : '/api/admin/users';
+            const method = editId ? 'PATCH' : 'POST';
+
+            const res = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(userData)
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(editId ? '帳號更新成功' : '帳號建立成功');
+                closeUserModal();
+                loadUsers();
+            } else {
+                alert('失敗: ' + (data.error || '未知錯誤'));
+            }
+        } catch (err) {
+            alert('系統錯誤，請查閱伺服器紀錄');
+        } finally {
+            btn.disabled = false;
+            btn.innerText = '確認建立';
+        }
+    });
+
+    // Room Management Logic
+    async function loadRoomTypes() {
+        const res = await fetch('/api/admin/room-types', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const roomTypes = await res.json();
+        renderRoomTypes(roomTypes);
+    }
+
+    function renderRoomTypes(types) {
+        if (!Array.isArray(types)) return;
+        let html = `<div class="room-type-grid">`;
+        types.forEach(t => {
+            const ammoJson = JSON.stringify(t.amenities || []).replace(/"/g, '&quot;');
+            const img = t.main_image || '/images/room-placeholder.jpg';
+
+            html += `
+            <div class="room-type-card">
+                <div style="position: relative;">
+                    <img src="${img}" alt="${t.room_type}" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="status-badge" style="background: rgba(255,255,255,0.9); color: var(--text-main); box-shadow: var(--shadow-sm);">
+                            <i class="fas fa-door-closed"></i> ${t.instance_count} 戶
                         </span>
                     </div>
+                </div>
+                <div class="details">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.25rem;">${t.room_type}</h3>
+                            <div class="text-overline" style="margin-top: 0.25rem;">ID: ${t.id}</div>
+                        </div>
+                    </div>
                     
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
-                            <span style="color: #6b7280;">安全庫存值</span>
-                            <span style="font-weight: 600;">${item.alert_threshold}</span>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label><i class="fas fa-vector-square"></i> 格局</label>
+                            <input type="text" value="${t.layout || ''}" class="form-input inp-room-type" data-id="${t.id}" data-field="layout" placeholder="例如: 2房1廳">
                         </div>
-                        <!-- Simple Progress Bar visual -->
-                        <div style="width: 100%; height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; margin-top: 0.5rem;">
-                            <div style="width: ${Math.min(100, (item.quantity / (item.alert_threshold * 2)) * 100)}%; height: 100%; background: ${isOut ? '#ef4444' : isLow ? '#f59e0b' : '#10b981'}; transition: width 0.3s ease;"></div>
+                        <div class="form-group">
+                            <label><i class="fas fa-bed"></i> 床型</label>
+                            <input type="text" value="${t.bed_type || ''}" class="form-input inp-room-type" data-id="${t.id}" data-field="bed_type" placeholder="例如: 雙人床">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> 人數</label>
+                            <input type="number" value="${t.max_occupancy || ''}" class="form-input inp-room-type" data-id="${t.id}" data-field="max_occupancy">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler-combined"></i> 面積 (m²)</label>
+                            <input type="number" value="${t.size_sqm || ''}" class="form-input inp-room-type" data-id="${t.id}" data-field="size_sqm" step="0.01">
                         </div>
                     </div>
 
-                    <div class="inv-qty-display">
-                        <button class="inv-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="-1">−</button>
-                        <input type="number" id="inv-qty-${item.id}" class="inv-qty-input inp-qty-inv" 
-                            value="${item.quantity}" 
-                            data-id="${item.id}"
-                            data-last-saved="${item.quantity}">
-                        <button class="inv-qty-btn btn-adjust-inv" data-id="${item.id}" data-delta="1">+</button>
+                    <div class="form-group mb-4">
+                        <label><i class="fas fa-align-left"></i> 房型描述</label>
+                        <textarea class="form-input inp-room-type" data-id="${t.id}" data-field="description" style="height: 80px; resize: none;">${t.description || ''}</textarea>
                     </div>
 
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                         <button class="btn btn-outline btn-edit-inv" style="flex: 1; padding: 6px; font-size: 11px;" data-id="${item.id}">設定</button>
-                         <button class="btn btn-outline btn-delete-inv" style="flex: 1; padding: 6px; font-size: 11px; color: #ef4444; border-color: #fecaca;" 
-                            data-id="${item.id}">刪除</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                        <button class="btn btn-outline btn-sm btn-edit-amenities" data-id="${t.id}" data-name="${t.room_type}" data-amenities='${ammoJson}'>
+                            <i class="fas fa-concierge-bell"></i> 配備 (${Array.isArray(t.amenities) ? t.amenities.length : 0})
+                        </button>
                     </div>
-                </div>`;
-    });
-    container.innerHTML = html;
-}
-
-async function loadInventoryItemForEdit(id) {
-    const item = allInventoryItems.find(i => i.id === id);
-    if (!item) return;
-    // Re-use current modal but populate it
-    document.getElementById('invName').value = item.name;
-    document.getElementById('invCode').value = item.code;
-    document.getElementById('invQuantity').value = item.quantity;
-    document.getElementById('invThreshold').value = item.alert_threshold;
-
-    // Note: need to handle "Edit" vs "Create" in the modal submission
-    // For now just show how it would populate. 
-    // I'll update the inventory form handler to support updates.
-    openInventoryModal();
-    // Change title/button text
-    document.querySelector('#inventoryModal h2').innerText = '編輯品項';
-    document.querySelector('#inventoryModal button[type="submit"]').innerText = '儲存變更';
-    // Store ID on the form
-    document.getElementById('inventoryForm').setAttribute('data-edit-id', id);
-}
-
-let inventoryDebounceTimers = {};
-
-function adjustInventory(id, delta) {
-    const input = document.getElementById(`inv-qty-${id}`);
-    if (!input) return;
-
-    const currentVal = parseInt(input.value) || 0;
-    const newVal = Math.max(0, currentVal + delta);
-    input.value = newVal;
-
-    // Debounce the update to prevent race conditions
-    if (inventoryDebounceTimers[id]) clearTimeout(inventoryDebounceTimers[id]);
-    inventoryDebounceTimers[id] = setTimeout(() => {
-        updateInventory(id, newVal);
-    }, 500);
-}
-
-async function updateInventory(id, newQty) {
-    newQty = parseInt(newQty);
-    if (isNaN(newQty) || newQty < 0) return;
-
-    const qtyInput = document.getElementById(`inv-qty-${id}`);
-    if (!qtyInput) return;
-
-    try {
-        qtyInput.classList.add('opacity-50');
-
-        const res = await fetch(`/api/inventory/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ quantity: newQty })
+                </div>
+                <div class="footer">
+                    <button class="btn btn-primary btn-sm btn-manage-instances" data-id="${t.id}" data-name="${t.room_type}" data-hotel-id="${t.hotel_id}" style="flex: 1;">
+                        <i class="fas fa-tasks"></i> 管理客房
+                    </button>
+                    <button class="btn btn-outline btn-sm btn-trigger-upload" data-id="${t.id}">
+                        <i class="fas fa-image"></i> 封面
+                    </button>
+                    <button class="btn btn-outline btn-sm btn-open-gallery" data-id="${t.id}" data-name="${t.room_type}">
+                        <i class="fas fa-images"></i> 相簿
+                    </button>
+                    <button class="btn btn-outline btn-sm btn-delete-room-type" data-id="${t.id}" style="color: var(--accent-red); border-color: var(--accent-red); opacity: 0.7;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>`;
         });
-
-        qtyInput.classList.remove('opacity-50');
-
-        if (res.ok) {
-            qtyInput.setAttribute('data-last-saved', newQty);
-            // Reload summary stats without full re-render for smooth experience
-            const item = allInventoryItems.find(i => i.id === id);
-            if (item) item.quantity = newQty;
-            updateSummaryStats();
-
-            // Update the card's visual state (badges, progress bar)
-            const card = qtyInput.closest('.inventory-card');
-            if (card) {
-                const isOut = newQty <= 0;
-                const isLow = !isOut && newQty <= item.alert_threshold;
-
-                card.className = `inventory-card ${isLow || isOut ? 'low-stock' : ''}`;
-                const badge = card.querySelector('.status-badge');
-                if (badge) {
-                    badge.className = `status-badge ${isOut ? 'status-cancelled' : isLow ? 'status-pending' : 'status-confirmed'}`;
-                    badge.innerText = isOut ? '🚫 缺貨' : isLow ? '⚠️ 低水位' : '✅ 充足';
-                }
-                const progress = card.querySelector('div[style*="transition: width"]');
-                if (progress && item) {
-                    progress.style.width = `${Math.min(100, (newQty / (item.alert_threshold * 2)) * 100)}%`;
-                    progress.style.background = isOut ? '#ef4444' : isLow ? '#f59e0b' : '#10b981';
-                }
-            }
-        } else {
-            const err = await res.json().catch(() => ({}));
-            alert('更新失敗: ' + (err.error || '伺服器錯誤'));
-            qtyInput.value = qtyInput.getAttribute('data-last-saved');
-        }
-    } catch (err) {
-        alert('更新失敗: 網路連線問題');
-        qtyInput.value = qtyInput.getAttribute('data-last-saved');
-        qtyInput.classList.remove('opacity-50');
+        html += `</div>`;
+        document.getElementById('roomTypesList').innerHTML = html;
     }
-}
 
 
-async function deleteInventoryItem(id) {
-    if (!confirm('確定要刪除此品項嗎？')) return;
-    try {
-        const res = await fetch(`/api/inventory/${id}`, {
-            method: 'DELETE',
+    async function updateRoomType(id, field, value) {
+        // Find current data
+        const resData = await fetch('/api/admin/room-types', { headers: { 'Authorization': `Bearer ${token}` } });
+        const allTypes = await resData.json();
+        const type = allTypes.find(t => t.id === id);
+
+        const updated = { ...type, [field]: value };
+
+        try {
+            const res = await fetch(`/api/admin/room-types/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(updated)
+            });
+            if (res.ok) {
+                console.log('Updated successfully');
+            }
+        } catch (err) {
+            alert('更新失敗');
+        }
+    }
+
+    function promptImage(id, current) {
+        const url = prompt('請貼上房型圖片連結:', current);
+        if (url !== null) {
+            updateRoomType(id, 'main_image', url);
+        }
+    }
+
+    let uploadTargetId = null;
+    function triggerUpload(id) {
+        uploadTargetId = id;
+        document.getElementById('roomImageInput').click();
+    }
+
+    async function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file || !uploadTargetId) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+            const res = await fetch(`/api/admin/room-types/${uploadTargetId}/upload`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('圖片上傳成功');
+                loadRoomTypes();
+            } else {
+                alert('上傳失敗: ' + (data.error || '未知錯誤'));
+            }
+        } catch (err) {
+            alert('系統錯誤，無法上傳圖片');
+        } finally {
+            event.target.value = ''; // Reset input
+        }
+    }
+
+    let activeRoomType = null;
+    function openInstanceModal(id, name, hotelId) {
+        activeRoomType = { id, name, hotelId };
+        document.getElementById('instanceModalTitle').innerText = `${name} - 房間清單`;
+        document.getElementById('roomInstanceModal').style.display = 'flex';
+        loadInstances(id);
+    }
+
+    function closeInstanceModal() {
+        document.getElementById('roomInstanceModal').style.display = 'none';
+    }
+
+    async function loadInstances(roomTypeId) {
+        const res = await fetch(`/api/admin/room-instances?room_type_id=${roomTypeId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (res.ok) loadInventory();
-    } catch (e) { alert('刪除失敗'); }
-}
-
-function openInventoryModal() {
-    const el = document.getElementById('inventoryModal');
-    if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-}
-
-function closeInventoryModal() {
-    const el = document.getElementById('inventoryModal');
-    if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-    document.getElementById('inventoryForm').reset();
-    document.getElementById('inventoryForm').removeAttribute('data-edit-id');
-    document.querySelector('#inventoryModal h2').innerText = '新增品項';
-    document.querySelector('#inventoryModal button[type="submit"]').innerText = '確認建立';
-}
-
-document.getElementById('inventoryForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const editId = e.target.getAttribute('data-edit-id');
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.innerText = '處理中...';
-
-    const data = {
-        name: document.getElementById('invName').value,
-        code: document.getElementById('invCode').value,
-        quantity: parseInt(document.getElementById('invQuantity').value),
-        alertThreshold: parseInt(document.getElementById('invThreshold').value)
-    };
-
-    try {
-        const url = editId ? `/api/inventory/${editId}` : '/api/inventory';
-        const method = editId ? 'PATCH' : 'POST';
-
-        const res = await fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(data)
-        });
-
-        if (res.ok) {
-            alert(editId ? '品項已更新' : '品項已新增');
-            closeInventoryModal();
-            loadInventory();
-        } else {
-            const err = await res.json();
-            alert('失敗: ' + (err.error || '未知錯誤'));
-        }
-    } catch (err) {
-        alert('系統錯誤');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = editId ? '儲存變更' : '確認建立';
-    }
-
-// Modal Handlers
-function openUserModal() {
-    const el = document.getElementById('userModal');
-    if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-}
-
-function closeUserModal() {
-    const el = document.getElementById('userModal');
-    if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-    document.getElementById('userForm').reset();
-    document.getElementById('editUserId').value = '';
-    document.getElementById('userModalTitle').innerText = '新增管理帳號';
-    document.getElementById('pwdLabel').innerText = '初始密碼';
-    document.getElementById('newPassword').required = true;
-}
-
-document.getElementById('userForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const editId = document.getElementById('editUserId').value;
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.innerText = '處理中...';
-
-    const permissions = Array.from(document.querySelectorAll('input[name="permission"]:checked')).map(cb => cb.value);
-
-    const userData = {
-        fullName: document.getElementById('newFullName').value,
-        email: document.getElementById('newEmail').value,
-        role: document.getElementById('newRole').value,
-        permissions: permissions
-    };
-
-    const password = document.getElementById('newPassword').value;
-    if (password) userData.password = password;
-
-    try {
-        const url = editId ? `/api/admin/users/${editId}` : '/api/admin/users';
-        const method = editId ? 'PATCH' : 'POST';
-
-        const res = await fetch(url, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(userData)
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-            alert(editId ? '帳號更新成功' : '帳號建立成功');
-            closeUserModal();
-            loadUsers();
-        } else {
-            alert('失敗: ' + (data.error || '未知錯誤'));
-        }
-    } catch (err) {
-        alert('系統錯誤，請查閱伺服器紀錄');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = '確認建立';
-    }
-
-// Room Management Logic
-async function loadRoomTypes() {
-    const res = await fetch('/api/admin/room-types', {
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-    const roomTypes = await res.json();
-    renderRoomTypes(roomTypes);
-}
-
-function renderRoomTypes(types) {
-    if (!Array.isArray(types)) return;
-    let html = `<table style="font-size: 13px;"><thead><tr>
-                <th>圖片</th>
-                <th>房型</th>
-                <th>格局</th>
-                <th>床型</th>
-                <th>入住人數</th>
-                <th>面積(m²)</th>
-                <th>描述</th>
-                <th>配備</th>
-                <th>房間數</th>
-                <th>管理</th>
-            </tr></thead><tbody>`;
-    types.forEach(t => {
-        const imgHtml = t.main_image
-            ? `<img src="${t.main_image}" class="btn-open-img" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer;" data-url="${t.main_image}">`
-            : `<div style="width: 50px; height: 50px; background: #f3f4f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #9ca3af;">無圖片</div>`;
-
-        // Escape quotes for JSON in onclick
-        const amenitiesJson = JSON.stringify(t.amenities || []).replace(/"/g, '&quot;');
-        const amenitiesCount = Array.isArray(t.amenities) ? t.amenities.length : 0;
-
-        html += `<tr>
-                    <td>${imgHtml}</td>
-                    <td>
-                        <div style="font-weight: 600;">${t.room_type}</div>
-                        <div style="font-size: 11px; color: #6b7280;">ID: ${t.id}</div>
-                    </td>
-                    <td><input type="text" value="${t.layout || ''}" class="inp-room-type" data-id="${t.id}" data-field="layout" style="width: 120px; font-size: 13px; padding: 4px;" placeholder="2房/2廳/1衛"></td>
-                    <td><input type="text" value="${t.bed_type || ''}" class="inp-room-type" data-id="${t.id}" data-field="bed_type" style="width: 100px; font-size: 13px; padding: 4px;" placeholder="雙人床"></td>
-                    <td><input type="number" value="${t.max_occupancy || ''}" class="inp-room-type" data-id="${t.id}" data-field="max_occupancy" style="width: 60px; font-size: 13px; padding: 4px;" min="1" max="10"></td>
-                    <td><input type="number" value="${t.size_sqm || ''}" class="inp-room-type" data-id="${t.id}" data-field="size_sqm" style="width: 70px; font-size: 13px; padding: 4px;" step="0.01" placeholder="45.00"></td>
-                    <td><textarea class="inp-room-type" data-id="${t.id}" data-field="description" style="width: 200px; height: 60px; font-size: 12px; padding: 4px; resize: vertical;" placeholder="輸入房型描述...">${t.description || ''}</textarea></td>
-                    <td>
-                        <button class="btn btn-outline btn-edit-amenities" style="padding: 4px 8px; font-size: 12px;" data-id="${t.id}" data-name="${t.room_type}" data-amenities='${amenitiesJson}'>編輯配備</button>
-                        <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">${amenitiesCount} 項</div>
-                    </td>
-                    <td>${t.instance_count} 戶</td>
-                    <td>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button class="btn btn-outline btn-manage-instances" style="padding: 4px 8px; font-size: 12px;" data-id="${t.id}" data-name="${t.room_type}" data-hotel-id="${t.hotel_id}">管理房間</button>
-                            <button class="btn btn-outline btn-trigger-upload" style="padding: 4px 8px; font-size: 12px;" data-id="${t.id}">封面圖片</button>
-                            <button class="btn btn-outline btn-open-gallery" style="padding: 4px 8px; font-size: 12px;" data-id="${t.id}" data-name="${t.room_type}">相簿管理</button>
-                            <button class="btn btn-outline btn-delete-room-type" style="padding: 4px 8px; font-size: 12px; color: #ef4444; border-color: #ef4444;" data-id="${t.id}">刪除房型</button>
-                        </div>
-                    </td>
-                </tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById('roomTypesList').innerHTML = html;
-}
-
-async function updateRoomType(id, field, value) {
-    // Find current data
-    const resData = await fetch('/api/admin/room-types', { headers: { 'Authorization': `Bearer ${token}` } });
-    const allTypes = await resData.json();
-    const type = allTypes.find(t => t.id === id);
-
-    const updated = { ...type, [field]: value };
-
-    try {
-        const res = await fetch(`/api/admin/room-types/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(updated)
-        });
-        if (res.ok) {
-            console.log('Updated successfully');
-        }
-    } catch (err) {
-        alert('更新失敗');
-    }
-}
-
-function promptImage(id, current) {
-    const url = prompt('請貼上房型圖片連結:', current);
-    if (url !== null) {
-        updateRoomType(id, 'main_image', url);
-    }
-}
-
-let uploadTargetId = null;
-function triggerUpload(id) {
-    uploadTargetId = id;
-    document.getElementById('roomImageInput').click();
-}
-
-async function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (!file || !uploadTargetId) return;
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-        const res = await fetch(`/api/admin/room-types/${uploadTargetId}/upload`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: formData
-        });
-        const data = await res.json();
-        if (res.ok) {
-            alert('圖片上傳成功');
-            loadRoomTypes();
-        } else {
-            alert('上傳失敗: ' + (data.error || '未知錯誤'));
-        }
-    } catch (err) {
-        alert('系統錯誤，無法上傳圖片');
-    } finally {
-        event.target.value = ''; // Reset input
-    }
-}
-
-let activeRoomType = null;
-function openInstanceModal(id, name, hotelId) {
-    activeRoomType = { id, name, hotelId };
-    document.getElementById('instanceModalTitle').innerText = `${name} - 房間清單`;
-    document.getElementById('roomInstanceModal').style.display = 'flex';
-    loadInstances(id);
-}
-
-function closeInstanceModal() {
-    document.getElementById('roomInstanceModal').style.display = 'none';
-}
-
-async function loadInstances(roomTypeId) {
-    const res = await fetch(`/api/admin/room-instances?room_type_id=${roomTypeId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-    const instances = await res.json();
-    let html = `<table style="font-size: 13px;"><thead><tr><th>房號</th><th>狀態</th><th>操作</th></tr></thead><tbody>`;
-    instances.forEach(ins => {
-        html += `<tr>
+        const instances = await res.json();
+        let html = `<table style="font-size: 13px;"><thead><tr><th>房號</th><th>狀態</th><th>操作</th></tr></thead><tbody>`;
+        instances.forEach(ins => {
+            html += `<tr>
                     <td>${ins.room_number}</td>
                     <td>${ins.status}</td>
                     <td><button class="btn-delete-instance" style="color: #ef4444; border: none; background: none; cursor: pointer;" data-id="${ins.id}">刪除</button></td>
                 </tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById('instanceListArea').innerHTML = html;
-}
-
-async function addRoomInstance() {
-    const num = document.getElementById('newInstanceNumber').value;
-    if (!num) return;
-
-    const res = await fetch('/api/admin/room-instances', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            room_type_id: activeRoomType.id,
-            hotel_id: activeRoomType.hotelId,
-            room_number: num
-        })
-    });
-    if (res.ok) {
-        document.getElementById('newInstanceNumber').value = '';
-        loadInstances(activeRoomType.id);
-        loadRoomTypes(); // Update count in main table
+        });
+        html += `</tbody></table>`;
+        document.getElementById('instanceListArea').innerHTML = html;
     }
-}
 
-async function deleteInstance(id) {
-    if (!confirm('確定要刪除此房間嗎？')) return;
-    const res = await fetch(`/api/admin/room-instances/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-    if (res.ok) {
-        loadInstances(activeRoomType.id);
-        loadRoomTypes();
+    async function addRoomInstance() {
+        const num = document.getElementById('newInstanceNumber').value;
+        if (!num) return;
+
+        const res = await fetch('/api/admin/room-instances', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                room_type_id: activeRoomType.id,
+                hotel_id: activeRoomType.hotelId,
+                room_number: num
+            })
+        });
+        if (res.ok) {
+            document.getElementById('newInstanceNumber').value = '';
+            loadInstances(activeRoomType.id);
+            loadRoomTypes(); // Update count in main table
+        }
     }
-}
 
-
-
-async function deleteRoomType(id) {
-    if (!confirm('確定要刪除此房型嗎？這將會刪除所有相關的房間和預訂紀錄！')) return;
-
-    try {
-        const res = await fetch(`/api/admin/room-types/${id}`, {
+    async function deleteInstance(id) {
+        if (!confirm('確定要刪除此房間嗎？')) return;
+        const res = await fetch(`/api/admin/room-instances/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
-
         if (res.ok) {
-            alert('刪除成功');
+            loadInstances(activeRoomType.id);
             loadRoomTypes();
-        } else {
-            alert('刪除失敗');
         }
-    } catch (err) {
-        alert('系統錯誤');
     }
-}
 
-// Gallery Management
-let paramsForGallery = null; // { id, name }
 
-function openGalleryModal(id, name) {
-    paramsForGallery = { id, name };
-    document.getElementById('galleryModalTitle').innerText = `${name} - 相簿管理`;
-    document.getElementById('galleryModal').style.display = 'flex';
-    loadGallery(id);
-}
 
-function closeGalleryModal() {
-    document.getElementById('galleryModal').style.display = 'none';
-}
+    async function deleteRoomType(id) {
+        if (!confirm('確定要刪除此房型嗎？這將會刪除所有相關的房間和預訂紀錄！')) return;
 
-async function loadGallery(roomTypeId) {
-    try {
-        const res = await fetch(`/api/admin/room-types/${roomTypeId}/images`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const images = await res.json();
-        renderGallery(images);
-    } catch (err) {
-        console.error('Failed to load gallery', err);
-    }
-}
+        try {
+            const res = await fetch(`/api/admin/room-types/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
 
-// Edit Booking Logic
-function closeEditBookingModal() {
-    document.getElementById('editBookingModal').style.display = 'none';
-}
-
-async function editBooking(id) {
-    try {
-        const res = await fetch(`/api/bookings/${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
-        const booking = await res.json();
-
-        document.getElementById('editBookingId').value = booking.id;
-        document.getElementById('editGuestName').value = booking.guest_name;
-        document.getElementById('editGuestEmail').value = booking.guest_email;
-        document.getElementById('editGuestEmail').value = booking.guest_email;
-        document.getElementById('editGuestPhone').value = booking.guest_phone;
-        document.getElementById('editGuestMobile').value = booking.guest_mobile || '';
-        document.getElementById('editCheckIn').value = booking.check_in_date.split('T')[0];
-        document.getElementById('editCheckOut').value = booking.check_out_date.split('T')[0];
-        document.getElementById('editStatus').value = booking.status;
-        document.getElementById('editSpecialRequests').value = booking.special_requests || '';
-
-        document.getElementById('editBookingModal').style.display = 'flex';
-    } catch (e) {
-        alert('載入失敗');
-    }
-}
-
-document.getElementById('editBookingForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('editBookingId').value;
-    const data = {
-        guestName: document.getElementById('editGuestName').value,
-        guestEmail: document.getElementById('editGuestEmail').value,
-        guestName: document.getElementById('editGuestName').value,
-        guestEmail: document.getElementById('editGuestEmail').value,
-        guestPhone: document.getElementById('editGuestPhone').value,
-        guestMobile: document.getElementById('editGuestMobile').value,
-        checkInDate: document.getElementById('editCheckIn').value,
-        checkInDate: document.getElementById('editCheckIn').value,
-        checkInDate: document.getElementById('editCheckIn').value,
-        checkOutDate: document.getElementById('editCheckOut').value,
-        status: document.getElementById('editStatus').value,
-        specialRequests: document.getElementById('editSpecialRequests').value
-    };
-
-    try {
-        const res = await fetch(`/api/bookings/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(data)
-        });
-        if (res.ok) {
-            alert('更新成功');
-            closeEditBookingModal();
-            loadBookings();
-        } else {
-            alert('更新失敗');
+            if (res.ok) {
+                alert('刪除成功');
+                loadRoomTypes();
+            } else {
+                alert('刪除失敗');
+            }
+        } catch (err) {
+            alert('系統錯誤');
         }
-    } catch (e) {
-        alert('系統錯誤');
     }
 
-async function confirmBooking(id) {
-    if (!confirm('確定要確認此訂單嗎？')) return;
-    try {
-        const res = await fetch(`/api/bookings/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ status: 'confirmed' })
-        });
-        if (res.ok) {
-            alert('訂單已確認');
-            loadBookings();
-        } else {
-            alert('操作失敗');
+    // Gallery Management
+    let paramsForGallery = null; // { id, name }
+
+    function openGalleryModal(id, name) {
+        paramsForGallery = { id, name };
+        document.getElementById('galleryModalTitle').innerText = `${name} - 相簿管理`;
+        document.getElementById('galleryModal').style.display = 'flex';
+        loadGallery(id);
+    }
+
+    function closeGalleryModal() {
+        document.getElementById('galleryModal').style.display = 'none';
+    }
+
+    async function loadGallery(roomTypeId) {
+        try {
+            const res = await fetch(`/api/admin/room-types/${roomTypeId}/images`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const images = await res.json();
+            renderGallery(images);
+        } catch (err) {
+            console.error('Failed to load gallery', err);
         }
-    } catch (e) {
-        alert('系統錯誤');
-    }
-}
-
-function renderGallery(images) {
-    const container = document.getElementById('galleryListArea');
-    if (images.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #9ca3af;">尚無圖片</p>';
-        return;
     }
 
-    container.innerHTML = `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem;">
+    // Edit Booking Logic
+    function closeEditBookingModal() {
+        document.getElementById('editBookingModal').style.display = 'none';
+    }
+
+    async function editBooking(id) {
+        try {
+            const res = await fetch(`/api/bookings/${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+            const booking = await res.json();
+
+            document.getElementById('editBookingId').value = booking.id;
+            document.getElementById('editGuestName').value = booking.guest_name;
+            document.getElementById('editGuestEmail').value = booking.guest_email;
+            document.getElementById('editGuestEmail').value = booking.guest_email;
+            document.getElementById('editGuestPhone').value = booking.guest_phone;
+            document.getElementById('editGuestMobile').value = booking.guest_mobile || '';
+            document.getElementById('editCheckIn').value = booking.check_in_date.split('T')[0];
+            document.getElementById('editCheckOut').value = booking.check_out_date.split('T')[0];
+            document.getElementById('editStatus').value = booking.status;
+            document.getElementById('editSpecialRequests').value = booking.special_requests || '';
+
+            document.getElementById('editBookingModal').style.display = 'flex';
+        } catch (e) {
+            alert('載入失敗');
+        }
+    }
+
+    document.getElementById('editBookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editBookingId').value;
+        const data = {
+            guestName: document.getElementById('editGuestName').value,
+            guestEmail: document.getElementById('editGuestEmail').value,
+            guestName: document.getElementById('editGuestName').value,
+            guestEmail: document.getElementById('editGuestEmail').value,
+            guestPhone: document.getElementById('editGuestPhone').value,
+            guestMobile: document.getElementById('editGuestMobile').value,
+            checkInDate: document.getElementById('editCheckIn').value,
+            checkInDate: document.getElementById('editCheckIn').value,
+            checkInDate: document.getElementById('editCheckIn').value,
+            checkOutDate: document.getElementById('editCheckOut').value,
+            status: document.getElementById('editStatus').value,
+            specialRequests: document.getElementById('editSpecialRequests').value
+        };
+
+        try {
+            const res = await fetch(`/api/bookings/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                alert('更新成功');
+                closeEditBookingModal();
+                loadBookings();
+            } else {
+                alert('更新失敗');
+            }
+        } catch (e) {
+            alert('系統錯誤');
+        }
+    });
+
+    async function confirmBooking(id) {
+        if (!confirm('確定要確認此訂單嗎？')) return;
+        try {
+            const res = await fetch(`/api/bookings/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ status: 'confirmed' })
+            });
+            if (res.ok) {
+                alert('訂單已確認');
+                loadBookings();
+            } else {
+                alert('操作失敗');
+            }
+        } catch (e) {
+            alert('系統錯誤');
+        }
+    }
+
+    function renderGallery(images) {
+        const container = document.getElementById('galleryListArea');
+        if (images.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #9ca3af;">尚無圖片</p>';
+            return;
+        }
+
+        container.innerHTML = `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem;">
                 ${images.map(img => `
                     <div style="position: relative; aspect-ratio: 1; border-radius: 0.5rem; overflow: hidden; border: 1px solid #e5e7eb;">
                         <img src="${img.image_url}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -1734,159 +2057,159 @@ function renderGallery(images) {
                     </div>
                 `).join('')}
             </div>`;
-}
+    }
 
-function triggerGalleryUpload() {
-    document.getElementById('galleryImageInput').click();
-}
+    function triggerGalleryUpload() {
+        document.getElementById('galleryImageInput').click();
+    }
 
-async function handleGalleryUpload(event) {
-    const file = event.target.files[0];
-    if (!file || !paramsForGallery) return;
+    async function handleGalleryUpload(event) {
+        const file = event.target.files[0];
+        if (!file || !paramsForGallery) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
+        const formData = new FormData();
+        formData.append('image', file);
 
-    try {
-        const res = await fetch(`/api/admin/room-types/${paramsForGallery.id}/images`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: formData
-        });
+        try {
+            const res = await fetch(`/api/admin/room-types/${paramsForGallery.id}/images`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
 
-        if (res.ok) {
-            loadGallery(paramsForGallery.id);
-        } else {
-            alert('上傳失敗');
+            if (res.ok) {
+                loadGallery(paramsForGallery.id);
+            } else {
+                alert('上傳失敗');
+            }
+        } catch (err) {
+            alert('系統錯誤');
+        } finally {
+            event.target.value = '';
         }
-    } catch (err) {
-        alert('系統錯誤');
-    } finally {
-        event.target.value = '';
     }
-}
 
-async function deleteGalleryImage(id) {
-    if (!confirm('確定要刪除這張圖片嗎？')) return;
-    try {
-        const res = await fetch(`/api/admin/room-images/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-            loadGallery(paramsForGallery.id);
-        } else {
-            alert('刪除失敗');
+    async function deleteGalleryImage(id) {
+        if (!confirm('確定要刪除這張圖片嗎？')) return;
+        try {
+            const res = await fetch(`/api/admin/room-images/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                loadGallery(paramsForGallery.id);
+            } else {
+                alert('刪除失敗');
+            }
+        } catch (err) {
+            alert('系統錯誤');
         }
-    } catch (err) {
-        alert('系統錯誤');
     }
-}
 
-// Amenities Management
-let currentAmenitiesRoomType = null;
+    // Amenities Management
+    let currentAmenitiesRoomType = null;
 
-function editAmenities(id, name, amenitiesArray) {
-    currentAmenitiesRoomType = id;
-    document.getElementById('amenitiesModalTitle').innerText = `${name} - 編輯配備`;
+    function editAmenities(id, name, amenitiesArray) {
+        currentAmenitiesRoomType = id;
+        document.getElementById('amenitiesModalTitle').innerText = `${name} - 編輯配備`;
 
-    // Convert array to text (one per line)
-    const text = Array.isArray(amenitiesArray) ? amenitiesArray.join('') : '';
-    document.getElementById('amenitiesTextarea').value = text;
+        // Convert array to text (one per line)
+        const text = Array.isArray(amenitiesArray) ? amenitiesArray.join('\n') : '';
+        document.getElementById('amenitiesTextarea').value = text;
 
-    document.getElementById('amenitiesModal').style.display = 'flex';
-}
+        document.getElementById('amenitiesModal').style.display = 'flex';
+    }
 
-function closeAmenitiesModal() {
-    document.getElementById('amenitiesModal').style.display = 'none';
-    currentAmenitiesRoomType = null;
-}
+    function closeAmenitiesModal() {
+        document.getElementById('amenitiesModal').style.display = 'none';
+        currentAmenitiesRoomType = null;
+    }
 
-async function saveAmenities() {
-    if (!currentAmenitiesRoomType) return;
+    async function saveAmenities() {
+        if (!currentAmenitiesRoomType) return;
 
-    const text = document.getElementById('amenitiesTextarea').value;
-    // Split by newline and filter empty lines
-    const amenitiesArray = text.split('')
-        .map(line => line.trim())
-        .filter(line => line.length > 0);
+        const text = document.getElementById('amenitiesTextarea').value;
+        // Split by newline and filter empty lines
+        const amenitiesArray = text.split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
 
-    try {
-        const res = await fetch(`/api/admin/room-types/${currentAmenitiesRoomType}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ amenities: amenitiesArray })
-        });
+        try {
+            const res = await fetch(`/api/admin/room-types/${currentAmenitiesRoomType}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ amenities: amenitiesArray })
+            });
 
-        if (res.ok) {
-            alert('配備已更新');
-            closeAmenitiesModal();
-            loadRoomTypes();
-        } else {
-            alert('更新失敗');
+            if (res.ok) {
+                alert('配備已更新');
+                closeAmenitiesModal();
+                loadRoomTypes();
+            } else {
+                alert('更新失敗');
+            }
+        } catch (err) {
+            alert('系統錯誤');
         }
-    } catch (err) {
-        alert('系統錯誤');
-    }
-}
-
-// ============ BI Dashboard Functions ============
-let occupancyChartInstance = null;
-let performanceChartInstance = null;
-
-async function loadBIDashboard() {
-    try {
-        // 1. Summary Data
-        const summRes = await fetch('/api/analytics/summary', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const summary = await summRes.json();
-        renderBISummary(summary);
-
-        // 2. Fetch Occupancy Chart Data
-        const occRes = await fetch('/api/analytics/occupancy', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const occupancyData = await occRes.json();
-        renderOccupancyChart(occupancyData);
-
-        // 3. Fetch Performance Chart Data
-        const perfRes = await fetch('/api/analytics/performance', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const performanceData = await perfRes.json();
-        renderPerformanceChart(performanceData);
-
-    } catch (err) {
-        console.error('Dashboard load error:', err);
-    }
-}
-
-function renderBISummary(data) {
-    // Occupancy
-    document.getElementById('occRateText').innerText = `${data.occupancyRate}%`;
-    document.getElementById('occCountText').innerText = `${data.occupiedCount}/${data.totalRooms} 房間`;
-    document.getElementById('occRateBar').style.width = `${data.occupancyRate}%`;
-
-    // Work Orders
-    document.getElementById('woRateText').innerText = `${data.woCompletionRate}%`;
-    document.getElementById('woCountText').innerText = `${data.resolvedWorkOrders}/${data.totalWorkOrders} 任務`;
-    document.getElementById('woRateBar').style.width = `${data.woCompletionRate}%`;
-
-    // Inventory
-    const alerts = data.inventoryAlerts || [];
-    document.getElementById('invAlertCount').innerText = alerts.length;
-
-    const listEl = document.getElementById('inventoryAlertList');
-    if (alerts.length === 0) {
-        listEl.innerHTML = '<div style="text-align: center; padding: 2rem; color: #10B981;">✅ 所有品項庫存充足</div>';
-        return;
     }
 
-    listEl.innerHTML = alerts.map(item => `
+    // ============ BI Dashboard Functions ============
+    let occupancyChartInstance = null;
+    let performanceChartInstance = null;
+
+    async function loadBIDashboard() {
+        try {
+            // 1. Summary Data
+            const summRes = await fetch('/api/analytics/summary', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const summary = await summRes.json();
+            renderBISummary(summary);
+
+            // 2. Fetch Occupancy Chart Data
+            const occRes = await fetch('/api/analytics/occupancy', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const occupancyData = await occRes.json();
+            renderOccupancyChart(occupancyData);
+
+            // 3. Fetch Performance Chart Data
+            const perfRes = await fetch('/api/analytics/performance', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const performanceData = await perfRes.json();
+            renderPerformanceChart(performanceData);
+
+        } catch (err) {
+            console.error('Dashboard load error:', err);
+        }
+    }
+
+    function renderBISummary(data) {
+        // Occupancy
+        document.getElementById('occRateText').innerText = `${data.occupancyRate}%`;
+        document.getElementById('occCountText').innerText = `${data.occupiedCount}/${data.totalRooms} 房間`;
+        document.getElementById('occRateBar').style.width = `${data.occupancyRate}%`;
+
+        // Work Orders
+        document.getElementById('woRateText').innerText = `${data.woCompletionRate}%`;
+        document.getElementById('woCountText').innerText = `${data.resolvedWorkOrders}/${data.totalWorkOrders} 任務`;
+        document.getElementById('woRateBar').style.width = `${data.woCompletionRate}%`;
+
+        // Inventory
+        const alerts = data.inventoryAlerts || [];
+        document.getElementById('invAlertCount').innerText = alerts.length;
+
+        const listEl = document.getElementById('inventoryAlertList');
+        if (alerts.length === 0) {
+            listEl.innerHTML = '<div style="text-align: center; padding: 2rem; color: #10B981;">✅ 所有品項庫存充足</div>';
+            return;
+        }
+
+        listEl.innerHTML = alerts.map(item => `
                 <div class="inventory-item">
                     <div>
                         <div style="font-weight: 600; font-size: 0.875rem;">${item.name}</div>
@@ -1900,335 +2223,263 @@ function renderBISummary(data) {
                     </div>
                 </div>
             `).join('');
-}
-
-function renderOccupancyChart(data) {
-    const ctx = document.getElementById('occupancyChart').getContext('2d');
-
-    // Destroy existing chart if it exists
-    if (occupancyChartInstance) {
-        occupancyChartInstance.destroy();
     }
 
-    occupancyChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: data.map(d => d.room_type),
-            datasets: [{
-                data: data.map(d => d.bookings_count),
-                backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            plugins: { legend: { position: 'bottom' } },
-            cutout: '70%'
+    function renderOccupancyChart(data) {
+        const ctx = document.getElementById('occupancyChart').getContext('2d');
+
+        // Destroy existing chart if it exists
+        if (occupancyChartInstance) {
+            occupancyChartInstance.destroy();
         }
-    });
-}
 
-function renderPerformanceChart(data) {
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-
-    // Destroy existing chart if it exists
-    if (performanceChartInstance) {
-        performanceChartInstance.destroy();
-    }
-
-    performanceChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.map(d => d.staff_name),
-            datasets: [{
-                label: '平均處理小時',
-                data: data.map(d => d.avg_resolution_hours),
-                backgroundColor: '#4F46E5',
-                borderRadius: 6
-            }]
-        },
-        options: {
-            scales: { y: { beginAtZero: true } },
-            plugins: { legend: { display: false } }
-        }
-    });
-}
-
-// ============ Staff Work Orders Functions ============
-async function loadStaffTasks() {
-    try {
-        const res = await fetch('/api/work-orders?status=open', {
-            headers: { 'Authorization': `Bearer ${token}` }
+        occupancyChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: data.map(d => d.room_type),
+                datasets: [{
+                    data: data.map(d => d.bookings_count),
+                    backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: { legend: { position: 'bottom' } },
+                cutout: '70%'
+            }
         });
-        if (res.status === 401) {
-            alert('認證失敗，請重新登入');
+    }
+
+    function renderPerformanceChart(data) {
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+
+        // Destroy existing chart if it exists
+        if (performanceChartInstance) {
+            performanceChartInstance.destroy();
+        }
+
+        performanceChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.map(d => d.staff_name),
+                datasets: [{
+                    label: '平均處理小時',
+                    data: data.map(d => d.avg_resolution_hours),
+                    backgroundColor: '#4F46E5',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // ============ Staff Work Orders Functions ============
+    async function loadStaffTasks() {
+        try {
+            const res = await fetch('/api/work-orders?status=open', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.status === 401) {
+                alert('認證失敗，請重新登入');
+                return;
+            }
+            const tasks = await res.json();
+            renderStaffTasks(tasks);
+        } catch (err) {
+            document.getElementById('staffTasksContainer').innerHTML = '<p style="text-align: center; color: red;">載入失敗</p>';
+        }
+    }
+
+    function renderStaffTasks(tasks) {
+        const container = document.getElementById('staffTasksContainer');
+        if (tasks.length === 0) {
+            container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 6rem 2rem; background: white; border-radius: 24px; border: 1px dashed var(--border-color);">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem;">🎉</div>
+                <h3 style="color: var(--text-main); font-weight: 800; font-size: 1.5rem;">目前沒有待辦事項</h3>
+                <p style="color: var(--text-muted); font-size: 1.125rem;">稍微休息一下，保持優質服務！</p>
+            </div>`;
             return;
         }
-        const tasks = await res.json();
-        renderStaffTasks(tasks);
-    } catch (err) {
-        document.getElementById('staffTasksContainer').innerHTML = '<p style="text-align: center; color: red;">載入失敗</p>';
+
+        const categoryNames = { cleaning: '房間清潔', repair: '設施維修', maintenance: '定期保養', other: '其他項目' };
+        const categoryIcons = { cleaning: 'fa-broom', repair: 'fa-tools', maintenance: 'fa-calendar-check', other: 'fa-clipboard-list' };
+
+        container.innerHTML = tasks.map(task => {
+            let actionBtn = '';
+            let statusLabel = '';
+            let statusColor = '';
+
+            if (task.status === 'pending') {
+                statusLabel = '待處理';
+                statusColor = '#D1D5DB';
+                actionBtn = `<button class="btn btn-primary w-full" style="margin-top: 1.5rem; justify-content: center;" onclick="startStaffTask(${task.id})"><i class="fas fa-play" style="margin-right: 8px;"></i> 開始任務</button>`;
+            } else if (task.status === 'in_progress') {
+                statusLabel = '執行中';
+                statusColor = 'var(--accent-blue)';
+                actionBtn = `<button class="btn btn-sm w-full" style="margin-top: 1.5rem; justify-content: center; background: var(--grad-green); color: white; border: none;" onclick="openCompletionModal(${task.id})"><i class="fas fa-check-double" style="margin-right: 8px;"></i> 完成任務</button>`;
+            }
+
+            return `
+            <div class="room-type-card" style="padding: 1.5rem;">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="status-badge" style="background: var(--primary-soft); color: var(--primary-color);">
+                        <i class="fas ${categoryIcons[task.category] || 'fa-tasks'}"></i> ${categoryNames[task.category] || task.category}
+                    </span>
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted); opacity: 0.6;">#${task.ticket_number}</span>
+                </div>
+                
+                <h2 style="font-size: 2rem; font-weight: 900; margin: 0.5rem 0; color: var(--text-main);">
+                    ${task.room_number ? 'Room ' + task.room_number : '公共區域'}
+                </h2>
+                
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;">
+                    <span class="status-dot" style="background: ${statusColor};"></span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: ${statusColor};">${statusLabel}</span>
+                </div>
+
+                <div style="background: #F8FAFC; padding: 1rem; border-radius: 12px; border: 1px solid #F1F5F9; font-size: 0.95rem; color: var(--text-main); line-height: 1.6; min-height: 60px;">
+                    ${task.description}
+                </div>
+
+                ${actionBtn}
+            </div>
+        `;
+        }).join('');
     }
-}
 
-function renderStaffTasks(tasks) {
-    const container = document.getElementById('staffTasksContainer');
-    if (tasks.length === 0) {
-        container.innerHTML = '<div style="text-align: center; padding: 4rem 2rem;"><div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div><h3 style="color: #374151; font-weight: 700;">目前沒有待辦事項</h3><p style="color: #6B7280;">稍微休息一下吧！</p></div>';
-        return;
+    async function startStaffTask(id) {
+        try {
+            const res = await fetch(`/api/work-orders/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'in_progress' })
+            });
+            if (res.ok) loadStaffTasks();
+        } catch (err) { alert('操作失敗'); }
     }
 
-    const categoryNames = {
-        cleaning: '✨ 房間清潔',
-        repair: '🔧 設施維修',
-        maintenance: '🛠️ 定期保養',
-        other: '📝 其他項目'
-    };
+    function openCompletionModal(id) {
+        document.getElementById('completionWoId').value = id;
+        document.getElementById('woCompletionModal').style.display = 'flex';
+    }
 
-    const categoryColors = {
-        cleaning: 'badge-cleaning',
-        repair: 'badge-repair',
-        maintenance: 'badge-maintenance',
-        other: 'badge-other'
-    };
+    function closeCompletionModal() {
+        document.getElementById('woCompletionModal').style.display = 'none';
+        document.getElementById('woCompletionForm').reset();
+    }
 
-    container.innerHTML = tasks.map(task => {
-        let actionBtn = '';
-        let statusClass = '';
+    document.getElementById('woCompletionForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('completionWoId').value;
+        const fileInput = document.getElementById('woCompletionImage');
 
-        if (task.status === 'pending') {
-            statusClass = 'status-pending';
-            actionBtn = `<button class="staff-action-btn btn-start" onclick="startStaffTask(${task.id})">🚀 開始處理</button>`;
-        } else if (task.status === 'in_progress') {
-            statusClass = 'status-in-progress';
-            actionBtn = `<button class="staff-action-btn btn-complete" onclick="openCompletionModal(${task.id})">✅ 完成任務</button>`;
+        if (!fileInput.files[0]) {
+            alert('請上傳照片');
+            return;
         }
 
-        return `
-                    <div class="staff-task-card priority-${task.priority} ${statusClass}">
-                        <div class="staff-card-header">
-                            <div class="staff-meta">
-                                <span class="status-badge ${categoryColors[task.category] || 'badge-other'}">${categoryNames[task.category] || task.category}</span>
-                                <span class="status-badge" style="background: ${task.status === 'in_progress' ? '#dbeafe' : '#f3f4f6'}; color: ${task.status === 'in_progress' ? '#1e40af' : '#4b5563'}">
-                                    ${task.status === 'in_progress' ? '處理中' : '未執行'}
-                                </span>
-                            </div>
-                            <span style="font-size: 0.75rem; color: #9CA3AF;">#${task.ticket_number}</span>
-                        </div>
-                        
-                        <div class="staff-room-title">
-                            ${task.room_number ? 'Room ' + task.room_number : '公共區域'}
-                        </div>
-                        
-                        <div class="staff-card-body">
-                            ${task.description}
-                        </div>
+        const formData = new FormData();
+        formData.append('status', 'completed');
+        formData.append('image', fileInput.files[0]);
 
-                        <div>
-                            ${actionBtn}
-                        </div>
-                    </div>
-                `;
-    }).join('');
-}
-
-async function startStaffTask(id) {
-    try {
-        const res = await fetch(`/api/work-orders/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ status: 'in_progress' })
-        });
-        if (res.ok) loadStaffTasks();
-    } catch (err) { alert('操作失敗'); }
-}
-
-function openCompletionModal(id) {
-    document.getElementById('completionWoId').value = id;
-    document.getElementById('woCompletionModal').style.display = 'flex';
-}
-
-function closeCompletionModal() {
-    document.getElementById('woCompletionModal').style.display = 'none';
-    document.getElementById('woCompletionForm').reset();
-}
-
-document.getElementById('woCompletionForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('completionWoId').value;
-    const fileInput = document.getElementById('woCompletionImage');
-
-    if (!fileInput.files[0]) {
-        alert('請上傳照片');
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('status', 'completed');
-    formData.append('image', fileInput.files[0]);
-
-    const remarks = document.getElementById('woCompletionRemarks').value;
-    if (remarks) {
-        formData.append('staffRemarks', remarks);
-    }
-
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.innerText = '上傳中...';
-
-    try {
-        const res = await fetch(`/api/work-orders/${id}`, {
-            method: 'PATCH',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: formData
-        });
-        if (res.ok) {
-            closeCompletionModal();
-            loadStaffTasks();
-        } else {
-            alert('上傳失敗');
+        const remarks = document.getElementById('woCompletionRemarks').value;
+        if (remarks) {
+            formData.append('staffRemarks', remarks);
         }
-    } catch (err) {
-        alert('系統錯誤');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = '上傳並完成';
-    }
 
-// Navigation Event Listeners
-document.getElementById('linkBookings').addEventListener('click', (e) => { e.preventDefault(); showTab('bookings'); });
-document.getElementById('linkBI').addEventListener('click', (e) => { e.preventDefault(); showTab('biDashboard'); });
-document.getElementById('linkStaff').addEventListener('click', (e) => { e.preventDefault(); showTab('staff'); });
-document.getElementById('linkRooms').addEventListener('click', (e) => { e.preventDefault(); showTab('rooms'); });
-document.getElementById('linkWorkOrders').addEventListener('click', (e) => { e.preventDefault(); showTab('workOrders'); });
-document.getElementById('linkInventory').addEventListener('click', (e) => { e.preventDefault(); showTab('inventory'); });
-document.getElementById('linkUsers').addEventListener('click', (e) => { e.preventDefault(); showTab('users'); });
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerText = '上傳中...';
 
-document.getElementById('btnLogout').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+        try {
+            const res = await fetch(`/api/work-orders/${id}`, {
+                method: 'PATCH',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+            if (res.ok) {
+                closeCompletionModal();
+                loadStaffTasks();
+            } else {
+                alert('上傳失敗');
+            }
+        } catch (err) {
+            alert('系統錯誤');
+        } finally {
+            btn.disabled = false;
+            btn.innerText = '上傳並完成';
+        }
+    });
 
-// Mobile Menu
-document.querySelector('.hamburger').addEventListener('click', toggleSidebar);
-document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+    // Navigation Event Listeners
+    document.getElementById("linkBookings").addEventListener("click", (e) => { e.preventDefault(); showTab("bookings"); });
+    document.getElementById("linkBI").addEventListener("click", (e) => { e.preventDefault(); showTab("biDashboard"); });
+    document.getElementById("linkStaff").addEventListener("click", (e) => { e.preventDefault(); showTab("staff"); });
+    document.getElementById("linkRooms").addEventListener("click", (e) => { e.preventDefault(); showTab("rooms"); });
+    document.getElementById("linkWorkOrders").addEventListener("click", (e) => { e.preventDefault(); showTab("workOrders"); });
+    document.getElementById("linkInventory").addEventListener("click", (e) => { e.preventDefault(); showTab("inventory"); });
+    document.getElementById("linkUsers").addEventListener("click", (e) => { e.preventDefault(); showTab("users"); });
 
+    document.getElementById("btnLogout").addEventListener("click", (e) => { e.preventDefault(); logout(); });
 
-// Central Event Delegation for dynamic buttons
-document.addEventListener('click', async (e) => {
-    // Bookings
-    if (e.target.classList.contains('btn-confirm-booking')) {
-        confirmBooking(e.target.getAttribute('data-id'));
-    }
-    if (e.target.classList.contains('btn-edit-booking')) {
-        editBooking(e.target.getAttribute('data-id'));
-    }
-    
-    // Users
-    if (e.target.classList.contains('btn-edit-user')) {
-        const user = JSON.parse(e.target.getAttribute('data-user'));
-        editUser(user);
-    }
-    if (e.target.classList.contains('btn-delete-user')) {
-        deleteUser(e.target.getAttribute('data-id'));
-    }
-    
-    // Work Orders
-    if (e.target.classList.contains('btn-view-wo')) {
-        viewWorkOrder(e.target.getAttribute('data-id'));
-    }
-    if (e.target.classList.contains('btn-edit-wo')) {
-        editWorkOrder(e.target.getAttribute('data-id'));
-    }
-    
-    // Inventory
-    if (e.target.classList.contains('btn-adjust-inv')) {
-        const id = e.target.getAttribute('data-id');
-        const delta = parseInt(e.target.getAttribute('data-delta'));
-        adjustInventory(id, delta);
-    }
-    if (e.target.classList.contains('btn-edit-inv')) {
-        loadInventoryItemForEdit(e.target.getAttribute('data-id'));
-    }
-    if (e.target.classList.contains('btn-delete-inv')) {
-        deleteInventoryItem(e.target.getAttribute('data-id'));
-    }
-    
-    // Rooms
-    if (e.target.classList.contains('btn-edit-amenities')) {
-        const id = e.target.getAttribute('data-id');
-        const name = e.target.getAttribute('data-name');
-        const amenities = JSON.parse(e.target.getAttribute('data-amenities'));
-        editAmenities(id, name, amenities);
-    }
-    if (e.target.classList.contains('btn-manage-instances')) {
-        const id = e.target.getAttribute('data-id');
-        const name = e.target.getAttribute('data-name');
-        const hotelId = e.target.getAttribute('data-hotel-id');
-        openInstanceModal(id, name, hotelId);
-    }
-    if (e.target.classList.contains('btn-trigger-upload')) {
-        triggerUpload(e.target.getAttribute('data-id'));
-    }
-    if (e.target.classList.contains('btn-open-gallery')) {
-        openGalleryModal(e.target.getAttribute('data-id'), e.target.getAttribute('data-name'));
-    }
-    if (e.target.classList.contains('btn-delete-room-type')) {
-        deleteRoomType(e.target.getAttribute('data-id'));
-    }
-    if (e.target.classList.contains('btn-delete-instance')) {
-        deleteInstance(e.target.getAttribute('data-id'));
-    }
-    
-    // Modal Closers (Universal)
-    if (e.target.id === 'btnCancelUser' || e.target.id === 'btnCloseUserModal') closeUserModal();
-    if (e.target.id === 'btnCancelInventory' || e.target.id === 'btnCloseInventoryModal') closeInventoryModal();
-    if (e.target.id === 'btnCloseWoViewModal') closeWoViewModal();
-    if (e.target.id === 'btnCloseInstanceModal') closeInstanceModal();
-    if (e.target.id === 'btnCloseGalleryModal') closeGalleryModal();
-    if (e.target.id === 'btnCancelAmenities' || e.target.id === 'btnCloseAmenitiesModalTop') closeAmenitiesModal();
+    // Mobile Menu
+    document.querySelector(".hamburger").addEventListener("click", toggleSidebar);
+    document.getElementById("sidebarOverlay").addEventListener("click", toggleSidebar);
 
-    
+    // Central Event Delegation for dynamic buttons
+    document.addEventListener("click", async (e) => {
+        const target = e.target.closest("button") || e.target;
+
+        if (target.classList.contains("btn-confirm-booking")) confirmBooking(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-edit-booking")) editBooking(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-edit-user")) { const user = JSON.parse(target.getAttribute("data-user")); editUser(user); }
+        if (target.classList.contains("btn-delete-user")) deleteUser(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-view-wo")) viewWorkOrder(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-edit-wo")) editWorkOrder(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-adjust-inv")) { adjustInventory(target.getAttribute("data-id"), parseInt(target.getAttribute("data-delta"))); }
+        if (target.classList.contains("btn-edit-inv")) loadInventoryItemForEdit(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-delete-inv")) deleteInventoryItem(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-edit-amenities")) { editAmenities(target.getAttribute("data-id"), target.getAttribute("data-name"), JSON.parse(target.getAttribute("data-amenities"))); }
+        if (target.classList.contains("btn-manage-instances")) { openInstanceModal(target.getAttribute("data-id"), target.getAttribute("data-name"), target.getAttribute("data-hotel-id")); }
+        if (target.classList.contains("btn-trigger-upload")) triggerUpload(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-open-gallery")) openGalleryModal(target.getAttribute("data-id"), target.getAttribute("data-name"));
+        if (target.classList.contains("btn-delete-room-type")) deleteRoomType(target.getAttribute("data-id"));
+        if (target.classList.contains("btn-delete-instance")) deleteInstance(target.getAttribute("data-id"));
+        if (target.id === "btnCancelUser" || target.id === "btnCloseUserModal") closeUserModal();
+        if (target.id === "btnCancelInventory" || target.id === "btnCloseInventoryModal") closeInventoryModal();
+        if (target.id === "btnCloseWoViewModal") closeWoViewModal();
+        if (target.id === "btnCloseInstanceModal") closeInstanceModal();
+        if (target.id === "btnCloseGalleryModal") closeGalleryModal();
+        if (target.id === "btnCancelAmenities" || target.id === "btnCloseAmenitiesModalTop") closeAmenitiesModal();
+    });
+
     // Static Button Listeners
-    if (document.getElementById('btnAddNewUser')) {
-        document.getElementById('btnAddNewUser').addEventListener('click', () => {
-            document.getElementById('userModalTitle').innerText = '新增管理帳號';
-            document.getElementById('userForm').reset();
-            document.getElementById('editUserId').value = '';
-            document.getElementById('userModal').style.display = 'flex';
+    if (document.getElementById("btnAddNewUser")) {
+        document.getElementById("btnAddNewUser").addEventListener("click", () => {
+            document.getElementById("userModalTitle").innerText = "新增管理帳號";
+            document.getElementById("userForm").reset();
+            document.getElementById("editUserId").value = "";
+            document.getElementById("userModal").style.display = "flex";
         });
     }
-
-    if (document.getElementById('btnAddNewInventory')) {
-        document.getElementById('btnAddNewInventory').addEventListener('click', () => {
-            document.getElementById('inventoryModal').style.display = 'flex';
-        });
+    if (document.getElementById("btnAddNewInventory")) {
+        document.getElementById("btnAddNewInventory").addEventListener("click", () => { document.getElementById("inventoryModal").style.display = "flex"; });
     }
-
-    if (document.getElementById('btnAddNewWorkOrder')) {
-        document.getElementById('btnAddNewWorkOrder').addEventListener('click', () => {
-            document.getElementById('woModal').style.display = 'flex';
-        });
+    if (document.getElementById("btnAddNewWorkOrder")) {
+        document.getElementById("btnAddNewWorkOrder").addEventListener("click", () => { document.getElementById("woModal").style.display = "flex"; });
     }
-
-    if (document.getElementById('btnAddRoomInstance')) {
-        document.getElementById('btnAddRoomInstance').addEventListener('click', addRoomInstance);
+    if (document.getElementById("btnAddRoomInstance")) {
+        document.getElementById("btnAddRoomInstance").addEventListener("click", addRoomInstance);
     }
-
-    if (document.getElementById('btnTriggerGalleryUpload')) {
-        document.getElementById('btnTriggerGalleryUpload').addEventListener('click', () => {
-            document.getElementById('galleryImageInput').click();
-        });
+    if (document.getElementById("btnTriggerGalleryUpload")) {
+        document.getElementById("btnTriggerGalleryUpload").addEventListener("click", () => { document.getElementById("galleryImageInput").click(); });
     }
-
-    // Modal Closer Helper
-    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; }
-    function closeInventoryModal() { document.getElementById('inventoryModal').style.display = 'none'; }
-    function closeWoViewModal() { if(document.getElementById('woViewModal')) document.getElementById('woViewModal').style.display = 'none'; }
-    function closeInstanceModal() { document.getElementById('roomInstanceModal').style.display = 'none'; }
-    function closeGalleryModal() { document.getElementById('galleryModal').style.display = 'none'; }
-    function closeAmenitiesModal() { document.getElementById('amenitiesModal').style.display = 'none'; }
-
 
 </script>
-</body>
-</html>
